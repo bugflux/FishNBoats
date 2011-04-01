@@ -151,8 +151,9 @@ public class TBoat extends Thread {
 
 				case returning_to_wharf:
 					popMsg = monitor.popMsg(false);
-					if (MESSAGE_TYPE.ReturnToWharf == popMsg.getMsgType()) {
-
+					if (MESSAGE_TYPE.ReturnToWharf == popMsg
+							.getMsgType()) {
+						
 					}
 					returnToWharf();
 					break;
