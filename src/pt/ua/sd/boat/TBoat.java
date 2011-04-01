@@ -46,7 +46,7 @@ public class TBoat extends Thread {
 	 * @param ocean
 	 *            The communication interface with the Ocean.
 	 * @param boats
-	 *            An arra of all boats. This boat is boats[id].
+	 *            An array of all boats. This boat is boats[id].
 	 */
 	public TBoat(BoatStats stats, int period, IDirOperBoat diroper,
 			IOceanBoat ocean, IBoat monitor) {

@@ -105,8 +105,6 @@ public class TDirOper extends Thread {
 				} else if (MESSAGE_TYPE.LifeEnd == popMsg.getMsgType()) {
 					lifeEnding = true;
 				} else if (MESSAGE_TYPE.FishingDone == popMsg.getMsgType()) {
-					assert false;
-					// TODO shouldn't accept this case. or should i?
 					FishingDoneMessage m = (FishingDoneMessage) popMsg;
 					removeCompanion(m.getId());
 				} else {

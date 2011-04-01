@@ -44,7 +44,7 @@ public class PortoAveiro {
 		final double eco_system = 0.0001;//0.001;
 		final double catchPercentage = 0.3;
 		final int minShoalDetectable = 100;
-		final int nCampaign = 3000;
+		final int nCampaign = 3;
 		// TODO: read these ^ from a graphical interface
 
 		// Logger
