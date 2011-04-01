@@ -114,11 +114,6 @@ public class TBoat extends Thread {
 					popMsg = monitor.popMsg(false);
 					if (MESSAGE_TYPE.NoAction == popMsg.getMsgType()) {
 						trackSchool(mHelper);
-					} else if (MESSAGE_TYPE.ChangeCourse == popMsg.getMsgType()) {
-						assert false; // for now
-						ChangeCourseMessage m = (ChangeCourseMessage) popMsg;
-						joiningDestination = m.getNewDestination();
-						joinCompanion(joiningDestination);
 					} else if (MESSAGE_TYPE.ReturnToWharf == popMsg
 							.getMsgType()) {
 						changeState(INTERNAL_STATE_BOAT.returning_to_wharf);
