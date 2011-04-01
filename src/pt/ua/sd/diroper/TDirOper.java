@@ -204,25 +204,18 @@ public class TDirOper extends Thread {
 	 *            the point where the boat should be at.
 	 */
 	protected void assignCompanion(BoatId id, Point p) {
-		// already assigned, just update!
-//		if(id.getBoat() % 2 != 0) {
-//			boats[id.getBoat() + 1].changeCourse(id, p);
-//			boats[id.getBoat()].helpRequestServed(boats[id.getBoat() + 1].getId());
-//			assignedCompanions.put(id, boats[id.getBoat() + 1].getId());
-//		}
-//		else if(id.getBoat() == 1) {
-//			boats[0].changeCourse(id, p);
-//			boats[id.getBoat()].helpRequestServed(boats[0].getId());
-//			assignedCompanions.put(id, boats[0].getId());
-//		}
-		if (assignedCompanions.containsKey(id)) {
-			boats[id.getBoat()].helpRequestServed((IBoatHelper)boats[assignedCompanions.get(id).getBoat()]);
-		} else {
+		// don't hand help to boats that are expected to help others
+		if (!assignedCompanions.containsKey(id)
+				&& !assignedCompanions.containsValue(id)) {
+			// don't hand helpers that are already helping others
 			for (IBoatDirOper helper : boats) {
 				if (!helper.getId().equals(id)
 						&& !assignedCompanions.containsKey(helper.getId())
 						&& !assignedCompanions.containsValue(helper.getId())) {
-					boats[id.getBoat()].helpRequestServed((IBoatHelper)boats[helper.getId().getBoat()]);
+					System.out.println("does not contain " + helper.getId());
+					boats[id.getBoat()]
+							.helpRequestServed((IBoatHelper) boats[helper
+									.getId().getBoat()]);
 					assignedCompanions.put(id, helper.getId());
 					break;
 				}
