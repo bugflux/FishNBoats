@@ -224,6 +224,7 @@ public class TDirOper extends Thread {
 						&& !assignedCompanions.containsValue(helper.getId())) {
 					boats[id.getBoat()].helpRequestServed((IBoatHelper)boats[helper.getId().getBoat()]);
 					assignedCompanions.put(id, helper.getId());
+					break;
 				}
 			}
 		}
