@@ -93,7 +93,7 @@ public class TBoat extends Thread {
 						ChangeCourseMessage m = (ChangeCourseMessage) popMsg;
 						joiningDestination = m.getNewDestination();
 						changeState(INTERNAL_STATE_BOAT.joining_a_companion);
-						//joinCompanion(joiningDestination);
+						// joinCompanion(joiningDestination);
 					} else if (MESSAGE_TYPE.ReturnToWharf == popMsg
 							.getMsgType()) {
 						changeState(INTERNAL_STATE_BOAT.returning_to_wharf);
@@ -103,7 +103,7 @@ public class TBoat extends Thread {
 						mHelper = m.getHelper();
 						mHelper.changeCourse(stats.getPosition());
 						changeState(INTERNAL_STATE_BOAT.tracking_a_school);
-						//trackSchool(mHelper);
+						// trackSchool(mHelper);
 					} else {
 						assert false; // cannot receive other messages in this
 										// state
@@ -145,11 +145,8 @@ public class TBoat extends Thread {
 					break;
 
 				case returning_to_wharf:
-					popMsg = monitor.popMsg(false);
-					if (MESSAGE_TYPE.ReturnToWharf == popMsg
-							.getMsgType()) {
-						
-					}
+					popMsg = monitor.popMsg(false); // use this to clear
+													// extraneous messages
 					returnToWharf();
 					break;
 
