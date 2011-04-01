@@ -140,6 +140,11 @@ public class TBoat extends Thread {
 						joiningId = m.getId();
 						joiningDestination = m.getNewDestination();
 						joinCompanion(joiningId, joiningDestination);
+					} else if (MESSAGE_TYPE.ReturnToWharf == popMsg
+							.getMsgType()) {
+						changeState(INTERNAL_STATE_BOAT.returning_to_wharf);
+					} else {
+						assert false;
 					}
 					break;
 

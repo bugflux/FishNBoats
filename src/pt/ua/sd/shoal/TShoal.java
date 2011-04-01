@@ -134,14 +134,15 @@ public class TShoal extends Thread {
 
 				case trapped_by_the_net:
 					trap(); // indicate how many fish were lost
+					escapeTheNet();
 
 					// BLOCK waiting for a retrieve the net
-					popMsg = monitor.popMsg(true);
-					if (MESSAGE_TYPE.RetrieveTheNet == popMsg.getMsgType()) {
-						escapeTheNet();
-					} else {
-						assert false;
-					}
+//					popMsg = monitor.popMsg(true);
+//					if (MESSAGE_TYPE.RetrieveTheNet == popMsg.getMsgType()) {
+//						escapeTheNet();
+//					} else {
+//						assert false;
+//					}
 					break;
 
 				default:
@@ -231,8 +232,6 @@ public class TShoal extends Thread {
 	 */
 	protected void escapeTheNet() {
 		changeState(INTERNAL_STATE_SCHOOL.feeding);
-		
-		monitor.escapeTheNet();
 	}
 
 	/**
@@ -251,6 +250,7 @@ public class TShoal extends Thread {
 	 */
 	protected void seasonEnd() {
 		changeState(INTERNAL_STATE_SCHOOL.spawning);
+		monitor.releaseRemainers();
 
 		for (IDirOperShoal d : diropers) {
 			d.endSeason();

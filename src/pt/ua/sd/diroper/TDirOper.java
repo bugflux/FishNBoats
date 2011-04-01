@@ -203,21 +203,30 @@ public class TDirOper extends Thread {
 	 */
 	protected void assignCompanion(BoatId id, Point p) {
 		// already assigned, just update!
-		if (assignedCompanions.containsKey(id)) {
-			boats[assignedCompanions.get(id).getBoat()].changeCourse(id, p);
-			boats[id.getBoat()].helpRequestServed(assignedCompanions.get(id));
-		} else {
-			for (IBoatDirOper helper : boats) {
-				// TODO better selection!!
-				if (!helper.getId().equals(id)
-						&& !assignedCompanions.containsKey(helper.getId())
-						&& !assignedCompanions.containsValue(helper.getId())) {
-					helper.changeCourse(id, p);
-					boats[id.getBoat()].helpRequestServed(helper.getId());
-					assignedCompanions.put(id, helper.getId());
-				}
-			}
+		if(id.getBoat() % 2 != 0) {
+			boats[id.getBoat() + 1].changeCourse(id, p);
+			boats[id.getBoat()].helpRequestServed(boats[id.getBoat() + 1].getId());
+			assignedCompanions.put(id, boats[id.getBoat() + 1].getId());
 		}
+//		else if(id.getBoat() == 1) {
+//			boats[0].changeCourse(id, p);
+//			boats[id.getBoat()].helpRequestServed(boats[0].getId());
+//			assignedCompanions.put(id, boats[0].getId());
+//		}
+//		if (assignedCompanions.containsKey(id)) {
+//			boats[assignedCompanions.get(id).getBoat()].changeCourse(id, p);
+//			boats[id.getBoat()].helpRequestServed(assignedCompanions.get(id));
+//		} else {
+//			for (IBoatDirOper helper : boats) {
+//				if (!helper.getId().equals(id)
+//						&& !assignedCompanions.containsKey(helper.getId())
+//						&& !assignedCompanions.containsValue(helper.getId())) {
+//					helper.changeCourse(id, p);
+//					boats[id.getBoat()].helpRequestServed(helper.getId());
+//					assignedCompanions.put(id, helper.getId());
+//				}
+//			}
+//		}
 	}
 
 	/**

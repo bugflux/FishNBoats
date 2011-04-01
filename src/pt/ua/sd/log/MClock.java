@@ -40,8 +40,8 @@ public class MClock {
 	 * @return int the clock tick id
 	 */
 	synchronized public int getClockTick() {
-		System.out.println("\t\t\t\t\t\t\t\t\ttick: " + tick);
-		Thread.dumpStack();
+//		System.out.println("\t\t\t\t\t\t\t\t\ttick: " + tick);
+//		Thread.dumpStack();
 		return ++tick;
 	}
 }

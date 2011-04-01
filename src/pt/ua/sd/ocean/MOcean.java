@@ -458,7 +458,7 @@ public class MOcean implements IOceanBoat, IOceanShoal, IOceanDirOper {
 						shoal = mshoals.get(stats.getId());
 						logShoal = "Shoal present";
 					} else {
-						logShoal = "Shoal present but too small";
+						logShoal = "Shoal present but undetectable (too small or trapped by the net)";
 					}
 				}
 				logCompanion = "Companion present";
@@ -544,21 +544,21 @@ public class MOcean implements IOceanBoat, IOceanShoal, IOceanDirOper {
 			// detect only if there's space for two boats or if there's space
 			// for
 			// one boat and there's already one boat from the same company
-			// there.
+			// there. But not two from the same company!
 			List<Point> toRemove = new ArrayList<Point>();
 			for (Point p : points) {
 				if (map[p.y][p.x].getMaxBoats() - map[p.y][p.x].boatsCount() < 1) {
 					toRemove.add(p);
 				} else if (map[p.y][p.x].getMaxBoats()
 						- map[p.y][p.x].boatsCount() < 2) {
-					boolean hasCompanion = false;
+					int companions = 0;
 					for (BoatId b : map[p.y][p.x].getBoats()) {
 						if (b.getCompany() == id.getCompany()) {
-							hasCompanion = true;
+							companions++;
 						}
 					}
 
-					if (!hasCompanion) {
+					if (companions != 1) {
 						toRemove.add(p);
 					}
 				}
@@ -635,12 +635,14 @@ public class MOcean implements IOceanBoat, IOceanShoal, IOceanDirOper {
 			logPrevious = "(" + c.y + "," + c.x + ")";
 
 			boolean canMove = true;
-			int companyCounters[] = new int[ncompanies];
-			if (shoalsPosition.get(id).isDetectable()) {
-				for (BoatId b : map[c.y][c.x].getBoats()) {
-					if (++companyCounters[b.getCompany()] > 1) {
-						canMove = false;
-						break;
+			if(shoalsPosition.get(id).isDetectable()) {
+				int companyCounters[] = new int[ncompanies];
+				if (shoalsPosition.get(id).isDetectable()) {
+					for (BoatId b : map[c.y][c.x].getBoats()) {
+						if (++companyCounters[b.getCompany()] > 1) {
+							canMove = false;
+							break;
+						}
 					}
 				}
 			}

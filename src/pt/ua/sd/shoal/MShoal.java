@@ -3,6 +3,9 @@
  */
 package pt.ua.sd.shoal;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import pt.ua.sd.communication.toshoal.GoToFeedingAreaMessage;
 import pt.ua.sd.communication.toshoal.NoActionMessage;
 import pt.ua.sd.communication.toshoal.RetrieveTheNetMessage;
@@ -93,7 +96,7 @@ public class MShoal implements IShoal, IShoalBoat, IShoalDirOper {
 				pushMsg(goToFeedingArea);
 			}
 		}
-		
+
 		log.push("Season begin", id.toString(), "", logTick);
 	}
 
@@ -114,7 +117,7 @@ public class MShoal implements IShoal, IShoalBoat, IShoalDirOper {
 			if (n_boat_cast_the_net == 2) {
 				pushMsg(trappedByTheNet);
 			}
-			
+
 			while (!isTrapped) {
 				try {
 					wait();
@@ -122,8 +125,8 @@ public class MShoal implements IShoal, IShoalBoat, IShoalDirOper {
 					throw new RuntimeException();
 				}
 			}
-			
-//			n_boat_cast_the_net = 0;
+
+			// n_boat_cast_the_net = 0;
 		}
 
 		log.push("Cast the net", id.toString(), logMessage, logTick);
@@ -139,12 +142,20 @@ public class MShoal implements IShoal, IShoalBoat, IShoalDirOper {
 		synchronized (this) {
 			logTick = clock.getClockTick();
 
-			trappedAmount = amount;
 			isTrapped = true;
-			escaped = false;
+			trappedAmount = amount;
 			notifyAll();
+
+			while (isTrapped) {
+				try {
+					wait();
+				} catch (InterruptedException ex) {
+					Logger.getLogger(MShoal.class.getName()).log(Level.SEVERE,
+							null, ex);
+				}
+			}
 		}
-		
+
 		log.push("Trapped", id.toString(), "in the net: " + amount, logTick);
 	}
 
@@ -157,48 +168,62 @@ public class MShoal implements IShoal, IShoalBoat, IShoalDirOper {
 		String logMessage;
 		int captured = 0;
 
-		synchronized(this) {
+		synchronized (this) {
 			logTick = clock.getClockTick();
 			logMessage = (n_boat_cast_the_net - 1) + " left";
 
 			n_boat_cast_the_net--;
+
+			if (n_boat_cast_the_net != 0) {
+				while (isTrapped) {
+					try {
+						wait();
+					} catch (InterruptedException e) {
+						throw new RuntimeException();
+					}
+				}
+			} else {
+				isTrapped = false;
+
+				notifyAll();
+			}
+
 			captured = trappedAmount;
 			trappedAmount = 0;
-
-			if(n_boat_cast_the_net == 0) {
-				pushMsg(retrieveTheNet);
-			}
-
-			while(!escaped) {
-				try {
-					wait();
-				} catch (InterruptedException e) {
-					throw new RuntimeException();
-				}
-			}
 		}
-		
+
 		log.push("Retrieve the net", id.toString(), logMessage, logTick);
-		
+
 		return captured;
 	}
 
 	/**
-	 * @see IShoal.#escapeTheNet()
+	 * @see IShoal.#releaseRemainers()
 	 */
 	@Override
-	public void escapeTheNet() {
-		int logTick;
+	public void releaseRemainers() {
 
+		// this does the "trapped by the net" sequence in case there is some
+		// astray waiting
 		synchronized(this) {
-			logTick = clock.getClockTick();
-
-			escaped = true;
-			isTrapped = false;
-			notifyAll();
+			if (n_boat_cast_the_net == 1) {
+				isTrapped = true;
+				trappedAmount = 0;
+	
+				notify();
+	
+				while (isTrapped) {
+					try {
+						wait();
+					} catch (InterruptedException e) {
+						throw new RuntimeException();
+					}
+				}
+	
+				isTrapped = false;
+				notify();
+			}
 		}
-		
-		log.push("Escape the net", id.toString(), "", logTick);
 	}
 
 	protected void pushMsg(ShoalMessage msg) {

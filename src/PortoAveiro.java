@@ -31,20 +31,20 @@ public class PortoAveiro {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		final int nboats = 3, ncompanies = 1, nshoals = 5;
+		final int nboats = 5, ncompanies = 2, nshoals = 5;
 		final int feedingDuration = 3 * 60 * 1000, spawningDuration = (int) (2 * 1000), cycles = 3;
-		final int boatPeriod = 200, shoalPeriod = 2 * boatPeriod, diroperSleepOnWait = 200;
+		final int boatPeriod = 20, shoalPeriod = 2 * boatPeriod, diroperSleepOnWait = 200;
 		final int height = 11, width = 11;
 		final int maxShoalPerSquare = 1, maxBoatsPerSquare = 3;
 		final int seasonMoves = 40;
 		final int boatCapacity = 1000;
 		final int initialFish = 2000;
 		final int shoalSize = initialFish;
-		final int growing_factor = 2;
-		final double eco_system = 0.001;
+		final int growing_factor = 2;//5;
+		final double eco_system = 0.0001;//0.001;
 		final double catchPercentage = 0.3;
 		final int minShoalDetectable = 100;
-		final int nCampaign = 3;
+		final int nCampaign = 300;
 		// TODO: read these ^ from a graphical interface
 
 		// Logger

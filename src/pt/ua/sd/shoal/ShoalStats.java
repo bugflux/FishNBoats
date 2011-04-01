@@ -84,7 +84,7 @@ public class ShoalStats {
 	 * @return true if it is detectable, false otherwise.
 	 */
 	public boolean isDetectable() {
-		return size >= minDetectable;
+		return size >= minDetectable && state != INTERNAL_STATE_SCHOOL.trapped_by_the_net;
 	}
 
 	/**

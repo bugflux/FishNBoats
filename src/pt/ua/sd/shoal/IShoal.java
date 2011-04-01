@@ -30,7 +30,8 @@ public interface IShoal {
 	public void isTrapped(int amount);
 	
 	/**
-	 * This method unlocks the boats at retrieveTheNet operation.
+	 * After the end of season, release boats that by got stuck casting the net.
+	 * // TODO eliminate this method, as it is a workaround to a state machine problem.
 	 */
-	public void escapeTheNet();
+	public void releaseRemainers();
 }
