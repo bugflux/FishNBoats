@@ -150,6 +150,11 @@ public class TBoat extends Thread {
 					break;
 
 				case returning_to_wharf:
+					popMsg = monitor.popMsg(false);
+					if (MESSAGE_TYPE.ReturnToWharf == popMsg
+							.getMsgType()) {
+						
+					}
 					returnToWharf();
 					break;
 
@@ -250,8 +255,7 @@ public class TBoat extends Thread {
 	 * Moves this boat to wharf. This has an internal l
 	 */
 	protected void returnToWharf() {
-		stats.setPosition(ocean.tryMoveBoat(stats.getId(), ocean.getWharf()));
-		if (stats.getPosition().equals(ocean.getWharf())) {
+		if(changePosition(ocean.getWharf())) {
 			changeState(INTERNAL_STATE_BOAT.at_the_wharf);
 			diroper.backAtWharf(stats.getId(), stats.getCatch());
 		}
