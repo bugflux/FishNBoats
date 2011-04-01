@@ -31,7 +31,7 @@ public class PortoAveiro {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		final int nboats = 5, ncompanies = 2, nshoals = 5;
+		final int nboats = 4, ncompanies = 2, nshoals = 5;
 		final int feedingDuration = 3 * 60 * 1000, spawningDuration = (int) (2 * 1000), cycles = 3;
 		final int boatPeriod = 20, shoalPeriod = 2 * boatPeriod, diroperSleepOnWait = 200;
 		final int height = 11, width = 11;

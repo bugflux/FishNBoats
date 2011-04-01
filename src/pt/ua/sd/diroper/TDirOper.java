@@ -212,7 +212,6 @@ public class TDirOper extends Thread {
 				if (!helper.getId().equals(id)
 						&& !assignedCompanions.containsKey(helper.getId())
 						&& !assignedCompanions.containsValue(helper.getId())) {
-					System.out.println("does not contain " + helper.getId());
 					boats[id.getBoat()]
 							.helpRequestServed((IBoatHelper) boats[helper
 									.getId().getBoat()]);
