@@ -10,9 +10,10 @@ import java.util.Random;
 
 import pt.ua.sd.boat.BoatStats.INTERNAL_STATE_BOAT;
 import pt.ua.sd.communication.toboat.BoatMessage;
-import pt.ua.sd.communication.toboat.HelpRequestServedMessage;
 import pt.ua.sd.communication.toboat.BoatMessage.MESSAGE_TYPE;
+import pt.ua.sd.communication.toboat.CastTheNetMessage;
 import pt.ua.sd.communication.toboat.ChangeCourseMessage;
+import pt.ua.sd.communication.toboat.HelpRequestServedMessage;
 import pt.ua.sd.diroper.IDirOperBoat;
 import pt.ua.sd.ocean.IOceanBoat;
 import pt.ua.sd.shoal.IShoalBoat;
@@ -65,8 +66,7 @@ public class TBoat extends Thread {
 				* stats.getId().getBoat());
 
 		Point joiningDestination = null;
-		BoatId joiningId = null;
-		BoatId helperId = null;
+		IBoatHelper mHelper = null;
 
 		while (!lifeEnd) {
 			while (!seasonEnd) {
@@ -91,17 +91,19 @@ public class TBoat extends Thread {
 						searchFish();
 					} else if (MESSAGE_TYPE.ChangeCourse == popMsg.getMsgType()) {
 						ChangeCourseMessage m = (ChangeCourseMessage) popMsg;
-						joiningId = m.getId();
 						joiningDestination = m.getNewDestination();
-						joinCompanion(joiningId, joiningDestination);
+						changeState(INTERNAL_STATE_BOAT.joining_a_companion);
+						//joinCompanion(joiningDestination);
 					} else if (MESSAGE_TYPE.ReturnToWharf == popMsg
 							.getMsgType()) {
 						changeState(INTERNAL_STATE_BOAT.returning_to_wharf);
 					} else if (MESSAGE_TYPE.HelpRequestServed == popMsg
 							.getMsgType()) {
 						HelpRequestServedMessage m = (HelpRequestServedMessage) popMsg;
-						helperId = m.getHelperId();
-						trackSchool(helperId);
+						mHelper = m.getHelper();
+						mHelper.changeCourse(stats.getPosition());
+						changeState(INTERNAL_STATE_BOAT.tracking_a_school);
+						//trackSchool(mHelper);
 					} else {
 						assert false; // cannot receive other messages in this
 										// state
@@ -111,19 +113,12 @@ public class TBoat extends Thread {
 				case tracking_a_school:
 					popMsg = monitor.popMsg(false);
 					if (MESSAGE_TYPE.NoAction == popMsg.getMsgType()) {
-						trackSchool(helperId);
-						// searchFish();
+						trackSchool(mHelper);
 					} else if (MESSAGE_TYPE.ChangeCourse == popMsg.getMsgType()) {
+						assert false; // for now
 						ChangeCourseMessage m = (ChangeCourseMessage) popMsg;
-						joiningId = m.getId();
 						joiningDestination = m.getNewDestination();
-						joinCompanion(joiningId, joiningDestination);
-					} else if (MESSAGE_TYPE.HelpRequestServed == popMsg
-							.getMsgType()) {
-						// assert false;
-						HelpRequestServedMessage m = (HelpRequestServedMessage) popMsg;
-						helperId = m.getHelperId();
-						trackSchool(helperId);
+						joinCompanion(joiningDestination);
 					} else if (MESSAGE_TYPE.ReturnToWharf == popMsg
 							.getMsgType()) {
 						changeState(INTERNAL_STATE_BOAT.returning_to_wharf);
@@ -135,12 +130,17 @@ public class TBoat extends Thread {
 				case joining_a_companion:
 					popMsg = monitor.popMsg(false);
 					if (MESSAGE_TYPE.NoAction == popMsg.getMsgType()) {
-						joinCompanion(joiningId, joiningDestination);
+						joinCompanion(joiningDestination);
 					} else if (MESSAGE_TYPE.ChangeCourse == popMsg.getMsgType()) {
 						ChangeCourseMessage m = (ChangeCourseMessage) popMsg;
-						joiningId = m.getId();
 						joiningDestination = m.getNewDestination();
-						joinCompanion(joiningId, joiningDestination);
+						joinCompanion(joiningDestination);
+					} else if (MESSAGE_TYPE.CastTheNet == popMsg.getMsgType()) {
+						CastTheNetMessage m = (CastTheNetMessage) popMsg;
+						castTheNet(m.getShoal());
+					} else if (MESSAGE_TYPE.ReleaseHelper == popMsg
+							.getMsgType()) {
+						changeState(INTERNAL_STATE_BOAT.searching_for_fish);
 					} else if (MESSAGE_TYPE.ReturnToWharf == popMsg
 							.getMsgType()) {
 						changeState(INTERNAL_STATE_BOAT.returning_to_wharf);
@@ -150,6 +150,10 @@ public class TBoat extends Thread {
 					break;
 
 				case returning_to_wharf:
+					popMsg = monitor.popMsg(false);
+					if (MESSAGE_TYPE.ReturnToWharf == popMsg.getMsgType()) {
+
+					}
 					returnToWharf();
 					break;
 
@@ -162,6 +166,16 @@ public class TBoat extends Thread {
 		}
 
 		System.out.println(stats.getId() + " dying");
+	}
+
+	/**
+	 * Casts the net on this shoal to catch it. The catch goes to the other guy.
+	 * I, the helper, automatically switch to searching_for_fish state.
+	 */
+	protected void castTheNet(IShoalBoat s) {
+		s.castTheNet();
+		s.retrieveTheNet();
+		changeState(INTERNAL_STATE_BOAT.searching_for_fish);
 	}
 
 	/**
@@ -183,8 +197,6 @@ public class TBoat extends Thread {
 
 		// if there is shoal, track!
 		if (shoal.size() > 0) {
-			// changeState(INTERNAL_STATE_BOAT.tracking_a_school);
-
 			// if it is in this cell, call a friend here, else somewhere else
 			if (shoal.contains(stats.getPosition())) {
 				follow = stats.getPosition();
@@ -201,48 +213,60 @@ public class TBoat extends Thread {
 	}
 
 	/**
-	 * Drive towards a point in order to help a companion. If arrived at the
-	 * point and conditions are gathered, fish!
 	 * 
-	 * @param id
-	 *            the id of the companion to join.
 	 * @param p
 	 *            the point the companion should be at.
 	 */
-	protected void joinCompanion(BoatId helping, Point p) {
+	protected void joinCompanion(Point p) {
 		changeState(INTERNAL_STATE_BOAT.joining_a_companion);
-
-		if (changePosition(p)) {
-			IShoalBoat b = ocean.companionDetected(stats.getId(), helping);
-			if (b != null) {
-				b.castTheNet();
-				b.retrieveTheNet();
-				changeState(INTERNAL_STATE_BOAT.searching_for_fish);
-			}
-		}
+		changePosition(p);
 	}
 
 	/**
 	 * Track a school knowing the id of the helper.
 	 * 
 	 * @param joining
-	 *            the Boat they are joining.
+	 *            the Boat that is joining.
 	 */
-	protected void trackSchool(BoatId helper) {
+	protected void trackSchool(IBoatHelper helper) {
 		changeState(INTERNAL_STATE_BOAT.tracking_a_school);
 
 		// attempt to join with companion right away. if not possible, track
 		// school around here and update the help request.
-		IShoalBoat b = ocean.companionDetected(stats.getId(), helper);
+		IShoalBoat b = ocean.companionDetected(stats.getId(), helper.getId());
 		if (b != null) {
+			helper.castTheNet(b);
 			b.castTheNet();
 			int trapped = b.retrieveTheNet();
 			changeCatch(stats.getCatch() + trapped);
 
 			diroper.fishingDone(stats.getId());
 			changeState(INTERNAL_STATE_BOAT.searching_for_fish);
-		} else {
-			searchFish();
+		} else { // search for fish
+			List<Point> shoal = ocean.getRadar(stats.getId());
+			Point follow;
+
+			// if there is shoal, track!
+			if (shoal.size() > 0) {
+				// if it is in this cell, call a friend here, else somewhere
+				// else
+				if (shoal.contains(stats.getPosition())) {
+					follow = stats.getPosition();
+				} else { // follow a random one
+					follow = shoal.get(rand.nextInt(shoal.size()));
+				}
+
+				// tell the helper again
+				if (changePosition(follow)) {
+					helper.changeCourse(follow);
+				}
+			} else {
+				helper.releaseHelper();
+				diroper.fishingDone(stats.getId());
+				changeState(INTERNAL_STATE_BOAT.searching_for_fish);
+				changePosition(new Point(rand.nextInt(ocean.getWidth()),
+						rand.nextInt(ocean.getHeight())));
+			}
 		}
 	}
 
@@ -250,8 +274,7 @@ public class TBoat extends Thread {
 	 * Moves this boat to wharf. This has an internal l
 	 */
 	protected void returnToWharf() {
-		stats.setPosition(ocean.tryMoveBoat(stats.getId(), ocean.getWharf()));
-		if (stats.getPosition().equals(ocean.getWharf())) {
+		if (changePosition(ocean.getWharf())) {
 			changeState(INTERNAL_STATE_BOAT.at_the_wharf);
 			diroper.backAtWharf(stats.getId(), stats.getCatch());
 		}

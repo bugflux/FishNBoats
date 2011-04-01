@@ -3,7 +3,7 @@
  */
 package pt.ua.sd.communication.toboat;
 
-import pt.ua.sd.boat.BoatId;
+import pt.ua.sd.boat.IBoatHelper;
 
 /**
  * @author André Prata
@@ -12,7 +12,7 @@ import pt.ua.sd.boat.BoatId;
  */
 public class HelpRequestServedMessage extends BoatMessage {
 
-	protected final BoatId helperId;
+	protected final IBoatHelper helper;
 
 	/**
 	 * construct a HelpRequestServed message with the id of the boat that is
@@ -20,15 +20,15 @@ public class HelpRequestServedMessage extends BoatMessage {
 	 * 
 	 * @param helperId
 	 */
-	public HelpRequestServedMessage(BoatId helperId) {
-		this.helperId = helperId;
+	public HelpRequestServedMessage(IBoatHelper helper) {
+		this.helper = helper;
 	}
 
 	/**
 	 * @return helperId
 	 */
-	public BoatId getHelperId() {
-		return helperId;
+	public IBoatHelper getHelper() {
+		return helper;
 	}
 
 	/**

@@ -4,31 +4,36 @@
 package pt.ua.sd.boat;
 
 import java.awt.Point;
+import java.util.LinkedList;
 
 import pt.ua.sd.communication.toboat.BoatMessage;
+import pt.ua.sd.communication.toboat.CastTheNetMessage;
 import pt.ua.sd.communication.toboat.ChangeCourseMessage;
 import pt.ua.sd.communication.toboat.HelpRequestServedMessage;
 import pt.ua.sd.communication.toboat.LifeEndMessage;
 import pt.ua.sd.communication.toboat.NoActionMessage;
+import pt.ua.sd.communication.toboat.ReleaseHelperMessage;
 import pt.ua.sd.communication.toboat.ReturnToWharfMessage;
 import pt.ua.sd.communication.toboat.SetToHighSeaMessage;
 import pt.ua.sd.log.MClock;
 import pt.ua.sd.log.MLog;
+import pt.ua.sd.shoal.IShoalBoat;
 
 /**
  * @author André Prata
  * @author Eriksson Monteiro
  * 
  */
-public class MBoat implements IBoat, IBoatDirOper {
+public class MBoat implements IBoat, IBoatDirOper, IBoatHelper {
 
 	protected final BoatId id;
 
-	protected BoatMessage message;
+	protected LinkedList<BoatMessage> messages = new LinkedList<BoatMessage>();
 	protected BoatMessage noAction = new NoActionMessage();
 	protected BoatMessage setToHighSea = new SetToHighSeaMessage();
 	protected BoatMessage returnToWharf = new ReturnToWharfMessage();
 	protected BoatMessage lifeEnd = new LifeEndMessage();
+	protected BoatMessage releaseHelper = new ReleaseHelperMessage();
 
 	protected final MClock clock = MClock.getClock();
 	protected final MLog log = MLog.getInstance();
@@ -51,7 +56,7 @@ public class MBoat implements IBoat, IBoatDirOper {
 		BoatMessage msg;
 
 		if (blocking) {
-			while (message == null) {
+			while (messages.isEmpty()) {
 				try {
 					wait();
 				} catch (InterruptedException e) {
@@ -59,9 +64,8 @@ public class MBoat implements IBoat, IBoatDirOper {
 				}
 			}
 		}
-
-		msg = message;
-		message = null;
+	
+		msg = messages.pollFirst();
 		if (msg == null) {
 			msg = noAction;
 		}
@@ -105,25 +109,24 @@ public class MBoat implements IBoat, IBoatDirOper {
 	 * @see IBoatDirOper.#changeCourse(BoatId, Point)
 	 */
 	@Override
-	public void changeCourse(BoatId id, Point p) {
+	public void changeCourse(Point p) {
 		int logTick;
 
 		synchronized (this) {
 			logTick = clock.getClockTick();
 
-			pushMsg(new ChangeCourseMessage(id, p));
+			pushMsg(new ChangeCourseMessage(p));
 		}
 
-		log.push("Change course", this.id.toString(),
-				"helping " + id.toString() + " at " + "(" + p.y + "," + p.x
-						+ ")", logTick);
+		log.push("Change course", id.toString(), "helping at " + "(" + p.y
+				+ "," + p.x + ")", logTick);
 	}
 
 	/**
 	 * @see IBoatDirOper.#helpRequestServed(BoatId)
 	 */
 	@Override
-	public void helpRequestServed(BoatId id) {
+	public void helpRequestServed(IBoatHelper id) {
 		int logTick;
 
 		synchronized (this) {
@@ -132,8 +135,39 @@ public class MBoat implements IBoat, IBoatDirOper {
 			pushMsg(new HelpRequestServedMessage(id));
 		}
 
-		log.push("Help request served", this.id.toString(),
-				"assigned " + id.toString(), logTick);
+		log.push("Help request served", this.id.toString(), "assigned", logTick);
+	}
+
+	/**
+	 * @see IBoatHelper.#releaseHelper()
+	 */
+	@Override
+	public void releaseHelper() {
+		int logTick;
+
+		synchronized (this) {
+			logTick = clock.getClockTick();
+
+			pushMsg(releaseHelper);
+		}
+
+		log.push("Release helper", id.toString(), "", logTick);
+	}
+
+	/**
+	 * @see IBoatHelper.#castTheNet(IShoalBoat)
+	 */
+	@Override
+	public void castTheNet(IShoalBoat s) {
+		int logTick;
+
+		synchronized (this) {
+			logTick = clock.getClockTick();
+
+			pushMsg(new CastTheNetMessage(s));
+		}
+
+		log.push("Cast the net", id.toString(), "to shoal", logTick);
 	}
 
 	/**
@@ -162,13 +196,8 @@ public class MBoat implements IBoat, IBoatDirOper {
 	}
 
 	protected void pushMsg(BoatMessage msg) {
-		if (message == null) {
-			message = msg;
-			notify();
-		} else if (msg.getMsgType().getPriority() <= message.getMsgType()
-				.getPriority()) {
-			message = msg;
-			notify();
-		}
+		messages.add(msg);
+
+		notify();
 	}
 }

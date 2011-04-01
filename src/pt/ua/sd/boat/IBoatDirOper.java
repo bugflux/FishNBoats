@@ -3,7 +3,6 @@
  */
 package pt.ua.sd.boat;
 
-import java.awt.Point;
 
 /**
  * @author André Prata
@@ -33,25 +32,25 @@ public interface IBoatDirOper {
 	 * Tell a boat that life has ended. :P
 	 */
 	public void lifeEnd();
-
-	/**
-	 * Order a boat to go to a specific point help a friend.
-	 * 
-	 * @param id
-	 *            the id of the boat it should help.
-	 * @param p
-	 *            the location where that boat should be.
-	 */
-	public void changeCourse(BoatId id, Point p);
+//
+//	/**
+//	 * Order a boat to go to a specific point help a friend.
+//	 * 
+//	 * @param id
+//	 *            the id of the boat it should help.
+//	 * @param p
+//	 *            the location where that boat should be.
+//	 */
+//	public void changeCourse(BoatId id, Point p);
 
 	/**
 	 * Inform a boat that its request for help has been served and that a boat
 	 * should be under way.
 	 * 
-	 * @param id
-	 *            the id of the assigned boat.
+	 * @param helper
+	 *            the monitor of the assigned boat.
 	 */
-	public void helpRequestServed(BoatId id);
+	public void helpRequestServed(IBoatHelper helper);
 
 	// /**
 	// * Order this boat to go to a specific point, to help a companion in a

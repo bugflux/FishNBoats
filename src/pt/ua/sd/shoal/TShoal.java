@@ -137,12 +137,12 @@ public class TShoal extends Thread {
 					escapeTheNet();
 
 					// BLOCK waiting for a retrieve the net
-//					popMsg = monitor.popMsg(true);
-//					if (MESSAGE_TYPE.RetrieveTheNet == popMsg.getMsgType()) {
-//						escapeTheNet();
-//					} else {
-//						assert false;
-//					}
+					// popMsg = monitor.popMsg(true);
+					// if (MESSAGE_TYPE.RetrieveTheNet == popMsg.getMsgType()) {
+					// escapeTheNet();
+					// } else {
+					// assert false;
+					// }
 					break;
 
 				default:
@@ -231,6 +231,8 @@ public class TShoal extends Thread {
 	 * Escape the net. The boats may or may not cast the net again.
 	 */
 	protected void escapeTheNet() {
+		// if the shoal changes to the feeding state before releasing the net,
+		// the fish will be detected sooner >P
 		changeState(INTERNAL_STATE_SCHOOL.feeding);
 	}
 
@@ -274,7 +276,7 @@ public class TShoal extends Thread {
 	 *            the state to set to.
 	 */
 	protected void changeState(INTERNAL_STATE_SCHOOL s) {
-		if(stats.getState() != s) {
+		if (stats.getState() != s) {
 			stats.setState(s);
 			ocean.setShoalState(stats.getId(), s);
 		}
