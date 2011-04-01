@@ -135,14 +135,6 @@ public class TShoal extends Thread {
 				case trapped_by_the_net:
 					trap(); // indicate how many fish were lost
 					escapeTheNet();
-
-					// BLOCK waiting for a retrieve the net
-					// popMsg = monitor.popMsg(true);
-					// if (MESSAGE_TYPE.RetrieveTheNet == popMsg.getMsgType()) {
-					// escapeTheNet();
-					// } else {
-					// assert false;
-					// }
 					break;
 
 				default:

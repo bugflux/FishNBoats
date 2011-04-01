@@ -144,6 +144,16 @@ public class TBoat extends Thread {
 					}
 					break;
 
+				case boat_full:
+					popMsg = monitor.popMsg(true); // block just because there's
+													// nothing else to do
+					if (MESSAGE_TYPE.ReturnToWharf == popMsg.getMsgType()) {
+						changeState(INTERNAL_STATE_BOAT.returning_to_wharf);
+					} else {
+						assert false;
+					}
+					break;
+
 				case returning_to_wharf:
 					popMsg = monitor.popMsg(false); // use this to clear
 													// extraneous messages

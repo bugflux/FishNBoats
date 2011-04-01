@@ -12,7 +12,7 @@ import java.awt.Point;
  */
 public class BoatStats {
 	public enum INTERNAL_STATE_BOAT {
-		at_the_wharf, searching_for_fish, tracking_a_school, joining_a_companion, returning_to_wharf
+		at_the_wharf, searching_for_fish, tracking_a_school, joining_a_companion, returning_to_wharf, boat_full
 	}
 
 	protected INTERNAL_STATE_BOAT state;
@@ -41,7 +41,7 @@ public class BoatStats {
 	}
 
 	/**
-	 * set the actua position of the boat
+	 * set the current position of the boat
 	 * 
 	 * @param x
 	 * @param y

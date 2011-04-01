@@ -8,6 +8,7 @@ import java.util.LinkedList;
 
 import pt.ua.sd.boat.BoatId;
 import pt.ua.sd.communication.todiroper.BackAtWharfMessage;
+import pt.ua.sd.communication.todiroper.BoatFullMessage;
 import pt.ua.sd.communication.todiroper.DirOperMessage;
 import pt.ua.sd.communication.todiroper.FishingDoneMessage;
 import pt.ua.sd.communication.todiroper.LifeEndMessage;
@@ -150,7 +151,22 @@ public class MDirOper implements IDirOper, IDirOperBoat, IDirOperShoal {
 
 		log.push("Request help", id.toString(), "help " + id + " at " + "(" + p.y + "," + p.x + ")", logTick);
 	}
-	
+
+	/**
+	 * @see IDirOperBoat.#boatFull(BoatId);
+	 */
+	@Override
+	public void boatFull(BoatId id) {
+		int logTick;
+
+		synchronized(this) {
+			logTick = clock.getClockTick();
+
+			pushMsg(new BoatFullMessage(id));
+		}
+		
+		log.push("Boat full", this.id.toString(), id.toString(), logTick);
+	}
 
 	/**
 	 * @see IDirOper.#clearMessages()

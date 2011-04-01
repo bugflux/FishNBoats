@@ -107,6 +107,9 @@ public class TDirOper extends Thread {
 				} else if (MESSAGE_TYPE.FishingDone == popMsg.getMsgType()) {
 					FishingDoneMessage m = (FishingDoneMessage) popMsg;
 					removeCompanion(m.getId());
+				} else if (MESSAGE_TYPE.SeasonEnd == popMsg.getMsgType()) {
+					// this message sometimes arrives. don't take it too
+					// seriously
 				} else {
 					assert false;
 				}
