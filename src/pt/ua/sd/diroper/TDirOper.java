@@ -104,6 +104,7 @@ public class TDirOper extends Thread {
 				} else if (MESSAGE_TYPE.LifeEnd == popMsg.getMsgType()) {
 					lifeEnding = true;
 				} else if (MESSAGE_TYPE.FishingDone == popMsg.getMsgType()) {
+					assert false;
 					// TODO shouldn't accept this case. or should i?
 					FishingDoneMessage m = (FishingDoneMessage) popMsg;
 					removeCompanion(m.getId());
@@ -208,11 +209,11 @@ public class TDirOper extends Thread {
 			boats[id.getBoat()].helpRequestServed(boats[id.getBoat() + 1].getId());
 			assignedCompanions.put(id, boats[id.getBoat() + 1].getId());
 		}
-//		else if(id.getBoat() == 1) {
-//			boats[0].changeCourse(id, p);
-//			boats[id.getBoat()].helpRequestServed(boats[0].getId());
-//			assignedCompanions.put(id, boats[0].getId());
-//		}
+		else if(id.getBoat() == 1) {
+			boats[0].changeCourse(id, p);
+			boats[id.getBoat()].helpRequestServed(boats[0].getId());
+			assignedCompanions.put(id, boats[0].getId());
+		}
 //		if (assignedCompanions.containsKey(id)) {
 //			boats[assignedCompanions.get(id).getBoat()].changeCourse(id, p);
 //			boats[id.getBoat()].helpRequestServed(assignedCompanions.get(id));

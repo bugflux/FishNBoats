@@ -97,8 +97,9 @@ public class TBoat extends Thread {
 					} else if (MESSAGE_TYPE.ReturnToWharf == popMsg
 							.getMsgType()) {
 						changeState(INTERNAL_STATE_BOAT.returning_to_wharf);
-					} else if(MESSAGE_TYPE.HelpRequestServed == popMsg.getMsgType()) {
-						HelpRequestServedMessage m = (HelpRequestServedMessage)popMsg;
+					} else if (MESSAGE_TYPE.HelpRequestServed == popMsg
+							.getMsgType()) {
+						HelpRequestServedMessage m = (HelpRequestServedMessage) popMsg;
 						helperId = m.getHelperId();
 						trackSchool(helperId);
 					} else {
@@ -111,7 +112,7 @@ public class TBoat extends Thread {
 					popMsg = monitor.popMsg(false);
 					if (MESSAGE_TYPE.NoAction == popMsg.getMsgType()) {
 						trackSchool(helperId);
-						//searchFish();
+						// searchFish();
 					} else if (MESSAGE_TYPE.ChangeCourse == popMsg.getMsgType()) {
 						ChangeCourseMessage m = (ChangeCourseMessage) popMsg;
 						joiningId = m.getId();
@@ -119,8 +120,8 @@ public class TBoat extends Thread {
 						joinCompanion(joiningId, joiningDestination);
 					} else if (MESSAGE_TYPE.HelpRequestServed == popMsg
 							.getMsgType()) {
-						//assert false;
-						HelpRequestServedMessage m = (HelpRequestServedMessage)popMsg;
+						// assert false;
+						HelpRequestServedMessage m = (HelpRequestServedMessage) popMsg;
 						helperId = m.getHelperId();
 						trackSchool(helperId);
 					} else if (MESSAGE_TYPE.ReturnToWharf == popMsg
@@ -182,7 +183,7 @@ public class TBoat extends Thread {
 
 		// if there is shoal, track!
 		if (shoal.size() > 0) {
-			//changeState(INTERNAL_STATE_BOAT.tracking_a_school);
+			// changeState(INTERNAL_STATE_BOAT.tracking_a_school);
 
 			// if it is in this cell, call a friend here, else somewhere else
 			if (shoal.contains(stats.getPosition())) {
@@ -209,13 +210,11 @@ public class TBoat extends Thread {
 	 *            the point the companion should be at.
 	 */
 	protected void joinCompanion(BoatId helping, Point p) {
-		if (stats.getState() != INTERNAL_STATE_BOAT.joining_a_companion) {
-			stats.setState(INTERNAL_STATE_BOAT.joining_a_companion);
-		}
+		changeState(INTERNAL_STATE_BOAT.joining_a_companion);
 
 		if (changePosition(p)) {
 			IShoalBoat b = ocean.companionDetected(stats.getId(), helping);
-			if(b != null) {
+			if (b != null) {
 				b.castTheNet();
 				b.retrieveTheNet();
 				changeState(INTERNAL_STATE_BOAT.searching_for_fish);
@@ -235,15 +234,14 @@ public class TBoat extends Thread {
 		// attempt to join with companion right away. if not possible, track
 		// school around here and update the help request.
 		IShoalBoat b = ocean.companionDetected(stats.getId(), helper);
-		if(b != null) {
+		if (b != null) {
 			b.castTheNet();
 			int trapped = b.retrieveTheNet();
 			changeCatch(stats.getCatch() + trapped);
 
 			diroper.fishingDone(stats.getId());
 			changeState(INTERNAL_STATE_BOAT.searching_for_fish);
-		}
-		else {
+		} else {
 			searchFish();
 		}
 	}
@@ -285,7 +283,7 @@ public class TBoat extends Thread {
 			ocean.setBoatState(stats.getId(), stats.getState());
 		}
 	}
-	
+
 	protected void changeCatch(int store) {
 		stats.setCatch(store);
 	}
