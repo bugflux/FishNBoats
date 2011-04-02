@@ -79,6 +79,14 @@ public interface IOceanBoat {
 	public void setBoatState(BoatId id, BoatStats.INTERNAL_STATE_BOAT state);
 
 	/**
+	 * Set the catch storage for a boat.
+	 *  
+	 * @param id the id of the boat.
+	 * @param stored the (total) amount stored.
+	 */
+	public void setBoatCatch(BoatId id, int stored);
+
+	/**
 	 * Get the position of the wharf associated with this ocean.
 	 * 
 	 * @return the point that indicates the wharf location.

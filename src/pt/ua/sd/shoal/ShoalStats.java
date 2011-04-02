@@ -127,4 +127,9 @@ public class ShoalStats {
 		return getId() + ", State " + state + ", Position (" + location.y + ","
 				+ location.x + "), Size " + size;
 	}
+	
+	@Override
+	public Object clone() {
+		return new ShoalStats(id, state, (Point)location.clone(), size, minDetectable);
+	}
 }

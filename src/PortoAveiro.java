@@ -31,7 +31,7 @@ public class PortoAveiro {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		final int nboats = 4, ncompanies = 2, nshoals = 5;
+		final int nboats = 5, ncompanies = 2, nshoals = 5;
 		final int feedingDuration = 3 * 60 * 1000, spawningDuration = (int) (2 * 1000), cycles = 3;
 		final int boatPeriod = 20, shoalPeriod = 2 * boatPeriod, diroperSleepOnWait = 200;
 		final int height = 11, width = 11;
@@ -40,8 +40,8 @@ public class PortoAveiro {
 		final int boatCapacity = 1000;
 		final int initialFish = 2000;
 		final int shoalSize = initialFish;
-		final int growing_factor = 2;//5;
-		final double eco_system = 0.0001;//0.001;
+		final int growing_factor = 2;// 5;
+		final double eco_system = 0.0001;// 0.001;
 		final double catchPercentage = 0.3;
 		final int minShoalDetectable = 100;
 		final int nCampaign = 3;
@@ -78,9 +78,9 @@ public class PortoAveiro {
 					INTERNAL_STATE_SCHOOL.spawning, new Point(reproducingZone),
 					shoalSize, minShoalDetectable);
 			mShoals[r] = new MShoal(sShoals[r].getId(), ncompanies);
-			tShoals[r] = new TShoal(sShoals[r], shoalPeriod, seasonMoves,
-					nCampaign, mShoals[r], oceano, mDirOpers, growing_factor,
-					eco_system, catchPercentage);
+			tShoals[r] = new TShoal((ShoalStats) sShoals[r].clone(),
+					shoalPeriod, seasonMoves, nCampaign, mShoals[r], oceano,
+					mDirOpers, growing_factor, eco_system, catchPercentage);
 			oceano.addShoal(sShoals[r], mShoals[r], reproducingZone);
 		}
 
@@ -90,15 +90,15 @@ public class PortoAveiro {
 					new DirOperId(r));
 			mDirOpers[r] = new MDirOper(sDirOpers[r].getId(), nshoals, nboats);
 			tDirOpers[r] = new TDirOper(logger, oceano, mDirOpers[r],
-					mBoats[r], mShoals, sDirOpers[r]);
+					mBoats[r], mShoals, (DirOperStats) sDirOpers[r].clone());
 
 			for (int s = 0; s < nboats; s++) {
 				sBoats[r][s] = new BoatStats(new BoatId(r, s),
 						INTERNAL_STATE_BOAT.at_the_wharf, new Point(wharf),
 						boatCapacity);
 				mBoats[r][s] = new MBoat(sBoats[r][s].getId());
-				tBoats[r][s] = new TBoat(sBoats[r][s], boatPeriod,
-						mDirOpers[r], oceano, mBoats[r][s]);
+				tBoats[r][s] = new TBoat((BoatStats) sBoats[r][s].clone(),
+						boatPeriod, mDirOpers[r], oceano, mBoats[r][s]);
 				oceano.addBoat(sBoats[r][s], wharf);
 			}
 		}
@@ -138,7 +138,7 @@ public class PortoAveiro {
 		} catch (InterruptedException e) {
 			throw new RuntimeException(e);
 		}
-		
+
 		System.out.println("All joined");
 	}
 }

@@ -11,15 +11,18 @@ package pt.ua.sd.diroper;
 public class DirOperStats {
 
 	public enum INTERNAL_STATE_DIROPER {
-		starting_a_campaign, organising_the_catch, ending_a_campaign, waiting_for_boats
+		starting_a_campaign, organising_the_catch, ending_a_campaign, waiting_for_boats, waiting_for_spawning
 	}
+
 	protected INTERNAL_STATE_DIROPER state;
 	protected final DirOperId id;
 
 	/**
-	 * Instantiate a new DirOperStats object with an initial state and a DirOper id.
+	 * Instantiate a new DirOperStats object with an initial state and a DirOper
+	 * id.
 	 * 
-	 * @param state The initial state.
+	 * @param state
+	 *            The initial state.
 	 */
 	public DirOperStats(INTERNAL_STATE_DIROPER state, DirOperId id) {
 		this.state = state;
@@ -33,13 +36,18 @@ public class DirOperStats {
 	public INTERNAL_STATE_DIROPER getState() {
 		return state;
 	}
-	
+
 	public DirOperId getId() {
 		return id;
 	}
-	
+
 	@Override
 	public String toString() {
-		return id + ", State " + state; 
+		return id + ", State " + state;
+	}
+
+	@Override
+	public Object clone() {
+		return new DirOperStats(state, id);
 	}
 }

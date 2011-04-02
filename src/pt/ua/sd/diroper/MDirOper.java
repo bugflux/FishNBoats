@@ -35,6 +35,7 @@ public class MDirOper implements IDirOper, IDirOperBoat, IDirOperShoal {
 	protected MLog log = MLog.getInstance();
 
 	protected int n_shoals_ended_season = 0;
+	protected int n_shoals_ended_life = 0;
 
 	/**
 	 * Construct a new DirOper monitor. This is used to send messages to the
@@ -69,7 +70,6 @@ public class MDirOper implements IDirOper, IDirOperBoat, IDirOperShoal {
 		return messages.poll();
 	}
 
-	
 	/**
 	 * @see IDirOperBoat.#backAtWharf(BoatId, int)
 	 */
@@ -77,25 +77,28 @@ public class MDirOper implements IDirOper, IDirOperBoat, IDirOperShoal {
 	public void backAtWharf(BoatId id, int stored) {
 		int logTick;
 
-		synchronized(this) {
+		synchronized (this) {
 			logTick = clock.getClockTick();
 
 			pushMsg(new BackAtWharfMessage(id, stored));
 		}
-		
+
 		log.push("Back at wharf", id.toString(), "catched " + stored, logTick);
 	}
-	
+
+	/**
+	 * @see IDirOperBoat.#fishingDone(BoatId)
+	 */
 	@Override
 	public void fishingDone(BoatId id) {
 		int logTick;
 
-		synchronized(this) {
+		synchronized (this) {
 			logTick = clock.getClockTick();
 
 			pushMsg(new FishingDoneMessage(id));
 		}
-		
+
 		log.push("Fishing done", id.toString(), "", logTick);
 	}
 
@@ -105,19 +108,22 @@ public class MDirOper implements IDirOper, IDirOperBoat, IDirOperShoal {
 	@Override
 	public void endSeason() {
 		int logTick;
+		String logMessage;
 
 		synchronized (this) {
 			logTick = clock.getClockTick();
+			logMessage = (n_shoals_ended_season + 1) + " of " + nshoals;
 
 			n_shoals_ended_season++;
 
 			if (n_shoals_ended_season == nshoals) {
+				logMessage += " (notified)";
 				n_shoals_ended_season = 0;
 				pushMsg(seasonEnd);
 			}
 		}
-		
-		log.push("Season end", id.toString(), "", logTick);
+
+		log.push("Season end", id.toString(), logMessage, logTick);
 	}
 
 	/**
@@ -126,14 +132,22 @@ public class MDirOper implements IDirOper, IDirOperBoat, IDirOperShoal {
 	@Override
 	public void endLife() {
 		int logTick;
+		String logMessage;
 
 		synchronized (this) {
 			logTick = clock.getClockTick();
+			logMessage = (n_shoals_ended_life + 1) + " of " + nshoals;
 
-			pushMsg(lifeEnd);
+			n_shoals_ended_life++;
+			if (n_shoals_ended_life == nshoals) {
+				logMessage += " (notified)";
+
+				n_shoals_ended_life = 0;
+				pushMsg(lifeEnd);
+			}
 		}
-		
-		log.push("Life end", id.toString(), "", logTick);
+
+		log.push("Life end", id.toString(), logMessage, logTick);
 	}
 
 	/**
@@ -143,13 +157,14 @@ public class MDirOper implements IDirOper, IDirOperBoat, IDirOperShoal {
 	public void requestHelp(BoatId id, Point p) {
 		int logTick;
 
-		synchronized(this) {
+		synchronized (this) {
 			logTick = clock.getClockTick();
 
 			pushMsg(new RequestHelpMessage(id, p));
 		}
 
-		log.push("Request help", id.toString(), "help " + id + " at " + "(" + p.y + "," + p.x + ")", logTick);
+		log.push("Request help", id.toString(), "help " + id + " at " + "("
+				+ p.y + "," + p.x + ")", logTick);
 	}
 
 	/**
@@ -159,12 +174,12 @@ public class MDirOper implements IDirOper, IDirOperBoat, IDirOperShoal {
 	public void boatFull(BoatId id) {
 		int logTick;
 
-		synchronized(this) {
+		synchronized (this) {
 			logTick = clock.getClockTick();
 
 			pushMsg(new BoatFullMessage(id));
 		}
-		
+
 		log.push("Boat full", this.id.toString(), id.toString(), logTick);
 	}
 
@@ -173,7 +188,7 @@ public class MDirOper implements IDirOper, IDirOperBoat, IDirOperShoal {
 	 */
 	@Override
 	public void clearMessages() {
-		synchronized(this) {
+		synchronized (this) {
 			messages.clear();
 		}
 	}
@@ -184,6 +199,7 @@ public class MDirOper implements IDirOper, IDirOperBoat, IDirOperShoal {
 
 	protected void pushMsg(DirOperMessage m) {
 		messages.push(m);
+
 		notify();
 	}
 }

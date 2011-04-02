@@ -170,4 +170,9 @@ public class BoatStats {
 		return getId() + ", State " + state + ", Position (" + location.y + ","
 				+ location.x + "), Catch " + stored + ", Capacity " + capacity;
 	}
+	
+	@Override
+	public Object clone() {
+		return new BoatStats(id, state, (Point)location.clone(), capacity);
+	}
 }

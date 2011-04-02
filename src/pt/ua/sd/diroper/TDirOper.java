@@ -5,13 +5,12 @@ package pt.ua.sd.diroper;
 
 import java.awt.Point;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
 
 import pt.ua.sd.boat.BoatId;
 import pt.ua.sd.boat.IBoatDirOper;
 import pt.ua.sd.boat.IBoatHelper;
 import pt.ua.sd.communication.todiroper.BackAtWharfMessage;
+import pt.ua.sd.communication.todiroper.BoatFullMessage;
 import pt.ua.sd.communication.todiroper.DirOperMessage;
 import pt.ua.sd.communication.todiroper.DirOperMessage.MESSAGE_TYPE;
 import pt.ua.sd.communication.todiroper.FishingDoneMessage;
@@ -36,7 +35,8 @@ public class TDirOper extends Thread {
 
 	protected final MLog logger;
 
-	protected final Set<BoatId> boatsAtWharf = new HashSet<BoatId>();
+	// record the boats that arrived to wharf. true: confirmed, false: underway
+	protected final HashMap<BoatId, Boolean> boatsAtWharf = new HashMap<BoatId, Boolean>();
 	protected int totalCatch = 0;
 
 	protected final HashMap<BoatId, BoatId> assignedCompanions = new HashMap<BoatId, BoatId>();
@@ -66,8 +66,8 @@ public class TDirOper extends Thread {
 				// feeding zone
 				startCampaign();
 				break;
+
 			case organising_the_catch:
-				// TODO
 				popMsg = monitor.popMsg();
 				if (MESSAGE_TYPE.SeasonEnd == popMsg.getMsgType()) {
 					seasonEnd();
@@ -77,14 +77,48 @@ public class TDirOper extends Thread {
 				} else if (MESSAGE_TYPE.BackAtWharf == popMsg.getMsgType()) {
 					BackAtWharfMessage m = (BackAtWharfMessage) popMsg;
 					newBoatAtWharf(m.getBoatId(), m.getStored());
+					if (boatsConfirmedAtWharf() == boats.length) {
+						changeState(INTERNAL_STATE_DIROPER.waiting_for_spawning);
+					}
 				} else if (MESSAGE_TYPE.RequestHelp == popMsg.getMsgType()) {
 					RequestHelpMessage m = (RequestHelpMessage) popMsg;
 					assignCompanion(m.getBoatId(), m.getLocation());
 				} else if (MESSAGE_TYPE.FishingDone == popMsg.getMsgType()) {
 					FishingDoneMessage m = (FishingDoneMessage) popMsg;
 					removeCompanion(m.getId());
+				} else if (MESSAGE_TYPE.BoatFull == popMsg.getMsgType()) {
+					BoatFullMessage m = (BoatFullMessage) popMsg;
+					setBoatToWharf(m.getId());
 				} else {
 					assert false; // not allowed
+				}
+				break;
+
+			case waiting_for_boats:
+				popMsg = monitor.popMsg();
+				if (MESSAGE_TYPE.BackAtWharf == popMsg.getMsgType()) {
+					BackAtWharfMessage m = (BackAtWharfMessage) popMsg;
+					newBoatAtWharf(m.getBoatId(), m.getStored());
+					if (boatsConfirmedAtWharf() == boats.length) {
+						changeState(INTERNAL_STATE_DIROPER.ending_a_campaign);
+					}
+				} else if (MESSAGE_TYPE.LifeEnd == popMsg.getMsgType()) {
+					lifeEnding = true;
+				} else if (MESSAGE_TYPE.FishingDone == popMsg.getMsgType()) {
+					FishingDoneMessage m = (FishingDoneMessage) popMsg;
+					removeCompanion(m.getId());
+				} else {
+					assert false;
+				}
+
+				break;
+
+			case waiting_for_spawning:
+				popMsg = monitor.popMsg();
+				if (MESSAGE_TYPE.SeasonEnd == popMsg.getMsgType()) {
+					changeState(INTERNAL_STATE_DIROPER.ending_a_campaign);
+				} else {
+					assert false;
 				}
 				break;
 
@@ -97,31 +131,12 @@ public class TDirOper extends Thread {
 				}
 				break;
 
-			case waiting_for_boats:
-				popMsg = monitor.popMsg();
-				if (MESSAGE_TYPE.BackAtWharf == popMsg.getMsgType()) {
-					BackAtWharfMessage m = (BackAtWharfMessage) popMsg;
-					newBoatAtWharf(m.getBoatId(), m.getStored());
-				} else if (MESSAGE_TYPE.LifeEnd == popMsg.getMsgType()) {
-					lifeEnding = true;
-				} else if (MESSAGE_TYPE.FishingDone == popMsg.getMsgType()) {
-					FishingDoneMessage m = (FishingDoneMessage) popMsg;
-					removeCompanion(m.getId());
-				} else if (MESSAGE_TYPE.SeasonEnd == popMsg.getMsgType()) {
-					// this message sometimes arrives. don't take it too
-					// seriously
-				} else {
-					assert false;
-				}
-
-				break;
-
 			default:
 				assert false;
 			}
 		}
 
-		System.out.println(stats.getId() + " dying");
+		System.out.println(stats.getId() + " dying. Total catch: " + totalCatch);
 	}
 
 	/**
@@ -129,8 +144,6 @@ public class TDirOper extends Thread {
 	 * the boatsAtWharf count.
 	 */
 	protected void startCampaign() {
-		boatsAtWharf.clear();
-
 		for (IShoalDirOper s : shoals) {
 			s.seasonBegin();
 		}
@@ -151,25 +164,29 @@ public class TDirOper extends Thread {
 	 */
 	protected void newBoatAtWharf(BoatId id, int stored) {
 		totalCatch += stored;
-		boatsAtWharf.add(id);
+		boatsAtWharf.put(id, true);
 
-		if (boatsAtWharf.size() == boats.length) {
-			changeState(INTERNAL_STATE_DIROPER.ending_a_campaign);
-		} else {
-			// if there's only one at high sea, call him. if it's the last one,
-			// wait
-			// for a seasonEnd.
-			// if (boatsAtWharf.size() == boats.length - 1) {
-			// for (IBoatDirOper b : boats) {
-			// if (!boatsAtWharf.contains(b)) {
-			// b.returnToWharf();
-			// boatsAtWharf.add(b.getId());
-			// break; // since there's only one left!
-			// }
-			// }
-			// }
+		// if (boatsConfirmedAtWharf() == boats.length - 1) {
+		// setBoatsToWharf();
+		// }
+	}
+
+	/**
+	 * Check if all boats are confirmed to have arrived at wharf.
+	 * 
+	 * @return true if all boats this DirOper manages have arrived, false
+	 *         otherwise.
+	 */
+	private int boatsConfirmedAtWharf() {
+		int r = 0;
+
+		for (Boolean b : boatsAtWharf.values()) {
+			if (b) {
+				r++;
+			}
 		}
 
+		return r;
 	}
 
 	/**
@@ -177,9 +194,24 @@ public class TDirOper extends Thread {
 	 */
 	protected void setBoatsToWharf() {
 		for (IBoatDirOper b : boats) {
-			if (!boatsAtWharf.contains(b)) {
+			if (!boatsAtWharf.containsKey(b)) {
 				b.returnToWharf();
+				boatsAtWharf.put(b.getId(), false);
 			}
+		}
+	}
+
+	/**
+	 * Set a single boat to wharf. Usually done when it's full.
+	 * 
+	 * @param id
+	 *            the id of the boat to set to wharf.
+	 */
+	protected void setBoatToWharf(BoatId id) {
+		if (!assignedCompanions.containsValue(id)
+				&& !boatsAtWharf.containsKey(id)) {
+			boats[id.getBoat()].returnToWharf();
+			boatsAtWharf.put(id, false);
 		}
 	}
 
@@ -206,13 +238,15 @@ public class TDirOper extends Thread {
 	 */
 	protected void assignCompanion(BoatId id, Point p) {
 		// don't hand help to boats that are expected to help others
+		// also if it's arriving at wharf, let him be!
 		if (!assignedCompanions.containsKey(id)
 				&& !assignedCompanions.containsValue(id)) {
 			// don't hand helpers that are already helping others
 			for (IBoatDirOper helper : boats) {
 				if (!helper.getId().equals(id)
 						&& !assignedCompanions.containsKey(helper.getId())
-						&& !assignedCompanions.containsValue(helper.getId())) {
+						&& !assignedCompanions.containsValue(helper.getId())
+						&& !boatsAtWharf.containsKey(helper.getId())) {
 					boats[id.getBoat()]
 							.helpRequestServed((IBoatHelper) boats[helper
 									.getId().getBoat()]);
@@ -250,6 +284,8 @@ public class TDirOper extends Thread {
 	protected void endCampaign() {
 		changeState(INTERNAL_STATE_DIROPER.starting_a_campaign);
 		monitor.clearMessages();
+		boatsAtWharf.clear();
+		assignedCompanions.clear();
 	}
 
 	/**

@@ -79,6 +79,9 @@ public class TBoat extends Thread {
 					} else if (MESSAGE_TYPE.LifeEnd == popMsg.getMsgType()) {
 						seasonEnd = true;
 						lifeEnd = true;
+					} else if (MESSAGE_TYPE.ReturnToWharf == popMsg
+							.getMsgType()) {
+						// intentionally do nothing. look at boat_full comments.
 					} else {
 						assert false; // cannot receive other messages in this
 										// state
@@ -93,7 +96,6 @@ public class TBoat extends Thread {
 						ChangeCourseMessage m = (ChangeCourseMessage) popMsg;
 						joiningDestination = m.getNewDestination();
 						changeState(INTERNAL_STATE_BOAT.joining_a_companion);
-						// joinCompanion(joiningDestination);
 					} else if (MESSAGE_TYPE.ReturnToWharf == popMsg
 							.getMsgType()) {
 						changeState(INTERNAL_STATE_BOAT.returning_to_wharf);
@@ -103,7 +105,6 @@ public class TBoat extends Thread {
 						mHelper = m.getHelper();
 						mHelper.changeCourse(stats.getPosition());
 						changeState(INTERNAL_STATE_BOAT.tracking_a_school);
-						// trackSchool(mHelper);
 					} else {
 						assert false; // cannot receive other messages in this
 										// state
@@ -114,11 +115,11 @@ public class TBoat extends Thread {
 					popMsg = monitor.popMsg(false);
 					if (MESSAGE_TYPE.NoAction == popMsg.getMsgType()) {
 						trackSchool(mHelper);
-					} else if (MESSAGE_TYPE.ReturnToWharf == popMsg
-							.getMsgType()) {
-						changeState(INTERNAL_STATE_BOAT.returning_to_wharf);
-					} else {
-						assert false;
+						// } else if (MESSAGE_TYPE.ReturnToWharf == popMsg
+						// .getMsgType()) {
+						// changeState(INTERNAL_STATE_BOAT.returning_to_wharf);
+						// } else {
+						// assert false;
 					}
 					break;
 
@@ -145,10 +146,18 @@ public class TBoat extends Thread {
 					break;
 
 				case boat_full:
+					diroper.boatFull(stats.getId()); // this may provoke that a
+														// last returnToWharf
+														// message is sent, even
+														// when at wharf!
 					popMsg = monitor.popMsg(true); // block just because there's
 													// nothing else to do
 					if (MESSAGE_TYPE.ReturnToWharf == popMsg.getMsgType()) {
 						changeState(INTERNAL_STATE_BOAT.returning_to_wharf);
+					} else if (MESSAGE_TYPE.ChangeCourse == popMsg.getMsgType()) {
+						ChangeCourseMessage m = (ChangeCourseMessage) popMsg;
+						joiningDestination = m.getNewDestination();
+						changeState(INTERNAL_STATE_BOAT.joining_a_companion);
 					} else {
 						assert false;
 					}
@@ -178,7 +187,7 @@ public class TBoat extends Thread {
 	protected void castTheNet(IShoalBoat s) {
 		s.castTheNet();
 		s.retrieveTheNet();
-		changeState(INTERNAL_STATE_BOAT.searching_for_fish);
+		conditionalResetState();
 	}
 
 	/**
@@ -244,14 +253,14 @@ public class TBoat extends Thread {
 			changeCatch(stats.getCatch() + trapped);
 
 			diroper.fishingDone(stats.getId());
-			changeState(INTERNAL_STATE_BOAT.searching_for_fish);
+			conditionalResetState();
 		} else { // search for fish
 			List<Point> shoal = ocean.getRadar(stats.getId());
 			Point follow;
 
 			// if there is shoal, track!
 			if (shoal.size() > 0) {
-				// if it is in this cell, call a friend here, else somewhere
+				// if it is in this cell, call a friend here, if not, somewhere
 				// else
 				if (shoal.contains(stats.getPosition())) {
 					follow = stats.getPosition();
@@ -266,7 +275,7 @@ public class TBoat extends Thread {
 			} else {
 				helper.releaseHelper();
 				diroper.fishingDone(stats.getId());
-				changeState(INTERNAL_STATE_BOAT.searching_for_fish);
+				conditionalResetState();
 				changePosition(new Point(rand.nextInt(ocean.getWidth()),
 						rand.nextInt(ocean.getHeight())));
 			}
@@ -280,7 +289,20 @@ public class TBoat extends Thread {
 		if (changePosition(ocean.getWharf())) {
 			changeState(INTERNAL_STATE_BOAT.at_the_wharf);
 			diroper.backAtWharf(stats.getId(), stats.getCatch());
+			changeCatch(0);
 		}
+	}
+
+	/**
+	 * This resets the state after main operations. If the boat is full, the
+	 * state is set to boat_full. If not, searching_for_fish.
+	 */
+	protected void conditionalResetState() {
+//		if (stats.isFull()) {
+//			changeState(INTERNAL_STATE_BOAT.boat_full);
+//		} else {
+			changeState(INTERNAL_STATE_BOAT.searching_for_fish);
+//		}
 	}
 
 	/**
@@ -310,8 +332,17 @@ public class TBoat extends Thread {
 		}
 	}
 
+	/**
+	 * Set the current boat catch, both locally and on the ocean.
+	 * 
+	 * @param store
+	 *            the current catch count.
+	 */
 	protected void changeCatch(int store) {
-		stats.setCatch(store);
+		if (stats.getCatch() != store) {
+			stats.setCatch(store);
+			ocean.setBoatCatch(stats.getId(), stats.getCatch());
+		}
 	}
 
 	/**

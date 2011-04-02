@@ -182,20 +182,39 @@ public class MOcean implements IOceanBoat, IOceanShoal, IOceanDirOper {
 	public void setBoatState(BoatId id, BoatStats.INTERNAL_STATE_BOAT state) {
 		int logTick;
 		String logMessage;
-		String logPrevious;
 
 		synchronized (this) {
 			assert boatsPosition.containsKey(id);
-			logPrevious = boatsPosition.get(id).getState().toString();
+			logMessage = boatsPosition.get(id).getState().toString() + " > ";
 
 			boatsPosition.get(id).setState(state);
 
 			logTick = clock.getClockTick();
-			logMessage = boatsPosition.get(id).getState().toString();
+			logMessage += boatsPosition.get(id).getState().toString();
 		}
 
-		log.push("Set state", id.toString(), logPrevious + " > " + logMessage,
-				logTick);
+		log.push("Set state", id.toString(), logMessage, logTick);
+	}
+
+	/**
+	 * @see IOceanBoat.#setBoatCatch(BoatId, int)
+	 */
+	@Override
+	public void setBoatCatch(BoatId id, int stored) {
+		int logTick;
+		String logMessage;
+
+
+		synchronized (this) {
+			logTick = clock.getClockTick();
+			logMessage = boatsPosition.get(id).getCatch() + " > ";
+			
+			boatsPosition.get(id).setCatch(stored);
+			
+			logMessage += stored;
+		}
+		
+		log.push("Set catch", id.toString(), logMessage, logTick);
 	}
 
 	/**
@@ -210,20 +229,18 @@ public class MOcean implements IOceanBoat, IOceanShoal, IOceanDirOper {
 	public void setShoalState(ShoalId id, ShoalStats.INTERNAL_STATE_SCHOOL state) {
 		int logTick;
 		String logMessage;
-		String logPrevious;
 
 		synchronized (this) {
 			assert shoalsPosition.containsKey(id);
-			logPrevious = shoalsPosition.get(id).getState().toString();
+			logMessage = shoalsPosition.get(id).getState().toString() + " > ";
 
 			shoalsPosition.get(id).setState(state);
 
 			logTick = clock.getClockTick();
-			logMessage = shoalsPosition.get(id).getState().toString();
+			logMessage += shoalsPosition.get(id).getState().toString();
 		}
 
-		log.push("Set state", id.toString(), logPrevious + " > " + logMessage,
-				logTick);
+		log.push("Set state", id.toString(), logMessage, logTick);
 	}
 
 	/**
@@ -238,21 +255,19 @@ public class MOcean implements IOceanBoat, IOceanShoal, IOceanDirOper {
 	public void setShoalSize(ShoalId id, int size) {
 		int logTick;
 		String logMessage;
-		String logPrevious;
 
 		synchronized (this) {
 			assert size > 0;
 			assert shoalsPosition.containsKey(id);
-			logPrevious = "" + shoalsPosition.get(id).getSize();
+			logMessage = shoalsPosition.get(id).getSize() + " > ";
 
 			shoalsPosition.get(id).setSize(size);
 
 			logTick = clock.getClockTick();
-			logMessage = "" + shoalsPosition.get(id).getSize();
+			logMessage += shoalsPosition.get(id).getSize();
 		}
 
-		log.push("Set size", id.toString(), logPrevious + " > " + logMessage,
-				logTick);
+		log.push("Set size", id.toString(), logMessage, logTick);
 	}
 
 	/**
@@ -284,7 +299,6 @@ public class MOcean implements IOceanBoat, IOceanShoal, IOceanDirOper {
 	public Point tryMoveBoat(BoatId id, Point p) {
 		int logTick;
 		String logMessage;
-		String logPrevious;
 
 		Point r;
 		Point c;
@@ -296,7 +310,7 @@ public class MOcean implements IOceanBoat, IOceanShoal, IOceanDirOper {
 			c = new Point(boatsPosition.get(id).getPosition());
 			r = c;
 
-			logPrevious = "(" + c.y + "," + c.x + ")";
+			logMessage = "(" + c.y + "," + c.x + ") > ";
 
 			// if it is in the desired position already
 			if (c.equals(p)) {
@@ -401,15 +415,14 @@ public class MOcean implements IOceanBoat, IOceanShoal, IOceanDirOper {
 			}
 
 			logTick = clock.getClockTick();
-			logMessage = "(" + r.y + "," + r.x + ")";
+			logMessage += "(" + r.y + "," + r.x + ")";
 		}
 
 		if (!r.equals(c)) {
 			gmoveBoat(id, c, r);
 		}
 
-		log.push("Move", id.toString(), logPrevious + " > " + logMessage,
-				logTick);
+		log.push("Move", id.toString(), logMessage, logTick);
 
 		return r;
 	}
@@ -621,7 +634,6 @@ public class MOcean implements IOceanBoat, IOceanShoal, IOceanDirOper {
 	public Point tryMoveShoal(ShoalId id, Point p) {
 		int logTick;
 		String logMessage;
-		String logPrevious;
 
 		Point c, r;
 
@@ -632,10 +644,10 @@ public class MOcean implements IOceanBoat, IOceanShoal, IOceanDirOper {
 			c = new Point(shoalsPosition.get(id).getPosition());
 			r = c;
 
-			logPrevious = "(" + c.y + "," + c.x + ")";
+			logMessage = "(" + c.y + "," + c.x + ") > ";
 
 			boolean canMove = true;
-			if(shoalsPosition.get(id).isDetectable()) {
+			if (shoalsPosition.get(id).isDetectable()) {
 				int companyCounters[] = new int[ncompanies];
 				if (shoalsPosition.get(id).isDetectable()) {
 					for (BoatId b : map[c.y][c.x].getBoats()) {
@@ -750,15 +762,14 @@ public class MOcean implements IOceanBoat, IOceanShoal, IOceanDirOper {
 			}
 
 			logTick = clock.getClockTick();
-			logMessage = "(" + r.y + "," + r.x + ")";
+			logMessage += "(" + r.y + "," + r.x + ")";
 		}
 
 		if (!r.equals(c)) {
 			gmoveShoal(id, c, r);
 		}
 
-		log.push("Move", id.toString(), logPrevious + " > " + logMessage,
-				logTick);
+		log.push("Move", id.toString(), logMessage, logTick);
 
 		return r;
 	}
