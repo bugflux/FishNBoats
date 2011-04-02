@@ -118,8 +118,8 @@ public class TBoat extends Thread {
 						// } else if (MESSAGE_TYPE.ReturnToWharf == popMsg
 						// .getMsgType()) {
 						// changeState(INTERNAL_STATE_BOAT.returning_to_wharf);
-						// } else {
-						// assert false;
+					} else {
+						assert false;
 					}
 					break;
 
@@ -298,11 +298,11 @@ public class TBoat extends Thread {
 	 * state is set to boat_full. If not, searching_for_fish.
 	 */
 	protected void conditionalResetState() {
-//		if (stats.isFull()) {
-//			changeState(INTERNAL_STATE_BOAT.boat_full);
-//		} else {
-			changeState(INTERNAL_STATE_BOAT.searching_for_fish);
-//		}
+		// if (stats.isFull()) {
+		// changeState(INTERNAL_STATE_BOAT.boat_full);
+		// } else {
+		changeState(INTERNAL_STATE_BOAT.searching_for_fish);
+		// }
 	}
 
 	/**
