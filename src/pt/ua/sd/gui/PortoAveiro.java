@@ -120,6 +120,7 @@ public class PortoAveiro {
 			mDirOpers[r] = new MDirOper(sDirOpers[r].getId(), nshoals, nboats);
 			tDirOpers[r] = new TDirOper(logger, oceano, mDirOpers[r],
 					mBoats[r], mShoals, (DirOperStats) sDirOpers[r].clone());
+			oceano.addDirOper(sDirOpers[r]);
 
 			for (int s = 0; s < nboats; s++) {
 				sBoats[r][s] = new BoatStats(new BoatId(r, s),

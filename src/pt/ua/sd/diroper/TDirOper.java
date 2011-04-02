@@ -301,6 +301,9 @@ public class TDirOper extends Thread {
 	 *            the new local state.
 	 */
 	protected void changeState(INTERNAL_STATE_DIROPER state) {
-		stats.setState(state);
+		if(stats.getState() != state) {
+			stats.setState(state);
+			ocean.setDirOperState(stats.getId(), stats.getState());
+		}
 	}
 }
