@@ -4,7 +4,7 @@
 package pt.ua.sd.gui;
 
 /**
- * @author André Prata
+ * @author AndrÃ© Prata
  * @author Eriksson Monteiro
  */
 public class PortoAveiroGui extends javax.swing.JFrame {
@@ -14,8 +14,17 @@ public class PortoAveiroGui extends javax.swing.JFrame {
 	 */
 	private static final long serialVersionUID = -3621284592528797932L;
 
+
+	private static PortoAveiroGui instance;
+
+	public static PortoAveiroGui getInstance() {
+		if (instance == null)
+			instance = new PortoAveiroGui();
+		return instance;
+	}
+
 	/** Creates new form PortoAveiroGui */
-	public PortoAveiroGui() {
+	private PortoAveiroGui() {
 		initComponents();
 		this.setResizable(false);
 	}
@@ -128,7 +137,7 @@ public class PortoAveiroGui extends javax.swing.JFrame {
 
 	private void editMenuMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_editMenuMouseClicked
 		// TODO add your handling code here:
-		Configurations c = new Configurations();
+		Configurations c = Configurations.getInstance();
 		c.setVisible(true);
 
 	}// GEN-LAST:event_editMenuMouseClicked

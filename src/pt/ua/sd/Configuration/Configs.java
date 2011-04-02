@@ -1,7 +1,7 @@
 /**
  * 
  */
-package pt.ua.sd.Configuration;
+package pt.ua.sd.configuration;
 
 import java.io.Serializable;
 
@@ -14,9 +14,10 @@ public class Configs implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1045228254506689226L;
-	Integer seasonDuration, simulationDuration, gfactor, capacityEcoSystem,
-			nCompanies, nBoats, boatsCapacity, boatsRadarSensibility, nShools,
-			catchPercentage;
+	Integer seasonDuration, simulationDuration, 
+			nCompanies, nBoats, boatsCapacity, boatsRadarSensibility, nSchools, shoalInicialSize, simulationSpeed;
+
+	Double gfactor,catchPercentage,capacityEcoSystem;
 
 	public Integer getBoatsCapacity() {
 		return boatsCapacity;
@@ -34,27 +35,27 @@ public class Configs implements Serializable {
 		this.boatsRadarSensibility = boatsRadarSensibility;
 	}
 
-	public Integer getCapacityEcoSystem() {
+	public Double getCapacityEcoSystem() {
 		return capacityEcoSystem;
 	}
 
-	public void setCapacityEcoSystem(Integer capacityEcoSystem) {
+	public void setCapacityEcoSystem(Double capacityEcoSystem) {
 		this.capacityEcoSystem = capacityEcoSystem;
 	}
 
-	public Integer getCatchPercentage() {
+	public Double getCatchPercentage() {
 		return catchPercentage;
 	}
 
-	public void setCatchPercentage(Integer catchPercentage) {
+	public void setCatchPercentage(Double catchPercentage) {
 		this.catchPercentage = catchPercentage;
 	}
 
-	public Integer getGfactor() {
+	public Double getGfactor() {
 		return gfactor;
 	}
 
-	public void setGfactor(Integer gfactor) {
+	public void setGfactor(Double gfactor) {
 		this.gfactor = gfactor;
 	}
 
@@ -74,12 +75,12 @@ public class Configs implements Serializable {
 		this.nCompanies = nCompanies;
 	}
 
-	public Integer getnShools() {
-		return nShools;
+	public Integer getnSchools() {
+		return nSchools;
 	}
 
-	public void setnShools(Integer nShools) {
-		this.nShools = nShools;
+	public void setnSchools(Integer nShools) {
+		this.nSchools = nShools;
 	}
 
 	public Integer getSeasonDuration() {
@@ -97,5 +98,23 @@ public class Configs implements Serializable {
 	public void setSimulationDuration(Integer simulationDuration) {
 		this.simulationDuration = simulationDuration;
 	}
+
+	public Integer getShoalInicialSize() {
+		return shoalInicialSize;
+	}
+
+	public void setShoalInicialSize(Integer shoalInicialSize) {
+		this.shoalInicialSize = shoalInicialSize;
+	}
+
+	public Integer getSimulationSpeed() {
+		return simulationSpeed;
+	}
+
+	public void setSimulationSpeed(Integer simulationSpeed) {
+		this.simulationSpeed = simulationSpeed;
+	}
+
+	
 
 }
