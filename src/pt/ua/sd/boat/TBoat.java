@@ -115,6 +115,7 @@ public class TBoat extends Thread {
 					} else if (MESSAGE_TYPE.ReturnToWharf == popMsg
 							.getMsgType()) {
 						mHelper.releaseHelper();
+						diroper.fishingDone(stats.getId());
 						changeState(INTERNAL_STATE_BOAT.returning_to_wharf);
 					} else {
 						assert false;
