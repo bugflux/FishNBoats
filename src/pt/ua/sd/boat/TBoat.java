@@ -112,6 +112,10 @@ public class TBoat extends Thread {
 					popMsg = monitor.popMsg(false);
 					if (MESSAGE_TYPE.NoAction == popMsg.getMsgType()) {
 						trackSchool(mHelper);
+					} else if (MESSAGE_TYPE.ReturnToWharf == popMsg
+							.getMsgType()) {
+						mHelper.releaseHelper();
+						changeState(INTERNAL_STATE_BOAT.returning_to_wharf);
 					} else {
 						assert false;
 					}
@@ -187,7 +191,7 @@ public class TBoat extends Thread {
 	 */
 	protected void setToHighSea() {
 		changeState(INTERNAL_STATE_BOAT.searching_for_fish);
-		//searchFish();
+		// searchFish();
 	}
 
 	/**

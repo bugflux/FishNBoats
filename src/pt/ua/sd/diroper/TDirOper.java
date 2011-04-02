@@ -95,6 +95,7 @@ public class TDirOper extends Thread {
 				break;
 
 			case waiting_for_boats:
+				setBoatsToWharf();
 				popMsg = monitor.popMsg();
 				if (MESSAGE_TYPE.BackAtWharf == popMsg.getMsgType()) {
 					BackAtWharfMessage m = (BackAtWharfMessage) popMsg;
@@ -199,7 +200,8 @@ public class TDirOper extends Thread {
 	 */
 	protected void setBoatsToWharf() {
 		for (IBoatDirOper b : boats) {
-			if (!boatsAtWharf.containsKey(b.getId())) {
+			if (!boatsAtWharf.containsKey(b.getId())
+					&& !assignedCompanions.containsValue(b.getId())) {
 				b.returnToWharf();
 				boatsAtWharf.put(b.getId(), false);
 			}
@@ -226,7 +228,6 @@ public class TDirOper extends Thread {
 	 */
 	protected void seasonEnd() {
 		if (boatsAtWharf.size() != boats.length) {
-			setBoatsToWharf();
 			changeState(INTERNAL_STATE_DIROPER.waiting_for_boats);
 		} else {
 			changeState(INTERNAL_STATE_DIROPER.ending_a_campaign);
