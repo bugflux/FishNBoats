@@ -1,7 +1,5 @@
 package pt.ua.sd.gui;
 
-
-
 import java.awt.Point;
 
 import pt.ua.sd.boat.BoatId;
@@ -31,9 +29,9 @@ import pt.ua.sd.shoal.TShoal;
 public class PortoAveiro {
 	private static PortoAveiro instance;
 
-	public static PortoAveiro getInstance(){
-		if(instance==null)
-			instance=new PortoAveiro();
+	public static PortoAveiro getInstance() {
+		if (instance == null)
+			instance = new PortoAveiro();
 		return instance;
 	}
 

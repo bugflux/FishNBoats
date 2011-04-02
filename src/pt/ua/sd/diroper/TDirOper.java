@@ -103,8 +103,8 @@ public class TDirOper extends Thread {
 					if (boatsConfirmedAtWharf() == boats.length) {
 						changeState(INTERNAL_STATE_DIROPER.ending_a_campaign);
 					}
-				} else if (MESSAGE_TYPE.LifeEnd == popMsg.getMsgType()) {
-					lifeEnding = true;
+//				} else if (MESSAGE_TYPE.LifeEnd == popMsg.getMsgType()) {
+//					lifeEnding = true;
 				} else if (MESSAGE_TYPE.FishingDone == popMsg.getMsgType()) {
 					FishingDoneMessage m = (FishingDoneMessage) popMsg;
 					removeCompanion(m.getId());

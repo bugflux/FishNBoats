@@ -1,21 +1,22 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * 
  */
-
 package pt.ua.sd.Configuration;
 
 import java.io.Serializable;
 
 /**
- *
- * @author Eriksson Monteiro <eriksson.monteiro@ua.pt>
+ * @author André Prata
+ * @author Eriksson Monteiro
  */
-public class Configs implements Serializable{
-	Integer seasonDuration, simulationDuration,
-			gfactor, capacityEcoSystem, nCompanies,
-			nBoats, boatsCapacity, boatsRadarSensibility,
-			nShools, catchPercentage;
+public class Configs implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1045228254506689226L;
+	Integer seasonDuration, simulationDuration, gfactor, capacityEcoSystem,
+			nCompanies, nBoats, boatsCapacity, boatsRadarSensibility, nShools,
+			catchPercentage;
 
 	public Integer getBoatsCapacity() {
 		return boatsCapacity;
@@ -96,5 +97,5 @@ public class Configs implements Serializable{
 	public void setSimulationDuration(Integer simulationDuration) {
 		this.simulationDuration = simulationDuration;
 	}
-	
+
 }
