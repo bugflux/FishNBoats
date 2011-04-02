@@ -12,6 +12,9 @@ import java.util.Random;
 
 import pt.ua.sd.boat.BoatId;
 import pt.ua.sd.boat.BoatStats;
+import pt.ua.sd.diroper.DirOperId;
+import pt.ua.sd.diroper.DirOperStats;
+import pt.ua.sd.diroper.DirOperStats.INTERNAL_STATE_DIROPER;
 import pt.ua.sd.log.MClock;
 import pt.ua.sd.log.MLog;
 import pt.ua.sd.shoal.IShoalBoat;
@@ -30,6 +33,7 @@ public class MOcean implements IOceanBoat, IOceanShoal, IOceanDirOper {
 	protected final HashMap<BoatId, BoatStats> boatsPosition;
 	protected final HashMap<ShoalId, ShoalStats> shoalsPosition;
 	protected final HashMap<ShoalId, IShoalBoat> mshoals;
+	protected final HashMap<DirOperId, DirOperStats> dirOperStats;
 	protected final Cell map[][];
 	protected int ncompanies = 0;
 	protected final FishingGBoard gmap;
@@ -84,10 +88,37 @@ public class MOcean implements IOceanBoat, IOceanShoal, IOceanDirOper {
 		this.boatsPosition = new HashMap<BoatId, BoatStats>();
 		this.shoalsPosition = new HashMap<ShoalId, ShoalStats>();
 		this.mshoals = new HashMap<ShoalId, IShoalBoat>();
+		this.dirOperStats = new HashMap<DirOperId, DirOperStats>();
 
 		//
 		gmap = new FishingGBoard(width, height,
 				(int) Math.ceil((maxBoatsPerSquare + maxShoalPerSquare) / 2.0));
+	}
+
+	public void addDirOper(DirOperStats s) {
+		synchronized(this) {
+			dirOperStats.put(s.getId(), s);
+		}
+	}
+
+	/**
+	 * @see IOceanDirOper.#setDirOperState(DirOperId, INTERNAL_STATE_DIROPER);
+	 */
+	public void setDirOperState(DirOperId id, INTERNAL_STATE_DIROPER s) {
+		int logTick;
+		String logMessage;
+
+		synchronized(this) {
+			assert dirOperStats.containsKey(id);
+			logTick = clock.getClockTick();
+			logMessage = dirOperStats.get(id).getState().toString() + " > ";
+
+			dirOperStats.get(id).setState(s);
+			
+			logMessage += s;
+		}
+		
+		log.push("Set DirOper state", id.toString(), logMessage, logTick);
 	}
 
 	/**

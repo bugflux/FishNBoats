@@ -31,7 +31,7 @@ public class PortoAveiro {
 	 */
 	public static void main(String[] args) {
 		final int nboats = 5, ncompanies = 2, nshoals = 5;
-		final int boatPeriod = 100, shoalPeriod = 200;
+		final int boatPeriod = 10, shoalPeriod = 20;
 		final int height = 11, width = 11;
 		final int maxShoalPerSquare = 1, maxBoatsPerSquare = 3;
 		final int seasonMoves = 40;
@@ -89,6 +89,7 @@ public class PortoAveiro {
 			mDirOpers[r] = new MDirOper(sDirOpers[r].getId(), nshoals, nboats);
 			tDirOpers[r] = new TDirOper(logger, oceano, mDirOpers[r],
 					mBoats[r], mShoals, (DirOperStats) sDirOpers[r].clone());
+			oceano.addDirOper(sDirOpers[r]);
 
 			for (int s = 0; s < nboats; s++) {
 				sBoats[r][s] = new BoatStats(new BoatId(r, s),

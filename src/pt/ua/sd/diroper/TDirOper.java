@@ -103,8 +103,8 @@ public class TDirOper extends Thread {
 					if (boatsConfirmedAtWharf() == boats.length) {
 						changeState(INTERNAL_STATE_DIROPER.ending_a_campaign);
 					}
-				} else if (MESSAGE_TYPE.LifeEnd == popMsg.getMsgType()) {
-					lifeEnding = true;
+//				} else if (MESSAGE_TYPE.LifeEnd == popMsg.getMsgType()) {
+//					lifeEnding = true;
 				} else if (MESSAGE_TYPE.FishingDone == popMsg.getMsgType()) {
 					FishingDoneMessage m = (FishingDoneMessage) popMsg;
 					removeCompanion(m.getId());
@@ -301,6 +301,9 @@ public class TDirOper extends Thread {
 	 *            the new local state.
 	 */
 	protected void changeState(INTERNAL_STATE_DIROPER state) {
-		stats.setState(state);
+		if(stats.getState() != state) {
+			stats.setState(state);
+			ocean.setDirOperState(stats.getId(), stats.getState());
+		}
 	}
 }
