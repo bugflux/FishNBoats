@@ -1,5 +1,3 @@
-package pt.ua.sd.gui;
-
 import java.awt.Point;
 
 import pt.ua.sd.boat.BoatId;
@@ -7,7 +5,6 @@ import pt.ua.sd.boat.BoatStats;
 import pt.ua.sd.boat.BoatStats.INTERNAL_STATE_BOAT;
 import pt.ua.sd.boat.MBoat;
 import pt.ua.sd.boat.TBoat;
-import pt.ua.sd.configuration.Configs;
 import pt.ua.sd.diroper.DirOperId;
 import pt.ua.sd.diroper.DirOperStats;
 import pt.ua.sd.diroper.DirOperStats.INTERNAL_STATE_DIROPER;
@@ -28,52 +25,24 @@ import pt.ua.sd.shoal.TShoal;
  * 
  */
 public class PortoAveiro {
-	private static PortoAveiro instance;
-
-	private PortoAveiro(){
-	}
-	
-	public static PortoAveiro getInstance() {
-		if (instance == null)
-			instance = new PortoAveiro();
-		return instance;
-	}
 
 	/**
 	 * @param args
 	 */
-	public void startSimulation(Configs confs) {
-//		final int nboats = 5, ncompanies = 2, nshoals = 5;
-//		final int boatPeriod = 100, shoalPeriod = 200;
-//		final int height = 11, width = 11;
-//		final int maxShoalPerSquare = 1, maxBoatsPerSquare = 3;
-//		final int seasonMoves = 40;
-//		final int boatCapacity = 1000;
-//		final int initialFish = 2000;
-//		final int shoalSize = initialFish;
-//		final int growing_factor = 2;// 5;
-//		final double eco_system = 0.001;// 0.001;
-//		final double catchPercentage = 0.3;
-//		final int minShoalDetectable = 100;
-//		final int nCampaign = 3;
-
-
-		final int nboats = confs.getnBoats(), ncompanies = confs.getnCompanies(), nshoals = confs.getnSchools();
-		final int boatPeriod = confs.getSimulationSpeed()/2, shoalPeriod = confs.getSimulationSpeed();
+	public static void main(String[] args) {
+		final int nboats = 5, ncompanies = 2, nshoals = 5;
+		final int boatPeriod = 100, shoalPeriod = 200;
 		final int height = 11, width = 11;
 		final int maxShoalPerSquare = 1, maxBoatsPerSquare = 3;
-		final int seasonMoves = confs.getSeasonDuration();
-		final int boatCapacity = confs.getBoatsCapacity();
-		final int initialFish = confs.getShoalInicialSize();
+		final int seasonMoves = 40;
+		final int boatCapacity = 1000;
+		final int initialFish = 2000;
 		final int shoalSize = initialFish;
-		final int growing_factor = confs.getGfactor().intValue();// 5;
-		final double eco_system = confs.getCapacityEcoSystem();// 0.001;
-		final double catchPercentage = confs.getCatchPercentage()/100;
-		final int minShoalDetectable = confs.getBoatsRadarSensibility();
-		final int nCampaign = confs.getSimulationDuration();
-
-
-
+		final int growing_factor = 2;// 5;
+		final double eco_system = 0.001;// 0.001;
+		final double catchPercentage = 0.3;
+		final int minShoalDetectable = 100;
+		final int nCampaign = 3;
 		// TODO: read these ^ from a graphical interface
 
 		// Logger
@@ -120,8 +89,8 @@ public class PortoAveiro {
 			mDirOpers[r] = new MDirOper(sDirOpers[r].getId(), nshoals, nboats);
 			tDirOpers[r] = new TDirOper(logger, oceano, mDirOpers[r],
 					mBoats[r], mShoals, (DirOperStats) sDirOpers[r].clone());
-			oceano.addDirOper(sDirOpers[r]);
 
+			oceano.addDirOper(sDirOpers[r]);
 			for (int s = 0; s < nboats; s++) {
 				sBoats[r][s] = new BoatStats(new BoatId(r, s),
 						INTERNAL_STATE_BOAT.at_the_wharf, new Point(wharf),
