@@ -24,7 +24,6 @@ import pt.ua.sd.shoal.TShoal;
  * @author Eriksson Monteiro
  * 
  */
-@SuppressWarnings("unused")
 public class PortoAveiro {
 
 	/**
