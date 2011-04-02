@@ -112,9 +112,6 @@ public class TBoat extends Thread {
 					popMsg = monitor.popMsg(false);
 					if (MESSAGE_TYPE.NoAction == popMsg.getMsgType()) {
 						trackSchool(mHelper);
-						// } else if (MESSAGE_TYPE.ReturnToWharf == popMsg
-						// .getMsgType()) {
-						// changeState(INTERNAL_STATE_BOAT.returning_to_wharf);
 					} else {
 						assert false;
 					}
@@ -134,9 +131,6 @@ public class TBoat extends Thread {
 					} else if (MESSAGE_TYPE.ReleaseHelper == popMsg
 							.getMsgType()) {
 						changeState(INTERNAL_STATE_BOAT.searching_for_fish);
-					} else if (MESSAGE_TYPE.ReturnToWharf == popMsg
-							.getMsgType()) {
-						changeState(INTERNAL_STATE_BOAT.returning_to_wharf);
 					} else {
 						assert false;
 					}
