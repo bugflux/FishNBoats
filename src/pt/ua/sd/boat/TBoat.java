@@ -193,7 +193,7 @@ public class TBoat extends Thread {
 	 */
 	protected void setToHighSea() {
 		changeState(INTERNAL_STATE_BOAT.searching_for_fish);
-		searchFish();
+		//searchFish();
 	}
 
 	/**
