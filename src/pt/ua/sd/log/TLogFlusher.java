@@ -30,23 +30,24 @@ public class TLogFlusher extends Thread {
 		MLog log = MLog.getInstance();
 		String msg;
 		while (!interrupted() && !stop) {
-			synchronized (this) {
-				try {
-					msg = log.popContiguous();
-					if (msg != null) {
-						out.append(msg).append('\n').flush();
-					}
+
+			try {
+				msg = log.popContiguous();
+				if (msg != null) {
+					out.append(msg).append('\n').flush();
 					System.out.println(msg);
-				} catch (IOException e) {
-					throw new RuntimeException(e);
 				}
-				yield();
+				
+			} catch (IOException e) {
+				throw new RuntimeException(e);
 			}
+			yield();
+
 		}
 	}
 
 	@Override
-	synchronized public void interrupt() {
+	public void interrupt() {
 		try {
 			stop = true;
 			out.flush();
