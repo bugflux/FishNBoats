@@ -185,11 +185,11 @@ public class MShoal implements IShoal, IShoalBoat, IShoalDirOper {
 			} else {
 				isTrapped = false;
 
+				captured = trappedAmount;
+				trappedAmount = 0;
+
 				notifyAll();
 			}
-
-			captured = trappedAmount;
-			trappedAmount = 0;
 		}
 
 		log.push("Retrieve the net", id.toString(), logMessage, logTick);

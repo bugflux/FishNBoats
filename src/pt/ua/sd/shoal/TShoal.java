@@ -145,8 +145,11 @@ public class TShoal extends Thread {
 				sleep();
 			}
 
-			seasonEnd();
 			campaigns++;
+			// don't set seasonEnd in the last one, just lifeEnd!
+			if(campaigns < nCampaigns) {
+				seasonEnd();
+			}
 		}
 
 		lifeEnd();

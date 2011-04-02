@@ -117,6 +117,9 @@ public class TDirOper extends Thread {
 				popMsg = monitor.popMsg();
 				if (MESSAGE_TYPE.SeasonEnd == popMsg.getMsgType()) {
 					changeState(INTERNAL_STATE_DIROPER.ending_a_campaign);
+				} else if (MESSAGE_TYPE.LifeEnd == popMsg.getMsgType()) {
+					seasonEnd();
+					lifeEnding = true;
 				} else {
 					assert false;
 				}
@@ -136,7 +139,8 @@ public class TDirOper extends Thread {
 			}
 		}
 
-		System.out.println(stats.getId() + " dying. Total catch: " + totalCatch);
+		System.out
+				.println(stats.getId() + " dying. Total catch: " + totalCatch);
 	}
 
 	/**
@@ -166,9 +170,10 @@ public class TDirOper extends Thread {
 		totalCatch += stored;
 		boatsAtWharf.put(id, true);
 
-		// if (boatsConfirmedAtWharf() == boats.length - 1) {
-		// setBoatsToWharf();
-		// }
+		// if there's only one boat on high sea, set to wharf
+		if (boatsConfirmedAtWharf() == boats.length - 1) {
+			setBoatsToWharf();
+		}
 	}
 
 	/**
@@ -194,7 +199,7 @@ public class TDirOper extends Thread {
 	 */
 	protected void setBoatsToWharf() {
 		for (IBoatDirOper b : boats) {
-			if (!boatsAtWharf.containsKey(b)) {
+			if (!boatsAtWharf.containsKey(b.getId())) {
 				b.returnToWharf();
 				boatsAtWharf.put(b.getId(), false);
 			}

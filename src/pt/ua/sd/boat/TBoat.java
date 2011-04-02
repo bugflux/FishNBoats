@@ -298,11 +298,11 @@ public class TBoat extends Thread {
 	 * state is set to boat_full. If not, searching_for_fish.
 	 */
 	protected void conditionalResetState() {
-		// if (stats.isFull()) {
-		// changeState(INTERNAL_STATE_BOAT.boat_full);
-		// } else {
-		changeState(INTERNAL_STATE_BOAT.searching_for_fish);
-		// }
+		if (stats.isFull()) {
+			changeState(INTERNAL_STATE_BOAT.boat_full);
+		} else {
+			changeState(INTERNAL_STATE_BOAT.searching_for_fish);
+		}
 	}
 
 	/**

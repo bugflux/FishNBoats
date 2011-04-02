@@ -41,7 +41,7 @@ public class PortoAveiro {
 		final int initialFish = 2000;
 		final int shoalSize = initialFish;
 		final int growing_factor = 2;// 5;
-		final double eco_system = 0.0001;// 0.001;
+		final double eco_system = 0.001;// 0.001;
 		final double catchPercentage = 0.3;
 		final int minShoalDetectable = 100;
 		final int nCampaign = 3;

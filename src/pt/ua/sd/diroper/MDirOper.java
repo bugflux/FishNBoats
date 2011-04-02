@@ -198,7 +198,7 @@ public class MDirOper implements IDirOper, IDirOperBoat, IDirOperShoal {
 	}
 
 	protected void pushMsg(DirOperMessage m) {
-		messages.push(m);
+		messages.add(m);
 
 		notify();
 	}

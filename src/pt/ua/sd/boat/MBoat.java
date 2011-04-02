@@ -65,7 +65,7 @@ public class MBoat implements IBoat, IBoatDirOper, IBoatHelper {
 			}
 		}
 
-		msg = messages.pollFirst();
+		msg = messages.poll();
 		if (msg == null) {
 			msg = noAction;
 		}
