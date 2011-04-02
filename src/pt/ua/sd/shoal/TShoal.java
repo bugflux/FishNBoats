@@ -248,7 +248,6 @@ public class TShoal extends Thread {
 	protected void seasonEnd() {
 		changeState(INTERNAL_STATE_SCHOOL.spawning);
 		spawn();
-		monitor.releaseRemainers();
 
 		for (IDirOperShoal d : diropers) {
 			d.endSeason();

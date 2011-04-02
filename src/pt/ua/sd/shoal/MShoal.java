@@ -193,35 +193,6 @@ public class MShoal implements IShoal, IShoalBoat, IShoalDirOper {
 		return captured;
 	}
 
-	/**
-	 * @see IShoal.#releaseRemainers()
-	 */
-	@Override
-	public void releaseRemainers() {
-
-		// this does the "trapped by the net" sequence in case there is some
-		// astray waiting
-		synchronized (this) {
-			if (n_boat_cast_the_net == 1) {
-				isTrapped = true;
-				trappedAmount = 0;
-
-				notify();
-
-				while (isTrapped) {
-					try {
-						wait();
-					} catch (InterruptedException e) {
-						throw new RuntimeException(e);
-					}
-				}
-
-				isTrapped = false;
-				notify();
-			}
-		}
-	}
-
 	protected void pushMsg(ShoalMessage msg) {
 		if (message == null
 				|| msg.getMsgType().getPriority() <= message.getMsgType()

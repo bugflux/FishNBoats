@@ -28,10 +28,4 @@ public interface IShoal {
 	 * been trapped.
 	 */
 	public void isTrapped(int amount);
-	
-	/**
-	 * After the end of season, release boats that by got stuck casting the net.
-	 * // TODO eliminate this method, as it is a workaround to a state machine problem.
-	 */
-	public void releaseRemainers();
 }
