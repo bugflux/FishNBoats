@@ -32,7 +32,7 @@ public class TLogFlusher extends Thread {
 				if(msg!=null)
 				out.append(msg).append('\n').flush();
 			} catch (IOException e) {
-				throw new RuntimeException("I/O error writing log");
+				throw new RuntimeException(e);
 			}
 		}
 	}

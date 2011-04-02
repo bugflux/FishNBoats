@@ -60,7 +60,7 @@ public class MBoat implements IBoat, IBoatDirOper, IBoatHelper {
 				try {
 					wait();
 				} catch (InterruptedException e) {
-					throw new RuntimeException();
+					throw new RuntimeException(e);
 				}
 			}
 		}

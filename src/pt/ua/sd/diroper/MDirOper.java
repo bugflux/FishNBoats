@@ -63,7 +63,7 @@ public class MDirOper implements IDirOper, IDirOperBoat, IDirOperShoal {
 			try {
 				wait();
 			} catch (InterruptedException e) {
-				throw new RuntimeException();
+				throw new RuntimeException(e);
 			}
 		}
 

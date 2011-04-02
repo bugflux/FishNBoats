@@ -3,9 +3,6 @@
  */
 package pt.ua.sd.shoal;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import pt.ua.sd.communication.toshoal.GoToFeedingAreaMessage;
 import pt.ua.sd.communication.toshoal.NoActionMessage;
 import pt.ua.sd.communication.toshoal.RetrieveTheNetMessage;
@@ -65,7 +62,7 @@ public class MShoal implements IShoal, IShoalBoat, IShoalDirOper {
 				try {
 					wait();
 				} catch (InterruptedException e) {
-					throw new RuntimeException();
+					throw new RuntimeException(e);
 				}
 			}
 		}
@@ -122,7 +119,7 @@ public class MShoal implements IShoal, IShoalBoat, IShoalDirOper {
 				try {
 					wait();
 				} catch (InterruptedException e) {
-					throw new RuntimeException();
+					throw new RuntimeException(e);
 				}
 			}
 
@@ -149,9 +146,8 @@ public class MShoal implements IShoal, IShoalBoat, IShoalDirOper {
 			while (isTrapped) {
 				try {
 					wait();
-				} catch (InterruptedException ex) {
-					Logger.getLogger(MShoal.class.getName()).log(Level.SEVERE,
-							null, ex);
+				} catch (InterruptedException e) {
+					throw new RuntimeException(e);
 				}
 			}
 		}
@@ -179,7 +175,7 @@ public class MShoal implements IShoal, IShoalBoat, IShoalDirOper {
 					try {
 						wait();
 					} catch (InterruptedException e) {
-						throw new RuntimeException();
+						throw new RuntimeException(e);
 					}
 				}
 			} else {
@@ -205,21 +201,21 @@ public class MShoal implements IShoal, IShoalBoat, IShoalDirOper {
 
 		// this does the "trapped by the net" sequence in case there is some
 		// astray waiting
-		synchronized(this) {
+		synchronized (this) {
 			if (n_boat_cast_the_net == 1) {
 				isTrapped = true;
 				trappedAmount = 0;
-	
+
 				notify();
-	
+
 				while (isTrapped) {
 					try {
 						wait();
 					} catch (InterruptedException e) {
-						throw new RuntimeException();
+						throw new RuntimeException(e);
 					}
 				}
-	
+
 				isTrapped = false;
 				notify();
 			}

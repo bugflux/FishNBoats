@@ -238,7 +238,7 @@ public class TShoal extends Thread {
 		try {
 			Thread.sleep(period + (int) (0.1 * period * rand.nextGaussian()));
 		} catch (InterruptedException e) {
-			interrupt();
+			throw new RuntimeException(e);
 		}
 	}
 
