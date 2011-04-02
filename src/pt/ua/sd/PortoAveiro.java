@@ -1,4 +1,9 @@
+package pt.ua.sd;
+
 import java.awt.Point;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 
 import pt.ua.sd.boat.BoatId;
 import pt.ua.sd.boat.BoatStats;
@@ -30,24 +35,59 @@ public class PortoAveiro {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		final int nboats = 5, ncompanies = 2, nshoals = 5;
-		final int boatPeriod = 100, shoalPeriod = 200;
-		final int height = 11, width = 11;
-		final int maxShoalPerSquare = 1, maxBoatsPerSquare = 3;
-		final int seasonMoves = 40;
-		final int boatCapacity = 1000;
-		final int initialFish = 2000;
-		final int shoalSize = initialFish;
-		final int growing_factor = 2;// 5;
-		final double eco_system = 0.001;// 0.001;
-		final double catchPercentage = 0.3;
-		final int minShoalDetectable = 100;
-		final int nCampaign = 3;
-		// TODO: read these ^ from a graphical interface
+		int nboats = 5, ncompanies = 2, nshoals = 5;
+		int boatPeriod = 333, shoalPeriod = 666;
+		int height = 11, width = 11;
+		int seasonMoves = 40;
+		int boatCapacity = 1000;
+		int shoalSize = 2000;
+		int growing_factor = 2;// 5;
+		double eco_system = 0.001;// 0.001;
+		double catchPercentage = 0.3;
+		int minShoalDetectable = 100;
+		int nCampaign = 3;
+
+		int maxShoalPerSquare = 1, maxBoatsPerSquare = 3;
+
+		File logFile = null;
+
+		if (args.length != 0) {
+			try {
+				width = Integer.valueOf(args[0]);
+				height = Integer.valueOf(args[1]);
+				nCampaign = Integer.valueOf(args[2]);
+				ncompanies = Integer.valueOf(args[3]);
+				nboats = Integer.valueOf(args[4]);
+				boatCapacity = Integer.valueOf(args[5]);
+				boatPeriod = Integer.valueOf(args[6]);
+				nshoals = Integer.valueOf(args[7]);
+				shoalSize = Integer.valueOf(args[8]);
+				minShoalDetectable = Integer.valueOf(args[9]);
+				catchPercentage = (double) Integer.valueOf(args[10]) / 100.0;
+				growing_factor = Integer.valueOf(args[11]);
+				eco_system = Double.valueOf(args[12]);
+				seasonMoves = Integer.valueOf(args[13]);
+				shoalPeriod = Integer.valueOf(args[14]);
+				logFile = new File(args[15]);
+			} catch (Throwable t) {
+				System.out.println("Invalid arguments!");
+				System.exit(-1);
+			}
+		}
 
 		// Logger
 		MLog logger = MLog.getInstance();
-		TLogFlusher loggFlusher = new TLogFlusher(System.out);
+		TLogFlusher logFlusher = null;
+		if(logFile == null) {
+			logFlusher = new TLogFlusher(System.out);
+		} else {
+			try {
+				logFlusher = new TLogFlusher(new FileOutputStream(logFile));
+			} catch (FileNotFoundException e) {
+				System.out.println("Error opening file for logging");
+				System.exit(-1);
+			}
+		}
 
 		// Ocean
 		Point wharf = new Point(0, 0);
@@ -117,7 +157,7 @@ public class PortoAveiro {
 			tDirOpers[r].start();
 		}
 
-		loggFlusher.start();
+		logFlusher.start();
 
 		// join
 		try {
