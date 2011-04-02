@@ -101,8 +101,6 @@ public class TShoal extends Thread {
 
 				switch (stats.getState()) {
 				case spawning:
-					spawn();
-
 					// BLOCK waiting to go to feeding area
 					popMsg = monitor.popMsg(true);
 					if (MESSAGE_TYPE.GoToFeedingArea == popMsg.getMsgType()) {
