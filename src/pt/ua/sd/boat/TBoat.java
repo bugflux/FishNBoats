@@ -79,9 +79,6 @@ public class TBoat extends Thread {
 					} else if (MESSAGE_TYPE.LifeEnd == popMsg.getMsgType()) {
 						seasonEnd = true;
 						lifeEnd = true;
-					} else if (MESSAGE_TYPE.ReturnToWharf == popMsg
-							.getMsgType()) {
-						// intentionally do nothing. look at boat_full comments.
 					} else {
 						assert false; // cannot receive other messages in this
 										// state
