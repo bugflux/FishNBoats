@@ -174,6 +174,10 @@ public class PortoAveiro {
 			for (int r = 0; r < ncompanies; r++) {
 				tDirOpers[r].join();
 			}
+
+			logFlusher.interrupt();
+			logFlusher.join();
+
 		} catch (InterruptedException e) {
 			throw new RuntimeException(e);
 		}
