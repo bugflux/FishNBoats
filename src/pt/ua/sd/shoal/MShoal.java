@@ -91,6 +91,16 @@ public class MShoal implements IShoal, IShoalBoat, IShoalDirOper {
 			if (n_diropers_began_season == ndiroper) {
 				n_diropers_began_season = 0;
 				pushMsg(goToFeedingArea);
+				notify();
+			}
+			else {
+				while(n_diropers_began_season != 0) {
+					try {
+						wait();
+					} catch (InterruptedException e) {
+						throw new RuntimeException(e);
+					}
+				}
 			}
 		}
 
