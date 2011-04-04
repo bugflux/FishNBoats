@@ -36,10 +36,10 @@ public class PortoAveiro {
 	 */
 	public static void main(String[] args) {
 		int nboats = 5, ncompanies = 2, nshoals = 5;
-		int boatPeriod = 333, shoalPeriod = 666;
+		int boatPeriod = 111, shoalPeriod = 222;
 		int height = 11, width = 11;
 		int seasonMoves = 40;
-		int boatCapacity = 1000;
+		int boatCapacity = 100;
 		int shoalSize = 2000;
 		int growing_factor = 2;// 5;
 		double eco_system = 0.001;// 0.001;
