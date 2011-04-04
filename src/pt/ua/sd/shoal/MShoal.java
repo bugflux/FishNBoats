@@ -172,7 +172,6 @@ public class MShoal implements IShoal, IShoalBoat, IShoalDirOper {
 	public int retrieveTheNet() {
 		int logTick;
 		String logMessage;
-		int captured = 0;
 
 		synchronized (this) {
 			logTick = clock.getClockTick();
@@ -191,16 +190,13 @@ public class MShoal implements IShoal, IShoalBoat, IShoalDirOper {
 			} else {
 				isTrapped = false;
 
-				captured = trappedAmount;
-				trappedAmount = 0;
-
 				notifyAll();
 			}
 		}
 
 		log.push("Retrieve the net", id.toString(), logMessage, logTick);
 
-		return captured;
+		return trappedAmount;
 	}
 
 	protected void pushMsg(ShoalMessage msg) {
