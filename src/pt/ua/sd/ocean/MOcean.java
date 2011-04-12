@@ -96,7 +96,7 @@ public class MOcean implements IOceanBoat, IOceanShoal, IOceanDirOper {
 	}
 
 	public void addDirOper(DirOperStats s) {
-		synchronized(this) {
+		synchronized (this) {
 			dirOperStats.put(s.getId(), s);
 		}
 	}
@@ -108,16 +108,16 @@ public class MOcean implements IOceanBoat, IOceanShoal, IOceanDirOper {
 		int logTick;
 		String logMessage;
 
-		synchronized(this) {
+		synchronized (this) {
 			assert dirOperStats.containsKey(id);
 			logTick = clock.getClockTick();
 			logMessage = dirOperStats.get(id).getState().toString() + " > ";
 
 			dirOperStats.get(id).setState(s);
-			
+
 			logMessage += s;
 		}
-		
+
 		log.push("Set DirOper state", id.toString(), logMessage, logTick);
 	}
 
@@ -239,12 +239,12 @@ public class MOcean implements IOceanBoat, IOceanShoal, IOceanDirOper {
 		synchronized (this) {
 			logTick = clock.getClockTick();
 			logMessage = boatsPosition.get(id).getCatch() + " > ";
-			
+
 			boatsPosition.get(id).setCatch(stored);
-			
+
 			logMessage += stored;
 		}
-		
+
 		log.push("Set catch", id.toString(), logMessage, logTick);
 	}
 
@@ -424,7 +424,7 @@ public class MOcean implements IOceanBoat, IOceanShoal, IOceanDirOper {
 						r = available.get(rand.nextInt(available.size()));
 					}
 				} // down and left
-				else /* if(p.y < c.y && p.x < c.x) */{
+				else /* if(p.y < c.y && p.x < c.x) */ {
 					// down
 					if (!map[c.y - 1][c.x].isBoatFull()) {
 						available.add(new Point(c.x, c.y - 1));
@@ -613,8 +613,7 @@ public class MOcean implements IOceanBoat, IOceanShoal, IOceanDirOper {
 
 		// log
 		StringBuilder logMessage = new StringBuilder();
-		logMessage
-				.append("Boat(" + id.getCompany() + "-" + id.getBoat() + ") ");
+		logMessage.append("Boat(" + id.getCompany() + "-" + id.getBoat() + ") ");
 		if (points.isEmpty()) {
 			logMessage.append("fish NOT found");
 		} else {
@@ -771,7 +770,7 @@ public class MOcean implements IOceanBoat, IOceanShoal, IOceanDirOper {
 						r = available.get(rand.nextInt(available.size()));
 					}
 				} // down and left
-				else /* if(p.y < c.y && p.x < c.x) */{
+				else /* if(p.y < c.y && p.x < c.x) */ {
 					// down
 					if (!map[c.y - 1][c.x].isShoalFull()) {
 						available.add(new Point(c.x, c.y - 1));

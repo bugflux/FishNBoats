@@ -11,10 +11,11 @@ import java.awt.Point;
  * 
  */
 public class ShoalStats {
+
 	public enum INTERNAL_STATE_SCHOOL {
+
 		spawning, feeding, trapped_by_the_net
 	}
-
 	protected INTERNAL_STATE_SCHOOL state;
 	protected Point location = new Point();
 	protected int size;
@@ -107,18 +108,23 @@ public class ShoalStats {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		ShoalStats other = (ShoalStats) obj;
 		if (id == null) {
-			if (other.id != null)
+			if (other.id != null) {
 				return false;
-		} else if (!id.equals(other.id))
+			}
+		} else if (!id.equals(other.id)) {
 			return false;
+		}
 		return true;
 	}
 
@@ -127,9 +133,9 @@ public class ShoalStats {
 		return getId() + ", State " + state + ", Position (" + location.y + ","
 				+ location.x + "), Size " + size;
 	}
-	
+
 	@Override
 	public Object clone() {
-		return new ShoalStats(id, state, (Point)location.clone(), size, minDetectable);
+		return new ShoalStats(id, state, (Point) location.clone(), size, minDetectable);
 	}
 }

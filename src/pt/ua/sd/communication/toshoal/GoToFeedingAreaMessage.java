@@ -18,5 +18,4 @@ public class GoToFeedingAreaMessage extends ShoalMessage {
 	public MESSAGE_TYPE getMsgType() {
 		return MESSAGE_TYPE.GoToFeedingArea;
 	}
-
 }

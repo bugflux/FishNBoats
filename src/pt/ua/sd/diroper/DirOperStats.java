@@ -11,9 +11,9 @@ package pt.ua.sd.diroper;
 public class DirOperStats {
 
 	public enum INTERNAL_STATE_DIROPER {
+
 		starting_a_campaign, organising_the_catch, ending_a_campaign, waiting_for_boats, waiting_for_spawning
 	}
-
 	protected INTERNAL_STATE_DIROPER state;
 	protected final DirOperId id;
 

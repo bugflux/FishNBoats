@@ -12,9 +12,10 @@ import pt.ua.sd.boat.BoatId;
  *
  */
 public class RequestHelpMessage extends DirOperMessage {
+
 	protected final Point location;
 	protected final BoatId boatId;
-	
+
 	/**
 	 * Constructs a new RequestHelp message to the DirOper to send one
 	 * boat to a given location and help catch fish.

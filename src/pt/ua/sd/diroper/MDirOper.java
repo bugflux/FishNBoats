@@ -23,17 +23,15 @@ import pt.ua.sd.log.MLog;
  * 
  */
 public class MDirOper implements IDirOper, IDirOperBoat, IDirOperShoal {
+
 	protected final int nshoals;
 	protected final int nboats;
 	protected final DirOperId id;
-
 	protected LinkedList<DirOperMessage> messages = new LinkedList<DirOperMessage>();
 	protected DirOperMessage seasonEnd = new SeasonEndMessage();
 	protected DirOperMessage lifeEnd = new LifeEndMessage();
-
 	protected MClock clock = MClock.getClock();
 	protected MLog log = MLog.getInstance();
-
 	protected int n_shoals_ended_season = 0;
 	protected int n_shoals_ended_life = 0;
 

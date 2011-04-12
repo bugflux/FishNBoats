@@ -23,7 +23,6 @@ public class MLog {
 		this.list = new HashMap<Integer, String>();
 		this.nextContiguousIndex = 1;
 	}
-
 	protected static Lock singleton = new ReentrantLock();
 
 	/**
@@ -61,11 +60,10 @@ public class MLog {
 	 * @return next message to be logged
 	 */
 	synchronized public String popContiguous() {
-		while(!list.containsKey(nextContiguousIndex)) {
+		while (!list.containsKey(nextContiguousIndex)) {
 			try {
 				wait();
-			}
-			catch (InterruptedException e) {
+			} catch (InterruptedException e) {
 				return null;
 			}
 		}

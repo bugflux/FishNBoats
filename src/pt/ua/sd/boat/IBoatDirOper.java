@@ -3,7 +3,6 @@
  */
 package pt.ua.sd.boat;
 
-
 /**
  * @author André Prata
  * @author Eriksson Monteiro
@@ -51,7 +50,6 @@ public interface IBoatDirOper {
 	 *            the monitor of the assigned boat.
 	 */
 	public void helpRequestServed(IBoatHelper helper);
-
 	// /**
 	// * Order this boat to go to a specific point, to help a companion in a
 	// catch.

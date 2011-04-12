@@ -20,17 +20,13 @@ public class MShoal implements IShoal, IShoalBoat, IShoalDirOper {
 
 	protected final ShoalId id;
 	protected final int ndiroper;
-
 	protected int n_diropers_began_season = 0;
 	protected int trappedAmount = 0;
 	protected boolean isTrapped = false;
 	protected boolean escaped = false;
-
 	protected int n_boat_cast_the_net = 0;
-
 	protected MClock clock = MClock.getClock();
 	protected MLog log = MLog.getInstance();
-
 	protected ShoalMessage message;
 	protected ShoalMessage goToFeedingArea = new GoToFeedingAreaMessage();
 	protected ShoalMessage noAction = new NoActionMessage();
@@ -92,9 +88,8 @@ public class MShoal implements IShoal, IShoalBoat, IShoalDirOper {
 				n_diropers_began_season = 0;
 				pushMsg(goToFeedingArea);
 				notify();
-			}
-			else {
-				while(n_diropers_began_season != 0) {
+			} else {
+				while (n_diropers_began_season != 0) {
 					try {
 						wait();
 					} catch (InterruptedException e) {
@@ -201,8 +196,7 @@ public class MShoal implements IShoal, IShoalBoat, IShoalDirOper {
 
 	protected void pushMsg(ShoalMessage msg) {
 		if (message == null
-				|| msg.getMsgType().getPriority() <= message.getMsgType()
-						.getPriority()) {
+				|| msg.getMsgType().getPriority() <= message.getMsgType().getPriority()) {
 			message = msg;
 		}
 		notify();

@@ -24,11 +24,9 @@ public class TShoal extends Thread {
 	protected final IOceanShoal ocean;
 	protected final IDirOperShoal diropers[];
 	protected ShoalStats stats;
-
 	protected final int period;
 	protected final int seasonMoves;
 	protected final int nCampaigns;
-
 	protected final int growing_factor;
 	protected final double eco_system_capacity;
 	protected final double maxCatchPercentage;
@@ -76,7 +74,6 @@ public class TShoal extends Thread {
 		this.maxCatchPercentage = maxCatchPercentage;
 		this.nCampaigns = nCampaigns;
 	}
-
 	protected Random rand;
 
 	@Override
@@ -100,43 +97,42 @@ public class TShoal extends Thread {
 			while (!seasonOver) {
 
 				switch (stats.getState()) {
-				case spawning:
-					// BLOCK waiting to go to feeding area
-					popMsg = monitor.popMsg(true);
-					if (MESSAGE_TYPE.GoToFeedingArea == popMsg.getMsgType()) {
-						goToFeedingArea();
-					} else {
-						assert false; // cannot receive other messages in this
-						// state
-					}
-					break;
-
-				case feeding:
-					feed(); // does nothing
-
-					popMsg = monitor.popMsg(false);
-					if (MESSAGE_TYPE.NoActionMessage == popMsg.getMsgType()) {
-						if (moves < seasonMoves) {
-							swimAbout();
+					case spawning:
+						// BLOCK waiting to go to feeding area
+						popMsg = monitor.popMsg(true);
+						if (MESSAGE_TYPE.GoToFeedingArea == popMsg.getMsgType()) {
+							goToFeedingArea();
 						} else {
-							seasonOver = swimToSpawningArea();
+							assert false; // cannot receive other messages in this
+							// state
 						}
-					} else if (MESSAGE_TYPE.TrappedByTheNet == popMsg
-							.getMsgType()) {
-						isTrapped();
-					} else {
-						assert false; // cannot receive other messages in this
-						// state
-					}
-					break;
+						break;
 
-				case trapped_by_the_net:
-					trap(); // indicate how many fish were lost
-					escapeTheNet();
-					break;
+					case feeding:
+						feed(); // does nothing
 
-				default:
-					assert false;
+						popMsg = monitor.popMsg(false);
+						if (MESSAGE_TYPE.NoActionMessage == popMsg.getMsgType()) {
+							if (moves < seasonMoves) {
+								swimAbout();
+							} else {
+								seasonOver = swimToSpawningArea();
+							}
+						} else if (MESSAGE_TYPE.TrappedByTheNet == popMsg.getMsgType()) {
+							isTrapped();
+						} else {
+							assert false; // cannot receive other messages in this
+							// state
+						}
+						break;
+
+					case trapped_by_the_net:
+						trap(); // indicate how many fish were lost
+						escapeTheNet();
+						break;
+
+					default:
+						assert false;
 				}
 
 				moves++;
@@ -145,7 +141,7 @@ public class TShoal extends Thread {
 
 			campaigns++;
 			// don't set seasonEnd in the last one, just lifeEnd!
-			if(campaigns < nCampaigns) {
+			if (campaigns < nCampaigns) {
 				seasonEnd();
 			}
 		}
@@ -177,7 +173,6 @@ public class TShoal extends Thread {
 	 * This method does nothing. It exists for consistency purposes only.
 	 */
 	protected void feed() {
-
 	}
 
 	/**

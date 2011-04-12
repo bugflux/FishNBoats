@@ -11,10 +11,11 @@ import pt.ua.sd.communication.Message;
  * 
  */
 public abstract class DirOperMessage extends Message {
+
 	public enum MESSAGE_TYPE implements Message.MESSAGE_TYPE {
+
 		SeasonEnd(10), LifeEnd(0), BackAtWharf(30), RequestHelp(40), FishingDone(20), BoatFull(50);
 		// smaller is more important!
-
 		protected int priority;
 
 		MESSAGE_TYPE(int priority) {

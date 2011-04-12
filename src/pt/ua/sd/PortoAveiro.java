@@ -78,7 +78,7 @@ public class PortoAveiro {
 		// Logger
 		MLog logger = MLog.getInstance();
 		TLogFlusher logFlusher = null;
-		if(logFile == null) {
+		if (logFile == null) {
 			logFlusher = new TLogFlusher(System.out);
 		} else {
 			try {

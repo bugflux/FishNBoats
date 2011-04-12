@@ -32,13 +32,10 @@ public class TDirOper extends Thread {
 	protected final IOceanDirOper ocean;
 	protected final IShoalDirOper shoals[];
 	protected final IBoatDirOper boats[];
-
 	protected final MLog logger;
-
 	// record the boats that arrived to wharf. true: confirmed, false: underway
 	protected final HashMap<BoatId, Boolean> boatsAtWharf = new HashMap<BoatId, Boolean>();
 	protected int totalCatch = 0;
-
 	protected final HashMap<BoatId, BoatId> assignedCompanions = new HashMap<BoatId, BoatId>();
 
 	public TDirOper(MLog logger, IOceanDirOper ocean, IDirOper monitor,
@@ -61,87 +58,86 @@ public class TDirOper extends Thread {
 		while (!lifeEnd) {
 
 			switch (stats.getState()) {
-			case starting_a_campaign:
-				// set boats to high sea and alert the shoal to get to the
-				// feeding zone
-				startCampaign();
-				break;
+				case starting_a_campaign:
+					// set boats to high sea and alert the shoal to get to the
+					// feeding zone
+					startCampaign();
+					break;
 
-			case organising_the_catch:
-				popMsg = monitor.popMsg();
-				if (MESSAGE_TYPE.SeasonEnd == popMsg.getMsgType()) {
-					seasonEnd();
-				} else if (MESSAGE_TYPE.LifeEnd == popMsg.getMsgType()) {
-					seasonEnd();
-					lifeEnding = true;
-				} else if (MESSAGE_TYPE.BackAtWharf == popMsg.getMsgType()) {
-					BackAtWharfMessage m = (BackAtWharfMessage) popMsg;
-					newBoatAtWharf(m.getBoatId(), m.getStored());
-					if (boatsConfirmedAtWharf() == boats.length) {
-						changeState(INTERNAL_STATE_DIROPER.waiting_for_spawning);
+				case organising_the_catch:
+					popMsg = monitor.popMsg();
+					if (MESSAGE_TYPE.SeasonEnd == popMsg.getMsgType()) {
+						seasonEnd();
+					} else if (MESSAGE_TYPE.LifeEnd == popMsg.getMsgType()) {
+						seasonEnd();
+						lifeEnding = true;
+					} else if (MESSAGE_TYPE.BackAtWharf == popMsg.getMsgType()) {
+						BackAtWharfMessage m = (BackAtWharfMessage) popMsg;
+						newBoatAtWharf(m.getBoatId(), m.getStored());
+						if (boatsConfirmedAtWharf() == boats.length) {
+							changeState(INTERNAL_STATE_DIROPER.waiting_for_spawning);
+						}
+					} else if (MESSAGE_TYPE.RequestHelp == popMsg.getMsgType()) {
+						RequestHelpMessage m = (RequestHelpMessage) popMsg;
+						assignCompanion(m.getBoatId(), m.getLocation());
+					} else if (MESSAGE_TYPE.FishingDone == popMsg.getMsgType()) {
+						FishingDoneMessage m = (FishingDoneMessage) popMsg;
+						removeCompanion(m.getId());
+					} else if (MESSAGE_TYPE.BoatFull == popMsg.getMsgType()) {
+						BoatFullMessage m = (BoatFullMessage) popMsg;
+						setBoatToWharf(m.getId());
+					} else {
+						assert false; // not allowed
 					}
-				} else if (MESSAGE_TYPE.RequestHelp == popMsg.getMsgType()) {
-					RequestHelpMessage m = (RequestHelpMessage) popMsg;
-					assignCompanion(m.getBoatId(), m.getLocation());
-				} else if (MESSAGE_TYPE.FishingDone == popMsg.getMsgType()) {
-					FishingDoneMessage m = (FishingDoneMessage) popMsg;
-					removeCompanion(m.getId());
-				} else if (MESSAGE_TYPE.BoatFull == popMsg.getMsgType()) {
-					BoatFullMessage m = (BoatFullMessage) popMsg;
-					setBoatToWharf(m.getId());
-				} else {
-					assert false; // not allowed
-				}
-				break;
+					break;
 
-			case waiting_for_boats:
-				setBoatsToWharf();
-				popMsg = monitor.popMsg();
-				if (MESSAGE_TYPE.BackAtWharf == popMsg.getMsgType()) {
-					BackAtWharfMessage m = (BackAtWharfMessage) popMsg;
-					newBoatAtWharf(m.getBoatId(), m.getStored());
-					if (boatsConfirmedAtWharf() == boats.length) {
-						changeState(INTERNAL_STATE_DIROPER.ending_a_campaign);
-					}
+				case waiting_for_boats:
+					setBoatsToWharf();
+					popMsg = monitor.popMsg();
+					if (MESSAGE_TYPE.BackAtWharf == popMsg.getMsgType()) {
+						BackAtWharfMessage m = (BackAtWharfMessage) popMsg;
+						newBoatAtWharf(m.getBoatId(), m.getStored());
+						if (boatsConfirmedAtWharf() == boats.length) {
+							changeState(INTERNAL_STATE_DIROPER.ending_a_campaign);
+						}
 //				} else if (MESSAGE_TYPE.LifeEnd == popMsg.getMsgType()) {
 //					lifeEnding = true;
-				} else if (MESSAGE_TYPE.FishingDone == popMsg.getMsgType()) {
-					FishingDoneMessage m = (FishingDoneMessage) popMsg;
-					removeCompanion(m.getId());
-				} else {
+					} else if (MESSAGE_TYPE.FishingDone == popMsg.getMsgType()) {
+						FishingDoneMessage m = (FishingDoneMessage) popMsg;
+						removeCompanion(m.getId());
+					} else {
+						assert false;
+					}
+
+					break;
+
+				case waiting_for_spawning:
+					popMsg = monitor.popMsg();
+					if (MESSAGE_TYPE.SeasonEnd == popMsg.getMsgType()) {
+						changeState(INTERNAL_STATE_DIROPER.ending_a_campaign);
+					} else if (MESSAGE_TYPE.LifeEnd == popMsg.getMsgType()) {
+						seasonEnd();
+						lifeEnding = true;
+					} else {
+						assert false;
+					}
+					break;
+
+				case ending_a_campaign:
+					if (lifeEnding) {
+						endLife();
+						lifeEnd = true;
+					} else {
+						endCampaign();
+					}
+					break;
+
+				default:
 					assert false;
-				}
-
-				break;
-
-			case waiting_for_spawning:
-				popMsg = monitor.popMsg();
-				if (MESSAGE_TYPE.SeasonEnd == popMsg.getMsgType()) {
-					changeState(INTERNAL_STATE_DIROPER.ending_a_campaign);
-				} else if (MESSAGE_TYPE.LifeEnd == popMsg.getMsgType()) {
-					seasonEnd();
-					lifeEnding = true;
-				} else {
-					assert false;
-				}
-				break;
-
-			case ending_a_campaign:
-				if (lifeEnding) {
-					endLife();
-					lifeEnd = true;
-				} else {
-					endCampaign();
-				}
-				break;
-
-			default:
-				assert false;
 			}
 		}
 
-		System.out
-				.println(stats.getId() + " dying. Total catch: " + totalCatch);
+		System.out.println(stats.getId() + " dying. Total catch: " + totalCatch);
 	}
 
 	/**
@@ -253,9 +249,7 @@ public class TDirOper extends Thread {
 						&& !assignedCompanions.containsKey(helper.getId())
 						&& !assignedCompanions.containsValue(helper.getId())
 						&& !boatsAtWharf.containsKey(helper.getId())) {
-					boats[id.getBoat()]
-							.helpRequestServed((IBoatHelper) boats[helper
-									.getId().getBoat()]);
+					boats[id.getBoat()].helpRequestServed((IBoatHelper) boats[helper.getId().getBoat()]);
 					assignedCompanions.put(id, helper.getId());
 					break;
 				}
@@ -301,7 +295,7 @@ public class TDirOper extends Thread {
 	 *            the new local state.
 	 */
 	protected void changeState(INTERNAL_STATE_DIROPER state) {
-		if(stats.getState() != state) {
+		if (stats.getState() != state) {
 			stats.setState(state);
 			ocean.setDirOperState(stats.getId(), stats.getState());
 		}

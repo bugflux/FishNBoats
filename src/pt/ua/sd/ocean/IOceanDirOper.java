@@ -23,7 +23,7 @@ public interface IOceanDirOper {
 	 * @return a list with the stats of boats from the given company.
 	 */
 	public List<BoatStats> getBoats(int companyId);
-	
+
 	/**
 	 * Set the DirOperState for a current DirOper.
 	 * 

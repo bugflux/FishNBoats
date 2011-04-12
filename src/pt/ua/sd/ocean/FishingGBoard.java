@@ -26,12 +26,11 @@ public class FishingGBoard {
 	protected final int moverLayer = 1;
 	protected final int gmapLayers = 2;
 	protected final Gelem backgroundGelem;
-	protected final String boatIcons[] = { "res/boat_g.png", "res/boat_p.png", "res/boat_r.png", "res/boat_y.png", "res/boat_b.png" };
+	protected final String boatIcons[] = {"res/boat_g.png", "res/boat_p.png", "res/boat_r.png", "res/boat_y.png", "res/boat_b.png"};
 	protected final String fishIcon = "res/fish.png";
 	protected final Gelem boatGelems[] = new Gelem[boatIcons.length];
 	protected final Gelem shoalGelem;
-	
-	protected Object map[][]; 
+	protected Object map[][];
 
 	/**
 	 * Build a new graphic map of width vs height cells.
@@ -52,16 +51,16 @@ public class FishingGBoard {
 	public FishingGBoard(int width, int height, int sizeFactor) {
 		this.sizeFactor = sizeFactor;
 
-		map = new Object[height*sizeFactor][width*sizeFactor];
+		map = new Object[height * sizeFactor][width * sizeFactor];
 
 		// graphic stuff
-		gmap = new GBoard("Pescaria", height*sizeFactor, width*sizeFactor, 50/sizeFactor, 50/sizeFactor, gmapLayers);
+		gmap = new GBoard("Pescaria", height * sizeFactor, width * sizeFactor, 50 / sizeFactor, 50 / sizeFactor, gmapLayers);
 		//backgroundGelem = new ImageGelem("res/water.jpg", gmap, 100, height*sizeFactor, width*sizeFactor);
 		backgroundGelem = new FilledGelem(Color.blue, 95, sizeFactor, sizeFactor);
 
 		for (int r = 0; r < height; r++) {
 			for (int s = 0; s < width; s++) {
-				gmap.draw(backgroundGelem, r*sizeFactor, s*sizeFactor, backgroundLayer);
+				gmap.draw(backgroundGelem, r * sizeFactor, s * sizeFactor, backgroundLayer);
 			}
 		}
 
@@ -74,13 +73,13 @@ public class FishingGBoard {
 
 	synchronized public void draw(BoatId id, Point p) {
 		assert isValid(p);
-		
+
 		int y = p.y * sizeFactor, x = p.x * sizeFactor;
-		for(int r = 0; r < sizeFactor; r++) {
-			for(int c = 0; c < sizeFactor; c++) {
-				if(map[y+r][x+c] == null) {
-					gmap.draw(boatGelems[id.getCompany() % boatGelems.length], y+r, x+c, moverLayer);
-					map[y+r][x+c] = id;
+		for (int r = 0; r < sizeFactor; r++) {
+			for (int c = 0; c < sizeFactor; c++) {
+				if (map[y + r][x + c] == null) {
+					gmap.draw(boatGelems[id.getCompany() % boatGelems.length], y + r, x + c, moverLayer);
+					map[y + r][x + c] = id;
 					return;
 				}
 			}
@@ -89,13 +88,13 @@ public class FishingGBoard {
 
 	synchronized public void erase(BoatId id, Point p) {
 		assert isValid(p);
-		
+
 		int y = p.y * sizeFactor, x = p.x * sizeFactor;
-		for(int r = 0; r < sizeFactor; r++) {
-			for(int c = 0; c < sizeFactor; c++) {
-				if(map[y+r][x+c] != null && map[y+r][x+c].equals(id)) {
-					gmap.erase(boatGelems[id.getCompany() % boatGelems.length], y+r, x+c, moverLayer);
-					map[y+r][x+c] = null;
+		for (int r = 0; r < sizeFactor; r++) {
+			for (int c = 0; c < sizeFactor; c++) {
+				if (map[y + r][x + c] != null && map[y + r][x + c].equals(id)) {
+					gmap.erase(boatGelems[id.getCompany() % boatGelems.length], y + r, x + c, moverLayer);
+					map[y + r][x + c] = null;
 					return;
 				}
 			}
@@ -106,11 +105,11 @@ public class FishingGBoard {
 		assert isValid(p);
 
 		int y = p.y * sizeFactor, x = p.x * sizeFactor;
-		for(int r = 0; r < sizeFactor; r++) {
-			for(int c = 0; c < sizeFactor; c++) {
-				if(map[y+r][x+c] == null) {
-					gmap.draw(shoalGelem, y+r, x+c, moverLayer);
-					map[y+r][x+c] = id;
+		for (int r = 0; r < sizeFactor; r++) {
+			for (int c = 0; c < sizeFactor; c++) {
+				if (map[y + r][x + c] == null) {
+					gmap.draw(shoalGelem, y + r, x + c, moverLayer);
+					map[y + r][x + c] = id;
 					return;
 				}
 			}
@@ -119,13 +118,13 @@ public class FishingGBoard {
 
 	synchronized public void erase(ShoalId id, Point p) {
 		assert isValid(p);
-		
+
 		int y = p.y * sizeFactor, x = p.x * sizeFactor;
-		for(int r = 0; r < sizeFactor; r++) {
-			for(int c = 0; c < sizeFactor; c++) {
-				if(map[y+r][x+c] != null && map[y+r][x+c].equals(id)) {
-					gmap.erase(shoalGelem, y+r, x+c, moverLayer);
-					map[y+r][x+c] = null;
+		for (int r = 0; r < sizeFactor; r++) {
+			for (int c = 0; c < sizeFactor; c++) {
+				if (map[y + r][x + c] != null && map[y + r][x + c].equals(id)) {
+					gmap.erase(shoalGelem, y + r, x + c, moverLayer);
+					map[y + r][x + c] = null;
 					return;
 				}
 			}
@@ -133,8 +132,7 @@ public class FishingGBoard {
 	}
 
 	protected boolean isValid(Point p) {
-		return
-			p.y >= 0 && p.y < gmap.numberOfLines() &&
-			p.x >= 0 && p.x < gmap.numberOfColumns();
+		return p.y >= 0 && p.y < gmap.numberOfLines()
+				&& p.x >= 0 && p.x < gmap.numberOfColumns();
 	}
 }

@@ -11,10 +11,11 @@ import java.awt.Point;
  * 
  */
 public class BoatStats {
+
 	public enum INTERNAL_STATE_BOAT {
+
 		at_the_wharf, searching_for_fish, tracking_a_school, joining_a_companion, returning_to_wharf, boat_full
 	}
-
 	protected INTERNAL_STATE_BOAT state;
 	protected Point location;
 	protected final int capacity;
@@ -150,18 +151,23 @@ public class BoatStats {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		BoatStats other = (BoatStats) obj;
 		if (id == null) {
-			if (other.id != null)
+			if (other.id != null) {
 				return false;
-		} else if (!id.equals(other.id))
+			}
+		} else if (!id.equals(other.id)) {
 			return false;
+		}
 		return true;
 	}
 
@@ -170,9 +176,9 @@ public class BoatStats {
 		return getId() + ", State " + state + ", Position (" + location.y + ","
 				+ location.x + "), Catch " + stored + ", Capacity " + capacity;
 	}
-	
+
 	@Override
 	public Object clone() {
-		return new BoatStats(id, state, (Point)location.clone(), capacity);
+		return new BoatStats(id, state, (Point) location.clone(), capacity);
 	}
 }

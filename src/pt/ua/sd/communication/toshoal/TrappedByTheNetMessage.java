@@ -3,7 +3,6 @@
  */
 package pt.ua.sd.communication.toshoal;
 
-
 /**
  * @author André Prata
  * @author Eriksson Monteiro
@@ -19,5 +18,4 @@ public class TrappedByTheNetMessage extends ShoalMessage {
 	public MESSAGE_TYPE getMsgType() {
 		return MESSAGE_TYPE.TrappedByTheNet;
 	}
-
 }

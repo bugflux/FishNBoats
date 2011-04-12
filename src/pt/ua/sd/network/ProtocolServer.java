@@ -50,7 +50,7 @@ public class ProtocolServer {
 		this.isClosed = true;
 	}
 
-	public static void main(String[] args){
+	public static void main(String[] args) {
 
 		ProtocolServer s = new ProtocolServer(8090, new ProtocolRunnableTest());
 		s.startServer();

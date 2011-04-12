@@ -3,8 +3,6 @@
  */
 package pt.ua.sd.communication.toboat;
 
-
-
 /**
  * @author André Prata
  * @author Eriksson Monteiro
@@ -20,5 +18,4 @@ public class ReturnToWharfMessage extends BoatMessage {
 	public MESSAGE_TYPE getMsgType() {
 		return MESSAGE_TYPE.ReturnToWharf;
 	}
-
 }

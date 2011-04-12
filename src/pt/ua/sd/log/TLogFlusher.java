@@ -37,7 +37,7 @@ public class TLogFlusher extends Thread {
 					out.append(msg).append('\n').flush();
 					System.out.println(msg);
 				}
-				
+
 			} catch (IOException e) {
 				throw new RuntimeException(e);
 			}

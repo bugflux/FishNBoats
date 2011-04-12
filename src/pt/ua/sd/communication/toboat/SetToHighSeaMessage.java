@@ -3,7 +3,6 @@
  */
 package pt.ua.sd.communication.toboat;
 
-
 /**
  * @author André Prata
  * @author Eriksson Monteiro
@@ -19,5 +18,4 @@ public class SetToHighSeaMessage extends BoatMessage {
 	public MESSAGE_TYPE getMsgType() {
 		return MESSAGE_TYPE.SetToHighSea;
 	}
-
 }

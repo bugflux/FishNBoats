@@ -9,8 +9,9 @@ package pt.ua.sd.boat;
  *
  */
 public class BoatId {
+
 	protected final int company, boat;
-	
+
 	public BoatId(int company, int boat) {
 		this.company = company;
 		this.boat = boat;
@@ -47,20 +48,25 @@ public class BoatId {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		BoatId other = (BoatId) obj;
-		if (boat != other.boat)
+		if (boat != other.boat) {
 			return false;
-		if (company != other.company)
+		}
+		if (company != other.company) {
 			return false;
+		}
 		return true;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Boat (" + company + "," + boat + ")";

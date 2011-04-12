@@ -11,6 +11,7 @@ import pt.ua.sd.boat.BoatId;
  * 
  */
 public class BackAtWharfMessage extends DirOperMessage {
+
 	protected final BoatId boatId;
 	protected final int stored;
 

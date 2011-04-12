@@ -9,8 +9,9 @@ package pt.ua.sd.shoal;
  *
  */
 public class ShoalId {
+
 	protected final int shoal;
-	
+
 	/**
 	 * Create a new ShoalId with a shoal integer identifier
 	 * 
@@ -45,18 +46,22 @@ public class ShoalId {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		ShoalId other = (ShoalId) obj;
-		if (shoal != other.shoal)
+		if (shoal != other.shoal) {
 			return false;
+		}
 		return true;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Shoal (" + shoal + ")";

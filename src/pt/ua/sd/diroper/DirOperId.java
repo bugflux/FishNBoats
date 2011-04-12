@@ -9,6 +9,7 @@ package pt.ua.sd.diroper;
  * 
  */
 public class DirOperId {
+
 	protected final int id;
 
 	public DirOperId(int id) {

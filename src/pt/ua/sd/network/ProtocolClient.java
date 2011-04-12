@@ -23,14 +23,13 @@ public class ProtocolClient {
 	private Socket client;
 	private OutputStream outputStream;
 	private InputStream inputStream;
-	
 
 	public ProtocolClient(String host, int port) {
 		try {
 			this.client = new Socket(host, port);
 			outputStream = this.client.getOutputStream();
 			inputStream = this.client.getInputStream();
-			System.out.println("Client connected to server on "+host+":"+port);
+			System.out.println("Client connected to server on " + host + ":" + port);
 		} catch (UnknownHostException ex) {
 			Logger.getLogger(ProtocolClient.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (IOException ex) {
@@ -44,7 +43,7 @@ public class ProtocolClient {
 			this.client = socket;
 			outputStream = this.client.getOutputStream();
 			inputStream = this.client.getInputStream();
-			
+
 		} catch (UnknownHostException ex) {
 			Logger.getLogger(ProtocolClient.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (IOException ex) {
@@ -62,11 +61,11 @@ public class ProtocolClient {
 
 	synchronized public IProtocolMessage sendMessageObjectBlocking(IProtocolMessage msg) {
 		IProtocolMessage ret = null;
-		
+
 		try {
 			ObjectOutputStream objOutputStream = new ObjectOutputStream(outputStream);
-			
-			
+
+
 			objOutputStream.writeObject(msg);
 			objOutputStream.flush();
 
@@ -107,7 +106,7 @@ public class ProtocolClient {
 	}
 
 	public static void main(String args[]) {
-		
+
 		do {
 			ProtocolClient c = new ProtocolClient("127.0.0.1", 8090);
 			System.out.println("Sending a message to server");

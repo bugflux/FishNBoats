@@ -41,7 +41,7 @@ public interface IDirOperBoat {
 	 *            the id of the boat that requested the help.
 	 */
 	public void fishingDone(BoatId id);
-	
+
 	/**
 	 * Inform the DirOper that no more fish can be stored in a boat.
 	 * 

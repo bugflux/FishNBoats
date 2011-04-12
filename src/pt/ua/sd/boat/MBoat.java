@@ -27,14 +27,12 @@ import pt.ua.sd.shoal.IShoalBoat;
 public class MBoat implements IBoat, IBoatDirOper, IBoatHelper {
 
 	protected final BoatId id;
-
 	protected LinkedList<BoatMessage> messages = new LinkedList<BoatMessage>();
 	protected BoatMessage noAction = new NoActionMessage();
 	protected BoatMessage setToHighSea = new SetToHighSeaMessage();
 	protected BoatMessage returnToWharf = new ReturnToWharfMessage();
 	protected BoatMessage lifeEnd = new LifeEndMessage();
 	protected BoatMessage releaseHelper = new ReleaseHelperMessage();
-
 	protected final MClock clock = MClock.getClock();
 	protected final MLog log = MLog.getInstance();
 
