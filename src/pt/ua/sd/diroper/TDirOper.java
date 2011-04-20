@@ -223,7 +223,7 @@ public class TDirOper extends Thread {
 	 * for them, otherwise effectively end the campaign.
 	 */
 	protected void seasonEnd() {
-		if (boatsAtWharf.size() != boats.length) {
+		if (boatsConfirmedAtWharf() != boats.length) {
 			changeState(INTERNAL_STATE_DIROPER.waiting_for_boats);
 		} else {
 			changeState(INTERNAL_STATE_DIROPER.ending_a_campaign);
