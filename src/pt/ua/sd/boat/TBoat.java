@@ -36,8 +36,6 @@ public class TBoat extends Thread {
 	 * Creates a new boat thread, that will interact with its monitor to follow
 	 * orders and update status.
 	 * 
-	 * @param id
-	 *            This boat id.
 	 * @param period
 	 *            How much should the thread sleep after each processing
 	 *            iteration.
@@ -45,8 +43,11 @@ public class TBoat extends Thread {
 	 *            The communication interface with the DirOper.
 	 * @param ocean
 	 *            The communication interface with the Ocean.
-	 * @param boats
-	 *            An array of all boats. This boat is boats[id].
+	 * @param stats
+	 *            This boat's stats
+	 * @param monitor
+	 *            the monitor of this boat
+	 * 
 	 */
 	public TBoat(BoatStats stats, int period, IDirOperBoat diroper,
 			IOceanBoat ocean, IBoat monitor) {
@@ -81,7 +82,7 @@ public class TBoat extends Thread {
 						lifeEnd = true;
 					} else {
 						assert false; // cannot receive other messages in this
-										// state
+						// state
 					}
 					break;
 
@@ -104,7 +105,7 @@ public class TBoat extends Thread {
 						changeState(INTERNAL_STATE_BOAT.tracking_a_school);
 					} else {
 						assert false; // cannot receive other messages in this
-										// state
+						// state
 					}
 					break;
 
@@ -143,11 +144,11 @@ public class TBoat extends Thread {
 
 				case boat_full:
 					diroper.boatFull(stats.getId()); // this may provoke that a
-														// last returnToWharf
-														// message is sent, even
-														// when at wharf!
+					// last returnToWharf
+					// message is sent, even
+					// when at wharf!
 					popMsg = monitor.popMsg(true); // block just because there's
-													// nothing else to do
+					// nothing else to do
 					if (MESSAGE_TYPE.ReturnToWharf == popMsg.getMsgType()) {
 						changeState(INTERNAL_STATE_BOAT.returning_to_wharf);
 					} else if (MESSAGE_TYPE.ChangeCourse == popMsg.getMsgType()) {
@@ -161,7 +162,7 @@ public class TBoat extends Thread {
 
 				case returning_to_wharf:
 					popMsg = monitor.popMsg(false); // use this to clear
-													// extraneous messages
+					// extraneous messages
 					returnToWharf();
 					break;
 
@@ -233,7 +234,7 @@ public class TBoat extends Thread {
 	/**
 	 * Track a school knowing the id of the helper.
 	 * 
-	 * @param joining
+	 * @param helper
 	 *            the Boat that is joining.
 	 */
 	protected void trackSchool(IBoatHelper helper) {

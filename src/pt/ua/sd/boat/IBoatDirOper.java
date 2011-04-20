@@ -32,16 +32,6 @@ public interface IBoatDirOper {
 	 * Tell a boat that life has ended. :P
 	 */
 	public void lifeEnd();
-//
-//	/**
-//	 * Order a boat to go to a specific point help a friend.
-//	 * 
-//	 * @param id
-//	 *            the id of the boat it should help.
-//	 * @param p
-//	 *            the location where that boat should be.
-//	 */
-//	public void changeCourse(BoatId id, Point p);
 
 	/**
 	 * Inform a boat that its request for help has been served and that a boat
@@ -51,25 +41,4 @@ public interface IBoatDirOper {
 	 *            the monitor of the assigned boat.
 	 */
 	public void helpRequestServed(IBoatHelper helper);
-
-	// /**
-	// * Order this boat to go to a specific point, to help a companion in a
-	// catch.
-	// *
-	// * @param p the point to go to.
-	// */
-	// public void changeCourse(Point p, BoatId id);
-	//
-	// /**
-	// * Inform this boat that its request for help in a catch was served,
-	// * and which boat is expected to arrive to help.
-	// *
-	// * @param id the id of the helper boat.
-	// */
-	// public void servedHelpRequest(BoatId id);
-	//
-	// /**
-	// * Tells a boat to resume prowling after a catch.
-	// */
-	// public void resumeProwling();
 }

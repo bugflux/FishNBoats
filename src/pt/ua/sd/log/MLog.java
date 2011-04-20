@@ -11,7 +11,7 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * @author André Prata
  * @author Eriksson Monteiro
- *
+ * 
  */
 public class MLog {
 
@@ -28,6 +28,7 @@ public class MLog {
 
 	/**
 	 * get a Logger's instance
+	 * 
 	 * @return MLog instance
 	 */
 	synchronized public static MLog getInstance() {
@@ -42,22 +43,31 @@ public class MLog {
 
 	/**
 	 * push a message to be logged
-	 * @param str message to be logged
-	 * @param tick global clock tick
+	 * 
+	 * @param type
+	 *            the type of message
+	 * @param entity
+	 *            the entity to which the log message refers
+	 * @param message
+	 *            message to be logged
+	 * @param tick
+	 *            global clock tick
 	 */
-	synchronized public void push(String type, String entity, String message, int tick) {
+	synchronized public void push(String type, String entity, String message,
+			int tick) {
 		assert tick >= nextContiguousIndex; // uniqueness
 		assert !list.containsKey(tick); // uniqueness
 
-		list.put(tick, String.format("%7s: %13s %-25s %-40s", String.valueOf(tick), entity + ",", type + ",", message));
-		//System.out.println(list.get(tick));
+		list.put(tick, String.format("%7s: %13s %-25s %-40s",
+				String.valueOf(tick), entity + ",", type + ",", message));
+		// System.out.println(list.get(tick));
 
 		notify();
 	}
 
 	/**
-	 * this method retreive the next message to be flushed
-	 * to the output
+	 * this method retreive the next message to be flushed to the output
+	 * 
 	 * @return next message to be logged
 	 */
 	synchronized public String popContiguous() {

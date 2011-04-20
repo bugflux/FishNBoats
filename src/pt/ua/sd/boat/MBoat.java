@@ -50,7 +50,7 @@ public class MBoat implements IBoat, IBoatDirOper, IBoatHelper {
 	}
 
 	/**
-	 * @see IBoat.#popMsg(boolean)
+	 * @see IBoat#popMsg(boolean)
 	 */
 	synchronized public BoatMessage popMsg(boolean blocking) {
 		BoatMessage msg;
@@ -74,7 +74,7 @@ public class MBoat implements IBoat, IBoatDirOper, IBoatHelper {
 	}
 
 	/**
-	 * @see IBoatDirOper.#setToHighSea()
+	 * @see IBoatDirOper#setToHighSea()
 	 */
 	@Override
 	public void setToHighSea() {
@@ -90,7 +90,7 @@ public class MBoat implements IBoat, IBoatDirOper, IBoatHelper {
 	}
 
 	/**
-	 * @see IBoatDirOper.#returnToWharf()
+	 * @see IBoatDirOper#returnToWharf()
 	 */
 	@Override
 	public void returnToWharf() {
@@ -106,7 +106,7 @@ public class MBoat implements IBoat, IBoatDirOper, IBoatHelper {
 	}
 
 	/**
-	 * @see IBoatDirOper.#changeCourse(BoatId, Point)
+	 * @see IBoatHelper#changeCourse(Point)
 	 */
 	@Override
 	public void changeCourse(Point p) {
@@ -123,7 +123,7 @@ public class MBoat implements IBoat, IBoatDirOper, IBoatHelper {
 	}
 
 	/**
-	 * @see IBoatDirOper.#helpRequestServed(BoatId)
+	 * @see IBoatDirOper#helpRequestServed(IBoatHelper)
 	 */
 	@Override
 	public void helpRequestServed(IBoatHelper id) {
@@ -139,7 +139,7 @@ public class MBoat implements IBoat, IBoatDirOper, IBoatHelper {
 	}
 
 	/**
-	 * @see IBoatHelper.#releaseHelper()
+	 * @see IBoatHelper#releaseHelper()
 	 */
 	@Override
 	public void releaseHelper() {
@@ -155,7 +155,7 @@ public class MBoat implements IBoat, IBoatDirOper, IBoatHelper {
 	}
 
 	/**
-	 * @see IBoatHelper.#castTheNet(IShoalBoat)
+	 * @see IBoatHelper#castTheNet(IShoalBoat)
 	 */
 	@Override
 	public void castTheNet(IShoalBoat s) {
@@ -171,7 +171,7 @@ public class MBoat implements IBoat, IBoatDirOper, IBoatHelper {
 	}
 
 	/**
-	 * @see IBoatDirOper.#lifeEnd()
+	 * @see IBoatDirOper#lifeEnd()
 	 */
 	@Override
 	public void lifeEnd() {
@@ -187,7 +187,7 @@ public class MBoat implements IBoat, IBoatDirOper, IBoatHelper {
 	}
 
 	/**
-	 * @see IBoatDirOper.#getId()
+	 * @see IBoatDirOper#getId()
 	 */
 	@Override
 	// no need to synchronize
