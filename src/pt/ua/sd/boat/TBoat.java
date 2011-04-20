@@ -36,8 +36,6 @@ public class TBoat extends Thread {
 	 * Creates a new boat thread, that will interact with its monitor to follow
 	 * orders and update status.
 	 * 
-	 * @param id
-	 *            This boat id.
 	 * @param period
 	 *            How much should the thread sleep after each processing
 	 *            iteration.
@@ -45,8 +43,11 @@ public class TBoat extends Thread {
 	 *            The communication interface with the DirOper.
 	 * @param ocean
 	 *            The communication interface with the Ocean.
-	 * @param boats
-	 *            An array of all boats. This boat is boats[id].
+	 * @param stats
+	 *            This boat's stats
+	 * @param monitor
+	 *            the monitor of this boat
+	 * 
 	 */
 	public TBoat(BoatStats stats, int period, IDirOperBoat diroper,
 			IOceanBoat ocean, IBoat monitor) {
@@ -72,97 +73,101 @@ public class TBoat extends Thread {
 			while (!seasonEnd) {
 
 				switch (stats.getState()) {
-					case at_the_wharf:
-						popMsg = monitor.popMsg(true);
-						if (MESSAGE_TYPE.SetToHighSea == popMsg.getMsgType()) {
-							setToHighSea();
-						} else if (MESSAGE_TYPE.LifeEnd == popMsg.getMsgType()) {
-							seasonEnd = true;
-							lifeEnd = true;
-						} else {
-							assert false; // cannot receive other messages in this
-							// state
-						}
-						break;
+				case at_the_wharf:
+					popMsg = monitor.popMsg(true);
+					if (MESSAGE_TYPE.SetToHighSea == popMsg.getMsgType()) {
+						setToHighSea();
+					} else if (MESSAGE_TYPE.LifeEnd == popMsg.getMsgType()) {
+						seasonEnd = true;
+						lifeEnd = true;
+					} else {
+						assert false; // cannot receive other messages in this
+						// state
+					}
+					break;
 
-					case searching_for_fish:
-						popMsg = monitor.popMsg(false);
-						if (MESSAGE_TYPE.NoAction == popMsg.getMsgType()) {
-							searchFish();
-						} else if (MESSAGE_TYPE.ChangeCourse == popMsg.getMsgType()) {
-							ChangeCourseMessage m = (ChangeCourseMessage) popMsg;
-							joiningDestination = m.getNewDestination();
-							changeState(INTERNAL_STATE_BOAT.joining_a_companion);
-						} else if (MESSAGE_TYPE.ReturnToWharf == popMsg.getMsgType()) {
-							changeState(INTERNAL_STATE_BOAT.returning_to_wharf);
-						} else if (MESSAGE_TYPE.HelpRequestServed == popMsg.getMsgType()) {
-							HelpRequestServedMessage m = (HelpRequestServedMessage) popMsg;
-							mHelper = m.getHelper();
-							mHelper.changeCourse(stats.getPosition());
-							changeState(INTERNAL_STATE_BOAT.tracking_a_school);
-						} else {
-							assert false; // cannot receive other messages in this
-							// state
-						}
-						break;
+				case searching_for_fish:
+					popMsg = monitor.popMsg(false);
+					if (MESSAGE_TYPE.NoAction == popMsg.getMsgType()) {
+						searchFish();
+					} else if (MESSAGE_TYPE.ChangeCourse == popMsg.getMsgType()) {
+						ChangeCourseMessage m = (ChangeCourseMessage) popMsg;
+						joiningDestination = m.getNewDestination();
+						changeState(INTERNAL_STATE_BOAT.joining_a_companion);
+					} else if (MESSAGE_TYPE.ReturnToWharf == popMsg
+							.getMsgType()) {
+						changeState(INTERNAL_STATE_BOAT.returning_to_wharf);
+					} else if (MESSAGE_TYPE.HelpRequestServed == popMsg
+							.getMsgType()) {
+						HelpRequestServedMessage m = (HelpRequestServedMessage) popMsg;
+						mHelper = m.getHelper();
+						mHelper.changeCourse(stats.getPosition());
+						changeState(INTERNAL_STATE_BOAT.tracking_a_school);
+					} else {
+						assert false; // cannot receive other messages in this
+						// state
+					}
+					break;
 
-					case tracking_a_school:
-						popMsg = monitor.popMsg(false);
-						if (MESSAGE_TYPE.NoAction == popMsg.getMsgType()) {
-							trackSchool(mHelper);
-						} else if (MESSAGE_TYPE.ReturnToWharf == popMsg.getMsgType()) {
-							mHelper.releaseHelper();
-							diroper.fishingDone(stats.getId());
-							changeState(INTERNAL_STATE_BOAT.returning_to_wharf);
-						} else {
-							assert false;
-						}
-						break;
+				case tracking_a_school:
+					popMsg = monitor.popMsg(false);
+					if (MESSAGE_TYPE.NoAction == popMsg.getMsgType()) {
+						trackSchool(mHelper);
+					} else if (MESSAGE_TYPE.ReturnToWharf == popMsg
+							.getMsgType()) {
+						mHelper.releaseHelper();
+						diroper.fishingDone(stats.getId());
+						changeState(INTERNAL_STATE_BOAT.returning_to_wharf);
+					} else {
+						assert false;
+					}
+					break;
 
-					case joining_a_companion:
-						popMsg = monitor.popMsg(false);
-						if (MESSAGE_TYPE.NoAction == popMsg.getMsgType()) {
-							joinCompanion(joiningDestination);
-						} else if (MESSAGE_TYPE.ChangeCourse == popMsg.getMsgType()) {
-							ChangeCourseMessage m = (ChangeCourseMessage) popMsg;
-							joiningDestination = m.getNewDestination();
-							joinCompanion(joiningDestination);
-						} else if (MESSAGE_TYPE.CastTheNet == popMsg.getMsgType()) {
-							CastTheNetMessage m = (CastTheNetMessage) popMsg;
-							castTheNet(m.getShoal());
-						} else if (MESSAGE_TYPE.ReleaseHelper == popMsg.getMsgType()) {
-							changeState(INTERNAL_STATE_BOAT.searching_for_fish);
-						} else {
-							assert false;
-						}
-						break;
+				case joining_a_companion:
+					popMsg = monitor.popMsg(false);
+					if (MESSAGE_TYPE.NoAction == popMsg.getMsgType()) {
+						joinCompanion(joiningDestination);
+					} else if (MESSAGE_TYPE.ChangeCourse == popMsg.getMsgType()) {
+						ChangeCourseMessage m = (ChangeCourseMessage) popMsg;
+						joiningDestination = m.getNewDestination();
+						joinCompanion(joiningDestination);
+					} else if (MESSAGE_TYPE.CastTheNet == popMsg.getMsgType()) {
+						CastTheNetMessage m = (CastTheNetMessage) popMsg;
+						castTheNet(m.getShoal());
+					} else if (MESSAGE_TYPE.ReleaseHelper == popMsg
+							.getMsgType()) {
+						changeState(INTERNAL_STATE_BOAT.searching_for_fish);
+					} else {
+						assert false;
+					}
+					break;
 
-					case boat_full:
-						diroper.boatFull(stats.getId()); // this may provoke that a
-						// last returnToWharf
-						// message is sent, even
-						// when at wharf!
-						popMsg = monitor.popMsg(true); // block just because there's
-						// nothing else to do
-						if (MESSAGE_TYPE.ReturnToWharf == popMsg.getMsgType()) {
-							changeState(INTERNAL_STATE_BOAT.returning_to_wharf);
-						} else if (MESSAGE_TYPE.ChangeCourse == popMsg.getMsgType()) {
-							ChangeCourseMessage m = (ChangeCourseMessage) popMsg;
-							joiningDestination = m.getNewDestination();
-							changeState(INTERNAL_STATE_BOAT.joining_a_companion);
-						} else {
-							assert false;
-						}
-						break;
+				case boat_full:
+					diroper.boatFull(stats.getId()); // this may provoke that a
+					// last returnToWharf
+					// message is sent, even
+					// when at wharf!
+					popMsg = monitor.popMsg(true); // block just because there's
+					// nothing else to do
+					if (MESSAGE_TYPE.ReturnToWharf == popMsg.getMsgType()) {
+						changeState(INTERNAL_STATE_BOAT.returning_to_wharf);
+					} else if (MESSAGE_TYPE.ChangeCourse == popMsg.getMsgType()) {
+						ChangeCourseMessage m = (ChangeCourseMessage) popMsg;
+						joiningDestination = m.getNewDestination();
+						changeState(INTERNAL_STATE_BOAT.joining_a_companion);
+					} else {
+						assert false;
+					}
+					break;
 
-					case returning_to_wharf:
-						popMsg = monitor.popMsg(false); // use this to clear
-						// extraneous messages
-						returnToWharf();
-						break;
+				case returning_to_wharf:
+					popMsg = monitor.popMsg(false); // use this to clear
+					// extraneous messages
+					returnToWharf();
+					break;
 
-					default:
-						break;
+				default:
+					break;
 				}
 
 				sleep();
@@ -229,7 +234,7 @@ public class TBoat extends Thread {
 	/**
 	 * Track a school knowing the id of the helper.
 	 * 
-	 * @param joining
+	 * @param helper
 	 *            the Boat that is joining.
 	 */
 	protected void trackSchool(IBoatHelper helper) {

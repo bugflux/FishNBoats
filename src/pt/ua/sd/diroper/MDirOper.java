@@ -53,7 +53,7 @@ public class MDirOper implements IDirOper, IDirOperBoat, IDirOperShoal {
 	}
 
 	/**
-	 * @see IDirOper.#popMsg()
+	 * @see IDirOper#popMsg()
 	 */
 	@Override
 	synchronized public DirOperMessage popMsg() {
@@ -69,7 +69,7 @@ public class MDirOper implements IDirOper, IDirOperBoat, IDirOperShoal {
 	}
 
 	/**
-	 * @see IDirOperBoat.#backAtWharf(BoatId, int)
+	 * @see IDirOperBoat#backAtWharf(BoatId, int)
 	 */
 	@Override
 	public void backAtWharf(BoatId id, int stored) {
@@ -85,7 +85,7 @@ public class MDirOper implements IDirOper, IDirOperBoat, IDirOperShoal {
 	}
 
 	/**
-	 * @see IDirOperBoat.#fishingDone(BoatId)
+	 * @see IDirOperBoat#fishingDone(BoatId)
 	 */
 	@Override
 	public void fishingDone(BoatId id) {
@@ -101,7 +101,7 @@ public class MDirOper implements IDirOper, IDirOperBoat, IDirOperShoal {
 	}
 
 	/**
-	 * @see IDirOperShoal.#endSeason()
+	 * @see IDirOperShoal#endSeason()
 	 */
 	@Override
 	public void endSeason() {
@@ -125,7 +125,7 @@ public class MDirOper implements IDirOper, IDirOperBoat, IDirOperShoal {
 	}
 
 	/**
-	 * @see IDirOperShoal.#endLife()
+	 * @see IDirOperShoal#endLife()
 	 */
 	@Override
 	public void endLife() {
@@ -149,7 +149,7 @@ public class MDirOper implements IDirOper, IDirOperBoat, IDirOperShoal {
 	}
 
 	/**
-	 * @see IDirOperBoat.#requestHelp(BoatId, Point)
+	 * @see IDirOperBoat#requestHelp(BoatId, Point)
 	 */
 	@Override
 	public void requestHelp(BoatId id, Point p) {
@@ -166,7 +166,7 @@ public class MDirOper implements IDirOper, IDirOperBoat, IDirOperShoal {
 	}
 
 	/**
-	 * @see IDirOperBoat.#boatFull(BoatId);
+	 * @see IDirOperBoat#boatFull(BoatId)
 	 */
 	@Override
 	public void boatFull(BoatId id) {
@@ -182,7 +182,7 @@ public class MDirOper implements IDirOper, IDirOperBoat, IDirOperShoal {
 	}
 
 	/**
-	 * @see IDirOper.#clearMessages()
+	 * @see IDirOper#clearMessages()
 	 */
 	@Override
 	public void clearMessages() {

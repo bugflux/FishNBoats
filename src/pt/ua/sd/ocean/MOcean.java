@@ -102,7 +102,12 @@ public class MOcean implements IOceanBoat, IOceanShoal, IOceanDirOper {
 	}
 
 	/**
-	 * @see IOceanDirOper.#setDirOperState(DirOperId, INTERNAL_STATE_DIROPER);
+	 * Update the state of a given DirOper.
+	 * 
+	 * @param id
+	 *            the id of the diroper.
+	 * @param s
+	 *            the new state to set.
 	 */
 	public void setDirOperState(DirOperId id, INTERNAL_STATE_DIROPER s) {
 		int logTick;
@@ -162,7 +167,7 @@ public class MOcean implements IOceanBoat, IOceanShoal, IOceanDirOper {
 	}
 
 	/**
-	 * @see #addShoal(ShoalStats, Point)
+	 * @see #addShoal(ShoalStats, IShoalBoat, Point)
 	 */
 	public void addShoal(ShoalStats shoal, IShoalBoat mshoal, int x, int y) {
 		synchronized (this) {
@@ -228,13 +233,12 @@ public class MOcean implements IOceanBoat, IOceanShoal, IOceanDirOper {
 	}
 
 	/**
-	 * @see IOceanBoat.#setBoatCatch(BoatId, int)
+	 * @see IOceanBoat#setBoatCatch(BoatId, int)
 	 */
 	@Override
 	public void setBoatCatch(BoatId id, int stored) {
 		int logTick;
 		String logMessage;
-
 
 		synchronized (this) {
 			logTick = clock.getClockTick();
@@ -424,7 +428,7 @@ public class MOcean implements IOceanBoat, IOceanShoal, IOceanDirOper {
 						r = available.get(rand.nextInt(available.size()));
 					}
 				} // down and left
-				else /* if(p.y < c.y && p.x < c.x) */ {
+				else /* if(p.y < c.y && p.x < c.x) */{
 					// down
 					if (!map[c.y - 1][c.x].isBoatFull()) {
 						available.add(new Point(c.x, c.y - 1));
@@ -480,7 +484,7 @@ public class MOcean implements IOceanBoat, IOceanShoal, IOceanDirOper {
 	}
 
 	/**
-	 * @see IOceanBoat.#companionDetected(BoatId, BoatId)
+	 * @see IOceanBoat#companionDetected(BoatId, BoatId)
 	 */
 	public IShoalBoat companionDetected(BoatId id, BoatId helper) {
 		int logTick;
@@ -613,7 +617,8 @@ public class MOcean implements IOceanBoat, IOceanShoal, IOceanDirOper {
 
 		// log
 		StringBuilder logMessage = new StringBuilder();
-		logMessage.append("Boat(" + id.getCompany() + "-" + id.getBoat() + ") ");
+		logMessage
+				.append("Boat(" + id.getCompany() + "-" + id.getBoat() + ") ");
 		if (points.isEmpty()) {
 			logMessage.append("fish NOT found");
 		} else {
@@ -770,7 +775,7 @@ public class MOcean implements IOceanBoat, IOceanShoal, IOceanDirOper {
 						r = available.get(rand.nextInt(available.size()));
 					}
 				} // down and left
-				else /* if(p.y < c.y && p.x < c.x) */ {
+				else /* if(p.y < c.y && p.x < c.x) */{
 					// down
 					if (!map[c.y - 1][c.x].isShoalFull()) {
 						available.add(new Point(c.x, c.y - 1));
@@ -871,8 +876,8 @@ public class MOcean implements IOceanBoat, IOceanShoal, IOceanDirOper {
 	}
 
 	/**
-	 * @see IOceanBoat.#getHeight()
-	 * @see IOceanShoal.#getHeight();
+	 * @see IOceanBoat#getHeight()
+	 * @see IOceanShoal#getHeight()
 	 */
 	@Override
 	// no need to synch this, it's final!
@@ -881,8 +886,8 @@ public class MOcean implements IOceanBoat, IOceanShoal, IOceanDirOper {
 	}
 
 	/**
-	 * @see IOceanBoat.#getWidth()
-	 * @see IOceanShoal.#getWidth();
+	 * @see IOceanBoat#getWidth()
+	 * @see IOceanShoal#getWidth()
 	 */
 	@Override
 	// no need to synch this, it's final!
@@ -891,7 +896,7 @@ public class MOcean implements IOceanBoat, IOceanShoal, IOceanDirOper {
 	}
 
 	/**
-	 * @see IOceanBoat.#getWharf()
+	 * @see IOceanBoat#getWharf()
 	 */
 	@Override
 	// no need to synch this, it's final!
@@ -900,7 +905,7 @@ public class MOcean implements IOceanBoat, IOceanShoal, IOceanDirOper {
 	}
 
 	/**
-	 * @see IOceanShoal.#getSpawningArea()
+	 * @see IOceanShoal#getSpawningArea()
 	 */
 	@Override
 	// no need to synch this, it's final!
@@ -909,7 +914,7 @@ public class MOcean implements IOceanBoat, IOceanShoal, IOceanDirOper {
 	}
 
 	/**
-	 * @see IOceanShoal.#getStats(ShoalId)
+	 * @see IOceanShoal#getStats(ShoalId)
 	 */
 	@Override
 	// no need to synch this, it's final!

@@ -47,7 +47,7 @@ public class MShoal implements IShoal, IShoalBoat, IShoalDirOper {
 	}
 
 	/**
-	 * @see IShoal.#popMsg()
+	 * @see IShoal#popMsg(boolean)
 	 */
 	@Override
 	synchronized public ShoalMessage popMsg(boolean blocking) {
@@ -73,7 +73,7 @@ public class MShoal implements IShoal, IShoalBoat, IShoalDirOper {
 	}
 
 	/**
-	 * @see IShoalDirOper.#seasonBegin()
+	 * @see IShoalDirOper#seasonBegin()
 	 */
 	@Override
 	public void seasonBegin() {
@@ -103,7 +103,7 @@ public class MShoal implements IShoal, IShoalBoat, IShoalDirOper {
 	}
 
 	/**
-	 * @see IShoalBoat.#castTheNet()
+	 * @see IShoalBoat#castTheNet()
 	 */
 	@Override
 	public void castTheNet() {
@@ -135,7 +135,7 @@ public class MShoal implements IShoal, IShoalBoat, IShoalDirOper {
 	}
 
 	/**
-	 * @see IShoal.#isTrapped(int)
+	 * @see IShoal#isTrapped(int)
 	 */
 	@Override
 	public void isTrapped(int amount) {
@@ -161,7 +161,7 @@ public class MShoal implements IShoal, IShoalBoat, IShoalDirOper {
 	}
 
 	/**
-	 * @see IShoalBoat.#retrieveTheNet()
+	 * @see IShoalBoat#retrieveTheNet()
 	 */
 	@Override
 	public int retrieveTheNet() {

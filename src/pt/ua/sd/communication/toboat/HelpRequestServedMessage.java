@@ -18,7 +18,7 @@ public class HelpRequestServedMessage extends BoatMessage {
 	 * construct a HelpRequestServed message with the id of the boat that is
 	 * going to help
 	 * 
-	 * @param helperId
+	 * @param helper
 	 */
 	public HelpRequestServedMessage(IBoatHelper helper) {
 		this.helper = helper;
