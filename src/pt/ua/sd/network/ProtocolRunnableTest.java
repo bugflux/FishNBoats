@@ -1,21 +1,19 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * 
  */
 package pt.ua.sd.network;
 
 import java.net.Socket;
-import pt.ua.sd.communication.Message.MESSAGE_TYPE;
 
 /**
- *
  * @author Eriksson Monteiro <eriksson.monteiro@ua.pt>
+ * @author André Prata <andreprata@ua.pt>
  */
 public class ProtocolRunnableTest implements IProtocolRunnable {
 
 	private Socket socket;
 
-	public void setConnetion(Socket socket) {
+	public void setConnection(Socket socket) {
 		this.socket = socket;
 	}
 

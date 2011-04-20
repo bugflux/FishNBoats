@@ -1,6 +1,5 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * 
  */
 package pt.ua.sd.network;
 
@@ -8,10 +7,15 @@ import java.io.Serializable;
 import pt.ua.sd.communication.Message;
 
 /**
- *
  * @author Eriksson Monteiro <eriksson.monteiro@ua.pt>
+ * @author André Prata <andreprata@ua.pt>
  */
 public abstract class AbstractProtocolMessage implements IProtocolMessage {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2975624544689947875L;
 
 	public enum MESSAGE_TYPE implements Message.MESSAGE_TYPE, Serializable {
 

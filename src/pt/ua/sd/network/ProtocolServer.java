@@ -1,6 +1,5 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * 
  */
 package pt.ua.sd.network;
 
@@ -11,8 +10,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
  * @author Eriksson Monteiro <eriksson.monteiro@ua.pt>
+ * @author André Prata <andreprata@ua.pt>
  */
 public class ProtocolServer {
 
@@ -37,7 +36,7 @@ public class ProtocolServer {
 			System.out.println("Server started");
 			do {
 				Socket accept = server.accept();
-				protocol.setConnetion(accept);
+				protocol.setConnection(accept);
 				new Thread(protocol).start();
 			} while (!isClosed);
 		} catch (IOException ex) {
