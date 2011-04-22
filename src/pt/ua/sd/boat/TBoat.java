@@ -32,6 +32,10 @@ public class TBoat extends Thread {
 	protected final int period;
 	protected Random rand;
 
+	// get these in the beginning for greater efficiency
+	protected final int oceanHeight, oceanWidth;
+	protected final Point oceanWharf;
+
 	/**
 	 * Creates a new boat thread, that will interact with its monitor to follow
 	 * orders and update status.
@@ -56,6 +60,10 @@ public class TBoat extends Thread {
 		this.monitor = monitor;
 		this.stats = stats;
 		this.period = period;
+
+		this.oceanHeight = ocean.getHeight();
+		this.oceanWidth = ocean.getWidth();
+		this.oceanWharf = ocean.getWharf();
 	}
 
 	@Override
@@ -216,8 +224,8 @@ public class TBoat extends Thread {
 			diroper.requestHelp(stats.getId(), follow);
 			changePosition(follow);
 		} else {
-			changePosition(new Point(rand.nextInt(ocean.getWidth()),
-					rand.nextInt(ocean.getHeight())));
+			changePosition(new Point(rand.nextInt(oceanWidth),
+					rand.nextInt(oceanHeight)));
 		}
 	}
 
@@ -273,8 +281,8 @@ public class TBoat extends Thread {
 				helper.releaseHelper();
 				diroper.fishingDone(stats.getId());
 				conditionalResetState();
-				changePosition(new Point(rand.nextInt(ocean.getWidth()),
-						rand.nextInt(ocean.getHeight())));
+				changePosition(new Point(rand.nextInt(oceanWidth),
+						rand.nextInt(oceanHeight)));
 			}
 		}
 	}
@@ -283,7 +291,7 @@ public class TBoat extends Thread {
 	 * Moves this boat to wharf. This has an internal l
 	 */
 	protected void returnToWharf() {
-		if (changePosition(ocean.getWharf())) {
+		if (changePosition(oceanWharf)) {
 			changeState(INTERNAL_STATE_BOAT.at_the_wharf);
 			diroper.backAtWharf(stats.getId(), stats.getCatch());
 			changeCatch(0);
