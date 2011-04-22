@@ -11,7 +11,7 @@ import pt.ua.sd.communication.toocean.OceanMessage;
  */
 public class OceanProtocolMessage {
 
-	protected OceanMessage m;
+	protected final OceanMessage m;
 
 	/**
 	 * Construct a new OceanMessage for Ocean Operations

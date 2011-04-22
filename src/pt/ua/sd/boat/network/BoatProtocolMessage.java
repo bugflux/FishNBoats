@@ -11,8 +11,9 @@ import pt.ua.sd.communication.toboat.BoatMessage;
  * @author André Prata <andreprata@ua.pt>
  */
 public class BoatProtocolMessage {
-	protected BoatMessage m;
-	protected BoatId id;
+
+	protected final BoatMessage m;
+	protected final BoatId id;
 
 	/**
 	 * Construct a new BoatProtocolMessage given a destination Shoal and the

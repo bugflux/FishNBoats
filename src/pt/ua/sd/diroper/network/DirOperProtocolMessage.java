@@ -11,8 +11,9 @@ import pt.ua.sd.diroper.DirOperId;
  * @author André Prata <andreprata@ua.pt>
  */
 public class DirOperProtocolMessage {
-	protected DirOperMessage m;
-	protected DirOperId id;
+
+	protected final DirOperMessage m;
+	protected final DirOperId id;
 
 	/**
 	 * Construct a new DirOperProtocolMessage given a destination Shoal and the

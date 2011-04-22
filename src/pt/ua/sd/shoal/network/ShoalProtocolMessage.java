@@ -11,8 +11,9 @@ import pt.ua.sd.shoal.ShoalId;
  * @author André Prata <andreprata@ua.pt>
  */
 public class ShoalProtocolMessage {
-	protected ShoalMessage m;
-	protected ShoalId id;
+
+	protected final ShoalMessage m;
+	protected final ShoalId id;
 
 	/**
 	 * Construct a new ShoalProtocolMessage given a destination Shoal and the
