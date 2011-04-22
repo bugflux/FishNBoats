@@ -74,15 +74,6 @@ public interface IOceanShoal {
 	public int getWidth();
 
 	/**
-	 * retrieve the stats of a given shoal
-	 * 
-	 * @param id
-	 *            the identifier of the shoal
-	 * @return ShoalStats the actual stats
-	 */
-	public ShoalStats getStats(ShoalId id);
-
-	/**
 	 * Get the spawning area of this ocean.
 	 * 
 	 * @return the Point that indicates the spawning area location in this

@@ -852,30 +852,6 @@ public class MOcean implements IOceanBoat, IOceanShoal, IOceanDirOper {
 	}
 
 	/**
-	 * Get all the boat's boatStats from a given company.
-	 * 
-	 * @param companyId
-	 *            the companyId to get the boats from.
-	 * @return The list of all boatStats for this company.
-	 */
-	@Override
-	public List<BoatStats> getBoats(int companyId) {
-		List<BoatStats> r;
-
-		synchronized (this) {
-			r = new ArrayList<BoatStats>();
-
-			for (BoatId boat : boatsPosition.keySet()) {
-				if (boat.getCompany() == companyId) {
-					r.add(boatsPosition.get(boat));
-				}
-			}
-		}
-
-		return r;
-	}
-
-	/**
 	 * @see IOceanBoat#getHeight()
 	 * @see IOceanShoal#getHeight()
 	 */
@@ -911,15 +887,6 @@ public class MOcean implements IOceanBoat, IOceanShoal, IOceanDirOper {
 	// no need to synch this, it's final!
 	public Point getSpawningArea() {
 		return reproducingZone;
-	}
-
-	/**
-	 * @see IOceanShoal#getStats(ShoalId)
-	 */
-	@Override
-	// no need to synch this, it's final!
-	synchronized public ShoalStats getStats(ShoalId id) {
-		return shoalsPosition.get(id);
 	}
 
 	protected class Cell {
