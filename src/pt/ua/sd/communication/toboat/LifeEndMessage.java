@@ -11,6 +11,11 @@ package pt.ua.sd.communication.toboat;
 public class LifeEndMessage extends BoatMessage {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5059662657689565567L;
+
+	/**
 	 * @return MESSAGE_TYPE.LifeEnd
 	 * @see pt.ua.sd.communication.Message#getMsgType()
 	 */

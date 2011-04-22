@@ -10,6 +10,7 @@ import pt.ua.sd.communication.Message;
  * @author Eriksson Monteiro
  * 
  */
+@SuppressWarnings("serial") // abstract class
 public abstract class BoatMessage extends Message {
 
 	public enum MESSAGE_TYPE implements Message.MESSAGE_TYPE {

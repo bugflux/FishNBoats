@@ -3,6 +3,8 @@
  */
 package pt.ua.sd.shoal.network;
 
+import java.io.Serializable;
+
 import pt.ua.sd.communication.toshoal.ShoalMessage;
 import pt.ua.sd.shoal.ShoalId;
 
@@ -10,7 +12,12 @@ import pt.ua.sd.shoal.ShoalId;
  * @author Eriksson Monteiro <eriksson.monteiro@ua.pt>
  * @author André Prata <andreprata@ua.pt>
  */
-public class ShoalProtocolMessage {
+public class ShoalProtocolMessage implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4054980547168620833L;
 
 	protected final ShoalMessage m;
 	protected final ShoalId id;

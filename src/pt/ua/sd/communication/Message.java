@@ -1,16 +1,18 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * 
  */
-
 package pt.ua.sd.communication;
+
+import java.io.Serializable;
 
 /**
  * @author André Prata
  * @author Eriksson Monteiro
  *
  */
-public abstract class Message {
+@SuppressWarnings("serial") // abstract class
+public abstract class Message implements Serializable {
+
 	public interface MESSAGE_TYPE {
 		public int getPriority();
 	};

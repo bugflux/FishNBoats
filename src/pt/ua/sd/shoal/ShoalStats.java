@@ -4,18 +4,24 @@
 package pt.ua.sd.shoal;
 
 import java.awt.Point;
+import java.io.Serializable;
 
 /**
  * @author André Prata
  * @author Eriksson Monteiro
  * 
  */
-public class ShoalStats {
+public class ShoalStats implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2115906958356771184L;
 
 	public enum INTERNAL_STATE_SCHOOL {
-
 		spawning, feeding, trapped_by_the_net
 	}
+
 	protected INTERNAL_STATE_SCHOOL state;
 	protected Point location = new Point();
 	protected int size;

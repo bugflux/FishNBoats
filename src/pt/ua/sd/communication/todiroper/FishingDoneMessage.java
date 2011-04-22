@@ -12,6 +12,11 @@ import pt.ua.sd.boat.BoatId;
  */
 public class FishingDoneMessage extends DirOperMessage {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6384800084751193442L;
+
 	protected final BoatId id;
 
 	public FishingDoneMessage(BoatId id) {

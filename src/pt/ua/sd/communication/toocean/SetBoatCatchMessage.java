@@ -11,6 +11,11 @@ import pt.ua.sd.boat.BoatId;
  */
 public class SetBoatCatchMessage extends OceanMessage {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3156741616318727106L;
+
 	protected final BoatId boat;
 	protected final int catched;
 

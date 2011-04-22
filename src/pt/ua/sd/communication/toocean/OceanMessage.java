@@ -9,6 +9,7 @@ import pt.ua.sd.communication.Message;
  * @author André Prata <andreprata@ua.pt>
  * @author Eriksson Monteiro <eriksson.monteiro@ua.pt>
  */
+@SuppressWarnings("serial") // abstract class
 public abstract class OceanMessage extends Message {
 
 	public enum MESSAGE_TYPE implements Message.MESSAGE_TYPE {

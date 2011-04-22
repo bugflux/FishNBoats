@@ -13,6 +13,11 @@ import pt.ua.sd.boat.BoatId;
  */
 public class TryMoveBoatMessage extends OceanMessage {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -582529586006724310L;
+
 	protected final BoatId boat;
 	protected final Point p;
 

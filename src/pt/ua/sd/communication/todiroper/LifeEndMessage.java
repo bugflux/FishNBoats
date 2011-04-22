@@ -11,6 +11,11 @@ package pt.ua.sd.communication.todiroper;
 public class LifeEndMessage extends DirOperMessage {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4042964280903389138L;
+
+	/**
 	 * @return MESSAGE_TYPE.LifeEnd
 	 * @see pt.ua.sd.communication.Message#getMsgType()
 	 */

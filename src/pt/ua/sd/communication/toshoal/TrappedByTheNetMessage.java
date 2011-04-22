@@ -3,12 +3,18 @@
  */
 package pt.ua.sd.communication.toshoal;
 
+
 /**
  * @author André Prata
  * @author Eriksson Monteiro
  *
  */
 public class TrappedByTheNetMessage extends ShoalMessage {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3597970031339658207L;
 
 	/**
 	 * @return MESSAGE_TYPE.TrappedByTheNet

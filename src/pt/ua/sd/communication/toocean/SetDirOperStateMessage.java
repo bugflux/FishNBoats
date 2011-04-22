@@ -12,6 +12,11 @@ import pt.ua.sd.diroper.DirOperStats.INTERNAL_STATE_DIROPER;
  */
 public class SetDirOperStateMessage extends OceanMessage {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 104150735150615880L;
+
 	protected final DirOperId dirOper;
 	protected final INTERNAL_STATE_DIROPER state;
 

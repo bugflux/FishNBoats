@@ -3,12 +3,19 @@
  */
 package pt.ua.sd.shoal;
 
+import java.io.Serializable;
+
 /**
  * @author André Prata
  * @author Eriksson Monteiro
  *
  */
-public class ShoalId {
+public class ShoalId implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5425023361933910839L;
 
 	protected final int shoal;
 

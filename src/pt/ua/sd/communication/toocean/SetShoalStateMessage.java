@@ -12,6 +12,11 @@ import pt.ua.sd.shoal.ShoalStats.INTERNAL_STATE_SCHOOL;
  */
 public class SetShoalStateMessage extends OceanMessage {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6209681820954271698L;
+
 	protected final ShoalId shoal;
 	protected final INTERNAL_STATE_SCHOOL state;
 

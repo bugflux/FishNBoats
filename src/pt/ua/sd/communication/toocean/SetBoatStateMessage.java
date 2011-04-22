@@ -12,6 +12,11 @@ import pt.ua.sd.boat.BoatStats.INTERNAL_STATE_BOAT;
  */
 public class SetBoatStateMessage extends OceanMessage {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4732700979808195557L;
+
 	protected final BoatId boat;
 	protected final INTERNAL_STATE_BOAT state;
 

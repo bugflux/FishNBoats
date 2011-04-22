@@ -13,6 +13,11 @@ import pt.ua.sd.shoal.ShoalStats;
  */
 public class AddShoalMessage extends OceanMessage {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4734097753573997980L;
+
 	protected final ShoalStats shoal;
 	protected final Point p;
 

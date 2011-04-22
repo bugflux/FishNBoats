@@ -11,6 +11,11 @@ package pt.ua.sd.communication.toocean;
 public class GetWidthMessage extends OceanMessage {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8755683165715777342L;
+
+	/**
 	 * @return MESSAGE_TYPE.GetHeight
 	 * @see pt.ua.sd.communication.Message#getMsgType()
 	 */

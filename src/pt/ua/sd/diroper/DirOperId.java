@@ -3,12 +3,19 @@
  */
 package pt.ua.sd.diroper;
 
+import java.io.Serializable;
+
 /**
  * @author André Prata
  * @author Eriksson Monteiro
  * 
  */
-public class DirOperId {
+public class DirOperId implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8677728891865436848L;
 
 	protected final int id;
 

@@ -11,6 +11,11 @@ import pt.ua.sd.boat.BoatId;
  */
 public class GetRadarMessage extends OceanMessage {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1925538413943736717L;
+
 	protected final BoatId boat;
 
 	/**

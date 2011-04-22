@@ -12,6 +12,11 @@ import pt.ua.sd.shoal.IShoalBoat;
  */
 public class CastTheNetMessage extends BoatMessage {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1663544824383032288L;
+
 	protected final IShoalBoat s;
 
 	/**

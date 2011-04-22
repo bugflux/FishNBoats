@@ -11,6 +11,11 @@ package pt.ua.sd.communication.toshoal;
 public class RetrieveTheNetMessage extends ShoalMessage {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6377519931567558395L;
+
+	/**
 	 * @return MESSAGE_TYPE.RetrieveTheNet
 	 * @see pt.ua.sd.communication.Message#getMsgType()
 	 */

@@ -13,6 +13,11 @@ import pt.ua.sd.boat.BoatId;
  */
 public class RequestHelpMessage extends DirOperMessage {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1925243343218662168L;
+
 	protected final Point location;
 	protected final BoatId boatId;
 

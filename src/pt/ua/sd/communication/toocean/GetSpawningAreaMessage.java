@@ -11,6 +11,11 @@ package pt.ua.sd.communication.toocean;
 public class GetSpawningAreaMessage extends OceanMessage {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1609734072826554417L;
+
+	/**
 	 * @return MESSAGE_TYPE.GetSpawningArea
 	 * @see pt.ua.sd.communication.Message#getMsgType()
 	 */

@@ -3,6 +3,8 @@
  */
 package pt.ua.sd.boat.network;
 
+import java.io.Serializable;
+
 import pt.ua.sd.boat.BoatId;
 import pt.ua.sd.communication.toboat.BoatMessage;
 
@@ -10,7 +12,12 @@ import pt.ua.sd.communication.toboat.BoatMessage;
  * @author Eriksson Monteiro <eriksson.monteiro@ua.pt>
  * @author André Prata <andreprata@ua.pt>
  */
-public class BoatProtocolMessage {
+public class BoatProtocolMessage implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2232336744180183339L;
 
 	protected final BoatMessage m;
 	protected final BoatId id;

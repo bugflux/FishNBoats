@@ -3,12 +3,19 @@
  */
 package pt.ua.sd.boat;
 
+import java.io.Serializable;
+
 /**
  * @author André Prata
  * @author Eriksson Monteiro
- *
+ * 
  */
-public class BoatId {
+public class BoatId implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4641229688893370756L;
 
 	protected final int company, boat;
 
@@ -31,7 +38,9 @@ public class BoatId {
 		return boat;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -43,7 +52,9 @@ public class BoatId {
 		return result;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override

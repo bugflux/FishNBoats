@@ -11,6 +11,11 @@ import pt.ua.sd.boat.BoatId;
  */
 public class CompanionDetectedMessage extends OceanMessage {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8646584775253913685L;
+
 	protected final BoatId boat;
 	protected final BoatId helper;
 

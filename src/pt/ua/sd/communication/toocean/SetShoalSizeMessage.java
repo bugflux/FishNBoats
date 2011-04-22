@@ -11,6 +11,11 @@ import pt.ua.sd.shoal.ShoalId;
  */
 public class SetShoalSizeMessage extends OceanMessage {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1687398894238776658L;
+
 	protected final ShoalId shoal;
 	protected final int size;
 

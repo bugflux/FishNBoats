@@ -3,6 +3,8 @@
  */
 package pt.ua.sd.diroper.network;
 
+import java.io.Serializable;
+
 import pt.ua.sd.communication.todiroper.DirOperMessage;
 import pt.ua.sd.diroper.DirOperId;
 
@@ -10,7 +12,12 @@ import pt.ua.sd.diroper.DirOperId;
  * @author Eriksson Monteiro <eriksson.monteiro@ua.pt>
  * @author André Prata <andreprata@ua.pt>
  */
-public class DirOperProtocolMessage {
+public class DirOperProtocolMessage implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1843428508746385511L;
 
 	protected final DirOperMessage m;
 	protected final DirOperId id;

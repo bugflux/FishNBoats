@@ -12,6 +12,11 @@ import java.awt.Point;
  */
 public class ChangeCourseMessage extends BoatMessage {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5307135674046369045L;
+
 	protected final Point newDestination;
 
 	/**

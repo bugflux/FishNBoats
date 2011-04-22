@@ -11,6 +11,11 @@ package pt.ua.sd.communication.toocean;
 public class GetWharfMessage extends OceanMessage {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2552308939790020981L;
+
+	/**
 	 * @return MESSAGE_TYPE.GetWharf
 	 * @see pt.ua.sd.communication.Message#getMsgType()
 	 */
