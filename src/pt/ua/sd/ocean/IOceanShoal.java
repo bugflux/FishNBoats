@@ -16,11 +16,6 @@ import pt.ua.sd.shoal.ShoalStats;
 public interface IOceanShoal {
 
 	/**
-	 * @see #tryMoveShoal(ShoalId, Point)
-	 */
-	public Point tryMoveShoal(ShoalId id, int x, int y);
-
-	/**
 	 * Attempt to move shoal ShoalId one square in the direction of point p.
 	 * Movements are taxicab based (90 degree only).
 	 * 

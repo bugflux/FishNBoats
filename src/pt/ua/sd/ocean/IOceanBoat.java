@@ -18,14 +18,6 @@ import pt.ua.sd.shoal.IShoalBoat;
 public interface IOceanBoat {
 
 	/**
-	 * @see #tryMoveBoat(BoatId, Point)
-	 */
-	// TODO: consider moving to the side or back, in case no cells can
-	// be taken in that direction, in order to reduce probability of
-	// indefinite wait.
-	public Point tryMoveBoat(BoatId id, int x, int y);
-
-	/**
 	 * Attempt to move boat BoatId one square in the direction of point p.
 	 * Movements are taxicab based (90 degree only).
 	 * 

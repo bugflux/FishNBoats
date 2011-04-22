@@ -306,16 +306,6 @@ public class MOcean implements IOceanBoat, IOceanShoal, IOceanDirOper {
 	}
 
 	/**
-	 * @see #tryMoveBoat(BoatId, Point)
-	 */
-	@Override
-	public Point tryMoveBoat(BoatId id, int x, int y) {
-		synchronized (this) {
-			return tryMoveBoat(id, new Point(x, y));
-		}
-	}
-
-	/**
 	 * Attempt to move boat BoatId one square in the direction of point p.
 	 * Movements are taxicab based (90 degree only).
 	 * 
@@ -634,20 +624,6 @@ public class MOcean implements IOceanBoat, IOceanShoal, IOceanDirOper {
 		log.push("Scan shoal", id.toString(), logMessage.toString(), logTick);
 
 		return points;
-	}
-
-	/**
-	 * @see #tryMoveShoal(ShoalId, Point)
-	 */
-	@Override
-	public Point tryMoveShoal(ShoalId id, int x, int y) {
-		Point r;
-
-		synchronized (this) {
-			r = tryMoveShoal(id, new Point(x, y));
-		}
-
-		return r;
 	}
 
 	/**
