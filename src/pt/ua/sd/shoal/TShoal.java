@@ -31,6 +31,10 @@ public class TShoal extends Thread {
 	protected final double eco_system_capacity;
 	protected final double maxCatchPercentage;
 
+	// get these at the beginning for improved efficiency
+	protected final int oceanHeight, oceanWidth;
+	protected final Point oceanSpawningArea;
+
 	/**
 	 * Construct a new Shoal Thread. Shoals execute at least nCampaign times
 	 * seasonMoves iterations. It is the responsibility of the Shoal to update
@@ -73,6 +77,10 @@ public class TShoal extends Thread {
 		this.growing_factor = growing_factor;
 		this.maxCatchPercentage = maxCatchPercentage;
 		this.nCampaigns = nCampaigns;
+
+		this.oceanHeight = ocean.getHeight();
+		this.oceanWidth = ocean.getWidth();
+		this.oceanSpawningArea = ocean.getSpawningArea();
 	}
 	protected Random rand;
 
@@ -179,8 +187,8 @@ public class TShoal extends Thread {
 	 * The shoal tries to move to a random position.
 	 */
 	protected void swimAbout() {
-		changePosition(new Point(rand.nextInt(ocean.getWidth()),
-				rand.nextInt(ocean.getHeight())));
+		changePosition(new Point(rand.nextInt(oceanWidth),
+				rand.nextInt(oceanHeight)));
 	}
 
 	/**
@@ -189,7 +197,7 @@ public class TShoal extends Thread {
 	 * @return true if it has reached it, false otherwise.
 	 */
 	protected boolean swimToSpawningArea() {
-		return changePosition(ocean.getSpawningArea());
+		return changePosition(oceanSpawningArea);
 	}
 
 	/**
