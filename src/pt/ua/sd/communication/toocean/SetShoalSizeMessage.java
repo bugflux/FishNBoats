@@ -1,0 +1,52 @@
+/**
+ * 
+ */
+package pt.ua.sd.communication.toocean;
+
+import pt.ua.sd.shoal.ShoalId;
+
+/**
+ * @author André Prata <andreprata@ua.pt>
+ * @author Eriksson Monteiro <eriksson.monteiro@ua.pt>
+ */
+public class SetShoalSizeMessage extends OceanMessage {
+
+	protected final ShoalId shoal;
+	protected final int size;
+
+	/**
+	 * Set the size for a given Shoal in this Ocean.
+	 * 
+	 * @param s
+	 *            the shoal
+	 * @param size
+	 *            the new size
+	 */
+	public SetShoalSizeMessage(ShoalId s, int size) {
+		this.shoal = s;
+		this.size = size;
+	}
+
+	/**
+	 * @return the shoal
+	 */
+	public ShoalId getShoal() {
+		return shoal;
+	}
+
+	/**
+	 * @return the size
+	 */
+	public int getSize() {
+		return size;
+	}
+
+	/**
+	 * @return MESSAGE_TYPE.SetShoalSize
+	 * @see pt.ua.sd.communication.Message#getMsgType()
+	 */
+	@Override
+	public MESSAGE_TYPE getMsgType() {
+		return MESSAGE_TYPE.SetShoalSize;
+	}
+}
