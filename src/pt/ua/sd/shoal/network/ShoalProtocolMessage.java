@@ -4,36 +4,41 @@
 package pt.ua.sd.shoal.network;
 
 import java.io.Serializable;
+import pt.ua.sd.boat.BoatId;
 
 import pt.ua.sd.communication.toshoal.ShoalMessage;
+import pt.ua.sd.network.IProtocolMessage;
 import pt.ua.sd.shoal.ShoalId;
 
 /**
  * @author Eriksson Monteiro <eriksson.monteiro@ua.pt>
  * @author André Prata <andreprata@ua.pt>
  */
-public class ShoalProtocolMessage implements Serializable {
+public class ShoalProtocolMessage implements Serializable, IProtocolMessage {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 4054980547168620833L;
-
 	protected final ShoalMessage m;
 	protected final ShoalId id;
+	protected final BoatId bId;
 
 	/**
 	 * Construct a new ShoalProtocolMessage given a destination Shoal and the
 	 * message to deliver to it.
-	 * 
+	 *
+	 * @param  b
+	 *			  the boat that send the message
 	 * @param id
 	 *            the shoal to deliver the message to.
 	 * @param m
 	 *            the messsage to deliver.
 	 */
-	public ShoalProtocolMessage(ShoalId id, ShoalMessage m) {
+	public ShoalProtocolMessage(ShoalId id, ShoalMessage m, BoatId b) {
 		this.m = m;
 		this.id = id;
+		this.bId = b;
 	}
 
 	/**
@@ -48,5 +53,13 @@ public class ShoalProtocolMessage implements Serializable {
 	 */
 	public ShoalId getShoalId() {
 		return id;
+	}
+
+	/**
+	 *
+	 * @return the boat id
+	 */
+	public BoatId getBoatId() {
+		return bId;
 	}
 }

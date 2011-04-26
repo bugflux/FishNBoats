@@ -4,14 +4,14 @@
 package pt.ua.sd.ocean.network;
 
 import java.io.Serializable;
-
 import pt.ua.sd.communication.toocean.OceanMessage;
+import pt.ua.sd.network.IProtocolMessage;
 
 /**
  * @author André Prata <andreprata@ua.pt>
  * @author Eriksson Monteiro <eriksson.monteiro@ua.pt>
  */
-public class OceanProtocolMessage implements Serializable {
+public class OceanProtocolMessage implements Serializable, IProtocolMessage {
 
 	/**
 	 * 

@@ -4,6 +4,7 @@
 package pt.ua.sd.network;
 
 import java.net.Socket;
+import pt.ua.sd.communication.toboat.HelpRequestServedMessage;
 
 /**
  * @author Eriksson Monteiro <eriksson.monteiro@ua.pt>
@@ -27,10 +28,10 @@ public class ProtocolRunnableTest implements IProtocolRunnable {
 			throw new RuntimeException("Message is null");
 		}
 
-		switch ((AbstractProtocolMessage.MESSAGE_TYPE) msg.getMsgType()) {
+		switch ((AbstractProtocolMessage.MESSAGE_TYPE) msg.getMessage().getMsgType()) {
 			case testMessageSend:
 				System.out.println("Server receive a testMessageSend");
-				client.sendMessageObject(new ProtocolMessageReceive());
+				client.sendMessageObject(new ProtocolMessageReceive(new HelpRequestServedMessage(null)));
 				break;
 			case testMessageReceived:
 				System.out.println("Server receive a testMessageReceive");

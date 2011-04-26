@@ -12,6 +12,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import pt.ua.sd.communication.todiroper.BoatFullMessage;
 
 /**
  * @author Eriksson Monteiro <eriksson.monteiro@ua.pt>
@@ -109,8 +110,8 @@ public class ProtocolClient {
 		do {
 			ProtocolClient c = new ProtocolClient("127.0.0.1", 8090);
 			System.out.println("Sending a message to server");
-			IProtocolMessage msg = c.sendMessageObjectBlocking(new ProtocolMessageSend());
-			switch ((AbstractProtocolMessage.MESSAGE_TYPE) msg.getMsgType()) {
+			IProtocolMessage msg = c.sendMessageObjectBlocking(new ProtocolMessageSend(new BoatFullMessage(null)));
+			switch ((AbstractProtocolMessage.MESSAGE_TYPE) msg.getMessage().getMsgType()) {
 				case testMessageReceived:
 					System.out.println("Mensage confirmada com recebida");
 					break;

@@ -4,6 +4,7 @@
 package pt.ua.sd.shoal;
 
 import java.awt.Point;
+import java.net.Socket;
 import java.util.Date;
 import java.util.Random;
 
@@ -34,7 +35,8 @@ public class TShoal extends Thread {
 	// get these at the beginning for improved efficiency
 	protected final int oceanHeight, oceanWidth;
 	protected final Point oceanSpawningArea;
-
+	protected Socket socket;
+	
 	/**
 	 * Construct a new Shoal Thread. Shoals execute at least nCampaign times
 	 * seasonMoves iterations. It is the responsibility of the Shoal to update
@@ -302,5 +304,13 @@ public class TShoal extends Thread {
 	protected boolean changePosition(Point p) {
 		stats.setPosition(ocean.tryMoveShoal(stats.getId(), p));
 		return stats.getPosition().equals(p);
+	}
+
+	/**
+	 * define the socket which the thread should use
+	 * @param socket
+	 */
+	public void setClientSocket(Socket socket){
+		this.socket = socket;
 	}
 }

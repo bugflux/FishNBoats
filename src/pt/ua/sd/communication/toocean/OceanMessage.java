@@ -13,7 +13,7 @@ import pt.ua.sd.communication.Message;
 public abstract class OceanMessage extends Message {
 
 	public enum MESSAGE_TYPE implements Message.MESSAGE_TYPE {
-		AddDirOper, SetDirOperState,
+		ACK,AddDirOper, SetDirOperState,
 		AddBoat, SetBoatState, SetBoatCatch, TryMoveBoat, CompanionDetected, GetRadar,
 		AddShoal, SetShoalState, SetShoalSize, TryMoveShoal,
 		GetHeight, GetWidth, GetWharf, GetSpawningArea;

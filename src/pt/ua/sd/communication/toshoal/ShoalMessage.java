@@ -15,7 +15,7 @@ public abstract class ShoalMessage extends Message {
 
 	public enum MESSAGE_TYPE implements Message.MESSAGE_TYPE {
 
-		GoToFeedingArea(Integer.MAX_VALUE), TrappedByTheNet(10), RetrieveTheNet(
+		ACK(0),GoToFeedingArea(Integer.MAX_VALUE), TrappedByTheNet(10), RetrieveTheNet(
 		5), NoActionMessage(Integer.MAX_VALUE);
 		// smaller is more important!
 		protected int priority;

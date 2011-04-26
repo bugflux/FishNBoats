@@ -8,4 +8,5 @@ package pt.ua.sd.boat.network;
  * @author André Prata <andreprata@ua.pt>
  */
 public class BoatServer {
+
 }

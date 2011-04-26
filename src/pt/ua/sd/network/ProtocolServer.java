@@ -15,9 +15,9 @@ import java.util.logging.Logger;
  */
 public class ProtocolServer {
 
-	private ServerSocket server;
-	private IProtocolRunnable protocol;
-	private boolean isClosed = false;
+	protected ServerSocket server;
+	protected IProtocolRunnable protocol;
+	protected boolean isClosed = false;
 
 	public ProtocolServer(int port, IProtocolRunnable protocol) {
 
