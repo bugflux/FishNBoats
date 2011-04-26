@@ -5,14 +5,16 @@
 package pt.ua.sd.shoal.network;
 
 import java.net.Socket;
+
 import pt.ua.sd.communication.toshoal.ShoalMessage;
 import pt.ua.sd.network.Acknowledge;
 import pt.ua.sd.network.IProtocolMessage;
 import pt.ua.sd.network.IProtocolRunnable;
 import pt.ua.sd.network.ProtocolClient;
 import pt.ua.sd.shoal.MShoal;
+
 /**
- *
+ * 
  * @author Eriksson Monteiro <eriksson.monteiro@ua.pt>
  */
 public class ShoalProtocolRunnable implements IProtocolRunnable {
@@ -41,7 +43,7 @@ public class ShoalProtocolRunnable implements IProtocolRunnable {
 			ShoalProtocolMessage m = (ShoalProtocolMessage) msg;
 			int shoal_id = m.getShoalId().getShoal();
 			if (shoal_id < mShoals.length) {
-				//TODO: error -> no shoal id
+				// TODO: error -> no shoal id
 			}
 			switch ((ShoalMessage.MESSAGE_TYPE) m.getMessage().getMsgType()) {
 				case GoToFeedingArea:
@@ -56,14 +58,14 @@ public class ShoalProtocolRunnable implements IProtocolRunnable {
 				case RetrieveTheNet:
 					int retrieveTheNet = mShoals[shoal_id].retrieveTheNet();
 					Acknowledge ack = new Acknowledge();
-					ack.setParam("catch", retrieveTheNet);
+					ack.setParam("catch", retrieveTheNet + "");
 					client.sendMessageObject(ack);
 					break;
 				default:
 					throw new RuntimeException("Message is not defined");
 			}
 		} else {
-			//TODO: error case
+			// TODO: error case
 		}
 	}
 }

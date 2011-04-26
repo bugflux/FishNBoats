@@ -8,7 +8,7 @@ import java.util.HashMap;
 import pt.ua.sd.communication.Message;
 
 /**
- *
+ * 
  * @author Eriksson Monteiro <eriksson.monteiro@ua.pt>
  */
 public class Acknowledge implements IProtocolMessage {
@@ -16,9 +16,7 @@ public class Acknowledge implements IProtocolMessage {
 	private HashMap<String, Object> params = new HashMap<String, Object>();
 	private static Message ack = new Ack();
 
-	public
-
-	 Message getMessage() {
+	public Message getMessage() {
 		return ack;
 	}
 
@@ -38,6 +36,11 @@ public class Acknowledge implements IProtocolMessage {
 	}
 
 	static class Ack extends Message {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -4017934159030590661L;
 
 		static public enum MESSAGE_TYPE implements Message.MESSAGE_TYPE {
 
