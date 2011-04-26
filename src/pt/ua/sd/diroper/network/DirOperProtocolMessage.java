@@ -7,12 +7,13 @@ import java.io.Serializable;
 
 import pt.ua.sd.communication.todiroper.DirOperMessage;
 import pt.ua.sd.diroper.DirOperId;
+import pt.ua.sd.network.IProtocolMessage;
 
 /**
  * @author Eriksson Monteiro <eriksson.monteiro@ua.pt>
  * @author André Prata <andreprata@ua.pt>
  */
-public class DirOperProtocolMessage implements Serializable {
+public class DirOperProtocolMessage implements Serializable,IProtocolMessage {
 
 	/**
 	 * 
