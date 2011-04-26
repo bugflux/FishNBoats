@@ -37,7 +37,7 @@ public class ShoalClient extends ProtocolClient implements IShoalBoat, IShoalDir
 	public int retrieveTheNet() {
 		IProtocolMessage response = this.sendMessageObjectBlocking(new ShoalProtocolMessage(id, new RetrieveTheNetMessage()));
 		Acknowledge ack =(Acknowledge)response;
-		return Integer.parseInt(ack.getParam("catch"));
+		return (Integer)ack.getParam("catch");
 	}
 
 	public void seasonBegin() {

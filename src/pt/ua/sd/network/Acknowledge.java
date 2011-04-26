@@ -13,7 +13,7 @@ import pt.ua.sd.communication.Message;
  */
 public class Acknowledge implements IProtocolMessage {
 
-	private HashMap<String, String> params = new HashMap<String, String>();
+	private HashMap<String, Object> params = new HashMap<String, Object>();
 	private static Message ack = new Ack();
 
 	public
@@ -22,18 +22,18 @@ public class Acknowledge implements IProtocolMessage {
 		return ack;
 	}
 
-	public String getParam(String param) {
+	public Object getParam(String param) {
 		return params.get(param);
 	}
 
-	public void setParam(String param, String value){
+	public void setParam(String param, Object value){
 		if(param.contains(param)){
 			params.remove(param);
 		}
 		params.put(param, value);
 	}
 
-	public HashMap<String, String> getParams() {
+	public HashMap<String, Object> getParams() {
 		return params;
 	}
 

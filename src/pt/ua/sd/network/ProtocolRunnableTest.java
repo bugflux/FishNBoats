@@ -3,8 +3,10 @@
  */
 package pt.ua.sd.network;
 
+
 import java.net.Socket;
 import pt.ua.sd.communication.toboat.HelpRequestServedMessage;
+import pt.ua.sd.communication.todiroper.DirOperMessage;
 
 /**
  * @author Eriksson Monteiro <eriksson.monteiro@ua.pt>
@@ -28,12 +30,12 @@ public class ProtocolRunnableTest implements IProtocolRunnable {
 			throw new RuntimeException("Message is null");
 		}
 
-		switch ((AbstractProtocolMessage.MESSAGE_TYPE) msg.getMessage().getMsgType()) {
-			case testMessageSend:
+		switch ((DirOperMessage.MESSAGE_TYPE) msg.getMessage().getMsgType()) {
+			case BoatFull:
 				System.out.println("Server receive a testMessageSend");
 				client.sendMessageObject(new ProtocolMessageReceive(new HelpRequestServedMessage(null)));
 				break;
-			case testMessageReceived:
+			case BackAtWharf:
 				System.out.println("Server receive a testMessageReceive");
 				throw new RuntimeException("Message received in bad context");
 			default:

@@ -5,7 +5,6 @@
 package pt.ua.sd.shoal.network;
 
 import java.net.Socket;
-import pt.ua.sd.boat.network.BoatProtocolMessage;
 import pt.ua.sd.communication.toshoal.ShoalMessage;
 import pt.ua.sd.network.Acknowledge;
 import pt.ua.sd.network.IProtocolMessage;
@@ -57,7 +56,7 @@ public class ShoalProtocolRunnable implements IProtocolRunnable {
 				case RetrieveTheNet:
 					int retrieveTheNet = mShoals[shoal_id].retrieveTheNet();
 					Acknowledge ack = new Acknowledge();
-					ack.setParam("catch", retrieveTheNet+"");
+					ack.setParam("catch", retrieveTheNet);
 					client.sendMessageObject(ack);
 					break;
 				default:
