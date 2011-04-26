@@ -13,6 +13,10 @@ import pt.ua.sd.communication.Message;
  */
 public class Acknowledge implements IProtocolMessage {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 584266944611767194L;
 	private HashMap<String, Object> params = new HashMap<String, Object>();
 	private static Message ack = new Ack();
 

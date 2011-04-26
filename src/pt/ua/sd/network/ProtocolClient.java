@@ -12,9 +12,9 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import pt.ua.sd.communication.toboat.BoatMessage;
 import pt.ua.sd.communication.todiroper.BoatFullMessage;
-import pt.ua.sd.communication.todiroper.DirOperMessage;
 
 /**
  * @author Eriksson Monteiro <eriksson.monteiro@ua.pt>
