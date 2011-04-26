@@ -22,7 +22,6 @@ public class ShoalProtocolMessage implements Serializable, IProtocolMessage {
 	private static final long serialVersionUID = 4054980547168620833L;
 	protected final ShoalMessage m;
 	protected final ShoalId id;
-	protected final BoatId bId;
 
 	/**
 	 * Construct a new ShoalProtocolMessage given a destination Shoal and the
@@ -35,10 +34,10 @@ public class ShoalProtocolMessage implements Serializable, IProtocolMessage {
 	 * @param m
 	 *            the messsage to deliver.
 	 */
-	public ShoalProtocolMessage(ShoalId id, ShoalMessage m, BoatId b) {
+	public ShoalProtocolMessage(ShoalId id, ShoalMessage m) {
 		this.m = m;
 		this.id = id;
-		this.bId = b;
+		
 	}
 
 	/**
@@ -53,13 +52,5 @@ public class ShoalProtocolMessage implements Serializable, IProtocolMessage {
 	 */
 	public ShoalId getShoalId() {
 		return id;
-	}
-
-	/**
-	 *
-	 * @return the boat id
-	 */
-	public BoatId getBoatId() {
-		return bId;
 	}
 }

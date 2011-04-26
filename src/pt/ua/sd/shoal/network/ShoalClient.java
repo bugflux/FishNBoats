@@ -4,51 +4,44 @@
 package pt.ua.sd.shoal.network;
 
 import java.net.Socket;
-import java.util.HashMap;
-import java.util.Map.Entry;
-import pt.ua.sd.communication.todiroper.LifeEndMessage;
-import pt.ua.sd.communication.todiroper.SeasonEndMessage;
-import pt.ua.sd.communication.toocean.SetShoalSizeMessage;
-import pt.ua.sd.communication.toocean.SetShoalStateMessage;
-import pt.ua.sd.diroper.DirOperId;
-import pt.ua.sd.diroper.network.DirOperProtocolMessage;
+import pt.ua.sd.communication.toshoal.GoToFeedingAreaMessage;
+import pt.ua.sd.communication.toshoal.RetrieveTheNetMessage;
+import pt.ua.sd.communication.toshoal.TrappedByTheNetMessage;
+import pt.ua.sd.network.Acknowledge;
+import pt.ua.sd.network.IProtocolMessage;
 import pt.ua.sd.network.ProtocolClient;
-import pt.ua.sd.ocean.network.OceanProtocolMessage;
+import pt.ua.sd.shoal.IShoalBoat;
+import pt.ua.sd.shoal.IShoalDirOper;
 import pt.ua.sd.shoal.ShoalId;
-import pt.ua.sd.shoal.ShoalStats.INTERNAL_STATE_SCHOOL;
+
 
 /**
  * @author Eriksson Monteiro <eriksson.monteiro@ua.pt>
  * @author André Prata <andreprata@ua.pt>
  */
-public class ShoalClient {
+public class ShoalClient extends ProtocolClient implements IShoalBoat, IShoalDirOper{
+	ShoalId id;
+	public ShoalClient(ShoalId id, int port, String host) {
+		super(host, port);
+		this.id=id;
+	}
+	public ShoalClient(ShoalId id, Socket socket) {
+		super(socket);
+		this.id=id;
+	}
 	
-	public static void sendEndSeason(HashMap<Integer,Socket> socket){
-		for(Entry<Integer,Socket> s : socket.entrySet()){
-			ProtocolClient client = new ProtocolClient(s.getValue());
-			client.sendMessageObject(new DirOperProtocolMessage(new DirOperId(s.getKey()), new SeasonEndMessage()));
-			client.disconnect();
-		}
-	}
-	public static void sendEndLife(HashMap<Integer,Socket> socket){
-		for(Entry<Integer,Socket> s : socket.entrySet()){
-			ProtocolClient client = new ProtocolClient(s.getValue());
-			client.sendMessageObject(new DirOperProtocolMessage(new DirOperId(s.getKey()), new LifeEndMessage()));
-			client.disconnect();
-		}
+	public void castTheNet() {
+		this.sendMessageObjectBlocking(new ShoalProtocolMessage(id, new TrappedByTheNetMessage()));
 	}
 
-	public static void changeSize(Socket socket ,ShoalId id, int size){
-		ProtocolClient client = new ProtocolClient(socket);
-		client.sendMessageObject(new OceanProtocolMessage(new SetShoalSizeMessage(id, size)));
-		client.disconnect();
+	public int retrieveTheNet() {
+		IProtocolMessage response = this.sendMessageObjectBlocking(new ShoalProtocolMessage(id, new RetrieveTheNetMessage()));
+		Acknowledge ack =(Acknowledge)response;
+		return Integer.parseInt(ack.getParam("catch"));
 	}
 
-	public static void changeSize(Socket socket ,ShoalId id, INTERNAL_STATE_SCHOOL state){
-		ProtocolClient client = new ProtocolClient(socket);
-		client.sendMessageObject(new OceanProtocolMessage(new SetShoalStateMessage(id, state)));
-		client.disconnect();
+	public void seasonBegin() {
+		this.sendMessageObjectBlocking(new ShoalProtocolMessage(id, new GoToFeedingAreaMessage()));
 	}
-
 
 }
