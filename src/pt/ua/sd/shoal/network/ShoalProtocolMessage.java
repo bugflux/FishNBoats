@@ -4,7 +4,6 @@
 package pt.ua.sd.shoal.network;
 
 import java.io.Serializable;
-import pt.ua.sd.boat.BoatId;
 
 import pt.ua.sd.communication.toshoal.ShoalMessage;
 import pt.ua.sd.network.IProtocolMessage;
