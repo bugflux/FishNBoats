@@ -39,6 +39,20 @@ public class DistributionServer {
 	static HashSet<Thread> runningServices = new HashSet<Thread>();
 	static HashSet<Entity> runningEntities = new HashSet<Entity>();
 
+	protected static boolean isThisMachine(InetAddress address) {
+		try {
+			InetAddress addresses[] = InetAddress.getAllByName(InetAddress.getLocalHost().getHostName());
+			for(InetAddress addr : addresses) {
+				System.out.println(addr.getHostAddress());
+			}
+			String thisMachine = InetAddress.getLocalHost().getHostAddress();
+			return address.getHostAddress().equals(thisMachine);
+		} catch (Throwable t) {
+
+		}
+		return false;
+	}
+
 	public static void main(String args[]) {
 		ProtocolServer s = new ProtocolServer(
 				DistributionConfig.DISTRIBUTION_SERVER_PORT,
@@ -51,9 +65,11 @@ public class DistributionServer {
 						assert socket != null;
 
 						try {
-							InetAddress thisMachine = null;
-							thisMachine = InetAddress.getLocalHost();
-							System.out.println("Detected ip address for this server: " + thisMachine.getHostAddress());
+							String thisMachine = InetAddress.getLocalHost()
+									.getHostAddress();
+							System.out
+									.println("Detected ip address for this server: "
+											+ thisMachine);
 
 							// fetch the dsitribution message
 							DistributionMessage distributionMessage = (DistributionMessage) ((IProtocolMessage) ProtocolEndPoint
@@ -64,87 +80,62 @@ public class DistributionServer {
 							// startup here, start them accordingly
 							if (distributionMessage.getMsgType() == MESSAGE_TYPE.Start) {
 								StartMessage msg = (StartMessage) distributionMessage;
+								System.out.println(msg.getMLogAddress()
+										.getHostAddress() + " " + thisMachine);
 
 								if (!runningEntities.contains(Entity.MLog)
-										&& msg.getMLogAddress().equals(
-												thisMachine)) {
+										&& isThisMachine(msg.getMLogAddress())) {
 
 									System.out.println("Launched MLog");
 									runningEntities.add(Entity.MLog);
-									ProtocolEndPoint.sendMessageObject(socket,
-											ack);
 								} else if (!runningEntities
 										.contains(Entity.TLogFlusher)
-										&& msg.getTLogFlusherAddress().equals(
-												thisMachine)) {
+										&& isThisMachine(msg.getTLogFlusherAddress())) {
 
 									System.out.println("Launched TLogFlusher");
 									runningEntities.add(Entity.TLogFlusher);
-									ProtocolEndPoint.sendMessageObject(socket,
-											ack);
 								} else if (!runningEntities
 										.contains(Entity.MOcean)
-										&& msg.getMOceanAddress().equals(
-												thisMachine)) {
+										&& isThisMachine(msg.getMOceanAddress())) {
 
 									System.out.println("Launched MOcean");
 									runningEntities.add(Entity.MOcean);
-									ProtocolEndPoint.sendMessageObject(socket,
-											ack);
 								} else if (!runningEntities
 										.contains(Entity.MShoal)
-										&& msg.getMShoalAddress().equals(
-												thisMachine)) {
+										&& isThisMachine(msg.getMShoalAddress())) {
 
 									System.out.println("Launched MShoal");
 									runningEntities.add(Entity.MShoal);
-									ProtocolEndPoint.sendMessageObject(socket,
-											ack);
 								} else if (!runningEntities
 										.contains(Entity.TShoal)
-										&& msg.getTShoalAddress().equals(
-												thisMachine)) {
+										&& isThisMachine(msg.getTShoalAddress())) {
 
 									System.out.println("Launched TShoal");
 									runningEntities.add(Entity.TShoal);
-									ProtocolEndPoint.sendMessageObject(socket,
-											ack);
 								} else if (!runningEntities
 										.contains(Entity.MBoat)
-										&& msg.getMBoatAddress().equals(
-												thisMachine)) {
+										&& isThisMachine(msg.getMBoatAddress())) {
 
 									System.out.println("Launched MBoat");
 									runningEntities.add(Entity.MBoat);
-									ProtocolEndPoint.sendMessageObject(socket,
-											ack);
 								} else if (!runningEntities
 										.contains(Entity.TBoat)
-										&& msg.getTBoatAddress().equals(
-												thisMachine)) {
+										&& isThisMachine(msg.getTBoatAddress())) {
 
 									System.out.println("Launched TBoat");
 									runningEntities.add(Entity.TBoat);
-									ProtocolEndPoint.sendMessageObject(socket,
-											ack);
 								} else if (!runningEntities
 										.contains(Entity.MDirOper)
-										&& msg.getMDirOperAddress().equals(
-												thisMachine)) {
+										&& isThisMachine(msg.getMDirOperAddress())) {
 
 									System.out.println("Launched MDirOper");
 									runningEntities.add(Entity.MDirOper);
-									ProtocolEndPoint.sendMessageObject(socket,
-											ack);
 								} else if (!runningEntities
 										.contains(Entity.TDirOper)
-										&& msg.getTDirOperAddress().equals(
-												thisMachine)) {
+										&& isThisMachine(msg.getTDirOperAddress())) {
 
 									System.out.println("Launched TDirOper");
 									runningEntities.add(Entity.TDirOper);
-									ProtocolEndPoint.sendMessageObject(socket,
-											ack);
 								}
 
 							} else { // MESSAGE_TYPE.Abort
@@ -157,16 +148,14 @@ public class DistributionServer {
 									}
 								}
 
-								ProtocolEndPoint.sendMessageObject(socket,
-										new Acknowledge());
 								runningServices.clear();
 								runningEntities.clear();
 							}
+
+							ProtocolEndPoint.sendMessageObject(socket, ack);
 						} catch (Throwable t) {
 							t.printStackTrace();
 						}
-
-						// socket = null;
 					}
 
 					@Override
