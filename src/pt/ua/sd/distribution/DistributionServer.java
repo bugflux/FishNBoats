@@ -132,7 +132,7 @@ public class DistributionServer {
 												thisMachine)) {
 
 									System.out.println("Launched MDirOper");
-									runningEntities.add(Entity.MDirOper;
+									runningEntities.add(Entity.MDirOper);
 									ProtocolEndPoint.sendMessageObject(socket,
 											ack);
 								} else if (!runningEntities
