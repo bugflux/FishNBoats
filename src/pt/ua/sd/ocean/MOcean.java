@@ -15,7 +15,6 @@ import pt.ua.sd.boat.BoatStats;
 import pt.ua.sd.diroper.DirOperId;
 import pt.ua.sd.diroper.DirOperStats;
 import pt.ua.sd.diroper.DirOperStats.INTERNAL_STATE_DIROPER;
-import pt.ua.sd.log.MClock;
 import pt.ua.sd.log.MLog;
 import pt.ua.sd.shoal.IShoalBoat;
 import pt.ua.sd.shoal.ShoalId;
@@ -39,7 +38,7 @@ public class MOcean implements IOceanBoat, IOceanShoal, IOceanDirOper {
 	protected final FishingGBoard gmap;
 	protected final Point wharf;
 	protected final Point reproducingZone;
-	protected final MClock clock = MClock.getClock();
+
 	protected final MLog log = MLog.getInstance();
 
 	/**
@@ -115,7 +114,7 @@ public class MOcean implements IOceanBoat, IOceanShoal, IOceanDirOper {
 
 		synchronized (this) {
 			assert dirOperStats.containsKey(id);
-			logTick = clock.getClockTick();
+			logTick = log.getClockTick();
 			logMessage = dirOperStats.get(id).getState().toString() + " > ";
 
 			dirOperStats.get(id).setState(s);
@@ -157,7 +156,7 @@ public class MOcean implements IOceanBoat, IOceanShoal, IOceanDirOper {
 			map[p.y][p.x].addBoat(boat.getId());
 			boat.setPosition(p);
 
-			logTick = clock.getClockTick();
+			logTick = log.getClockTick();
 			logMessage = boat.toString();
 		}
 
@@ -195,7 +194,7 @@ public class MOcean implements IOceanBoat, IOceanShoal, IOceanDirOper {
 			map[p.y][p.x].addShoal(shoal.getId());
 			shoal.setPosition(p);
 
-			logTick = clock.getClockTick();
+			logTick = log.getClockTick();
 			logMessage = shoal.toString();
 
 			mshoals.put(shoal.getId(), mshoal);
@@ -225,7 +224,7 @@ public class MOcean implements IOceanBoat, IOceanShoal, IOceanDirOper {
 
 			boatsPosition.get(id).setState(state);
 
-			logTick = clock.getClockTick();
+			logTick = log.getClockTick();
 			logMessage += boatsPosition.get(id).getState().toString();
 		}
 
@@ -241,7 +240,7 @@ public class MOcean implements IOceanBoat, IOceanShoal, IOceanDirOper {
 		String logMessage;
 
 		synchronized (this) {
-			logTick = clock.getClockTick();
+			logTick = log.getClockTick();
 			logMessage = boatsPosition.get(id).getCatch() + " > ";
 
 			boatsPosition.get(id).setCatch(stored);
@@ -271,7 +270,7 @@ public class MOcean implements IOceanBoat, IOceanShoal, IOceanDirOper {
 
 			shoalsPosition.get(id).setState(state);
 
-			logTick = clock.getClockTick();
+			logTick = log.getClockTick();
 			logMessage += shoalsPosition.get(id).getState().toString();
 		}
 
@@ -298,7 +297,7 @@ public class MOcean implements IOceanBoat, IOceanShoal, IOceanDirOper {
 
 			shoalsPosition.get(id).setSize(size);
 
-			logTick = clock.getClockTick();
+			logTick = log.getClockTick();
 			logMessage += shoalsPosition.get(id).getSize();
 		}
 
@@ -439,7 +438,7 @@ public class MOcean implements IOceanBoat, IOceanShoal, IOceanDirOper {
 				moveBoat(id, r);
 			}
 
-			logTick = clock.getClockTick();
+			logTick = log.getClockTick();
 			logMessage += "(" + r.y + "," + r.x + ")";
 		}
 
@@ -486,7 +485,7 @@ public class MOcean implements IOceanBoat, IOceanShoal, IOceanDirOper {
 			assert boatsPosition.containsKey(id);
 			assert boatsPosition.containsKey(helper);
 
-			logTick = clock.getClockTick();
+			logTick = log.getClockTick();
 
 			Point p = boatsPosition.get(id).getPosition();
 			if (p.equals(boatsPosition.get(helper).getPosition())) {
@@ -526,7 +525,7 @@ public class MOcean implements IOceanBoat, IOceanShoal, IOceanDirOper {
 		synchronized (this) {
 			assert boatsPosition.containsKey(id);
 
-			logTick = clock.getClockTick();
+			logTick = log.getClockTick();
 
 			points = new ArrayList<Point>();
 
@@ -772,7 +771,7 @@ public class MOcean implements IOceanBoat, IOceanShoal, IOceanDirOper {
 				moveShoal(id, r);
 			}
 
-			logTick = clock.getClockTick();
+			logTick = log.getClockTick();
 			logMessage += "(" + r.y + "," + r.x + ")";
 		}
 
