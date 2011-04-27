@@ -63,49 +63,15 @@ public class ProtocolClient {
 	}
 
 	synchronized public IProtocolMessage sendMessageObjectBlocking(IProtocolMessage msg) {
-		IProtocolMessage ret = null;
-		System.out.println("socket sending object blocking");
-		try {
-			ObjectOutputStream objOutputStream = new ObjectOutputStream(outputStream);
-
-
-			objOutputStream.writeObject(msg);
-			objOutputStream.flush();
-
-			ObjectInputStream objInputStream = new ObjectInputStream(inputStream);
-			ret = (IProtocolMessage) objInputStream.readObject();
-		} catch (ClassNotFoundException ex) {
-			Logger.getLogger(ProtocolClient.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (IOException ex) {
-			Logger.getLogger(ProtocolClient.class.getName()).log(Level.SEVERE, null, ex);
-		}
-		return ret;
+		return ProtocolEndPoint.sendMessageObjectBlocking(client, msg);
 	}
 
 	synchronized public void sendMessageObject(IProtocolMessage msg) {
-		System.out.println("socket sending object");
-		try {
-			ObjectOutputStream objOutputStream = new ObjectOutputStream(outputStream);
-
-			objOutputStream.writeObject(msg);
-			objOutputStream.flush();
-		} catch (IOException ex) {
-			Logger.getLogger(ProtocolClient.class.getName()).log(Level.SEVERE, null, ex);
-		}
+		ProtocolEndPoint.sendMessageObject(client, msg);
 	}
 
 	synchronized public IProtocolMessage getMessageObject() {
-		try {
-			System.out.println("socket receiving object");
-			ObjectInputStream objInputStream = new ObjectInputStream(inputStream);
-
-			return (IProtocolMessage) objInputStream.readObject();
-		} catch (IOException ex) {
-			Logger.getLogger(ProtocolClient.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (ClassNotFoundException ex) {
-			Logger.getLogger(ProtocolClient.class.getName()).log(Level.SEVERE, null, ex);
-		}
-		return null;
+		return ProtocolEndPoint.getMessageObject(client);
 	}
 
 	public static void main(String args[]) {
