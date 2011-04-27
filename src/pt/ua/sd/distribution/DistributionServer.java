@@ -53,6 +53,7 @@ public class DistributionServer {
 						try {
 							InetAddress thisMachine = null;
 							thisMachine = InetAddress.getLocalHost();
+							System.out.println("Detected ip address for this server: " + thisMachine.getHostAddress());
 
 							// fetch the dsitribution message
 							DistributionMessage distributionMessage = (DistributionMessage) ((IProtocolMessage) ProtocolEndPoint
