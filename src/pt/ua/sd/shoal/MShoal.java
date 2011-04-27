@@ -8,7 +8,6 @@ import pt.ua.sd.communication.toshoal.NoActionMessage;
 import pt.ua.sd.communication.toshoal.RetrieveTheNetMessage;
 import pt.ua.sd.communication.toshoal.ShoalMessage;
 import pt.ua.sd.communication.toshoal.TrappedByTheNetMessage;
-import pt.ua.sd.log.MClock;
 import pt.ua.sd.log.MLog;
 
 /**
@@ -25,7 +24,7 @@ public class MShoal implements IShoal, IShoalBoat, IShoalDirOper {
 	protected boolean isTrapped = false;
 	protected boolean escaped = false;
 	protected int n_boat_cast_the_net = 0;
-	protected MClock clock = MClock.getClock();
+
 	protected MLog log = MLog.getInstance();
 	protected ShoalMessage message;
 	protected ShoalMessage goToFeedingArea = new GoToFeedingAreaMessage();
@@ -80,7 +79,7 @@ public class MShoal implements IShoal, IShoalBoat, IShoalDirOper {
 		int logTick;
 
 		synchronized (this) {
-			logTick = clock.getClockTick();
+			logTick = log.getClockTick();
 
 			n_diropers_began_season++;
 
@@ -111,7 +110,7 @@ public class MShoal implements IShoal, IShoalBoat, IShoalDirOper {
 		String logMessage;
 
 		synchronized (this) {
-			logTick = clock.getClockTick();
+			logTick = log.getClockTick();
 			logMessage = (n_boat_cast_the_net + 1) + " of " + 2;
 
 			n_boat_cast_the_net++;
@@ -142,7 +141,7 @@ public class MShoal implements IShoal, IShoalBoat, IShoalDirOper {
 		int logTick;
 
 		synchronized (this) {
-			logTick = clock.getClockTick();
+			logTick = log.getClockTick();
 
 			isTrapped = true;
 			trappedAmount = amount;
@@ -169,7 +168,7 @@ public class MShoal implements IShoal, IShoalBoat, IShoalDirOper {
 		String logMessage;
 
 		synchronized (this) {
-			logTick = clock.getClockTick();
+			logTick = log.getClockTick();
 			logMessage = (n_boat_cast_the_net - 1) + " left";
 
 			n_boat_cast_the_net--;

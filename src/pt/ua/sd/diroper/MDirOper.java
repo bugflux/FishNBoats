@@ -14,7 +14,6 @@ import pt.ua.sd.communication.todiroper.FishingDoneMessage;
 import pt.ua.sd.communication.todiroper.LifeEndMessage;
 import pt.ua.sd.communication.todiroper.RequestHelpMessage;
 import pt.ua.sd.communication.todiroper.SeasonEndMessage;
-import pt.ua.sd.log.MClock;
 import pt.ua.sd.log.MLog;
 
 /**
@@ -30,7 +29,7 @@ public class MDirOper implements IDirOper, IDirOperBoat, IDirOperShoal {
 	protected LinkedList<DirOperMessage> messages = new LinkedList<DirOperMessage>();
 	protected DirOperMessage seasonEnd = new SeasonEndMessage();
 	protected DirOperMessage lifeEnd = new LifeEndMessage();
-	protected MClock clock = MClock.getClock();
+
 	protected MLog log = MLog.getInstance();
 	protected int n_shoals_ended_season = 0;
 	protected int n_shoals_ended_life = 0;
@@ -76,7 +75,7 @@ public class MDirOper implements IDirOper, IDirOperBoat, IDirOperShoal {
 		int logTick;
 
 		synchronized (this) {
-			logTick = clock.getClockTick();
+			logTick = log.getClockTick();
 
 			pushMsg(new BackAtWharfMessage(id, stored));
 		}
@@ -92,7 +91,7 @@ public class MDirOper implements IDirOper, IDirOperBoat, IDirOperShoal {
 		int logTick;
 
 		synchronized (this) {
-			logTick = clock.getClockTick();
+			logTick = log.getClockTick();
 
 			pushMsg(new FishingDoneMessage(id));
 		}
@@ -109,7 +108,7 @@ public class MDirOper implements IDirOper, IDirOperBoat, IDirOperShoal {
 		String logMessage;
 
 		synchronized (this) {
-			logTick = clock.getClockTick();
+			logTick = log.getClockTick();
 			logMessage = (n_shoals_ended_season + 1) + " of " + nshoals;
 
 			n_shoals_ended_season++;
@@ -133,7 +132,7 @@ public class MDirOper implements IDirOper, IDirOperBoat, IDirOperShoal {
 		String logMessage;
 
 		synchronized (this) {
-			logTick = clock.getClockTick();
+			logTick = log.getClockTick();
 			logMessage = (n_shoals_ended_life + 1) + " of " + nshoals;
 
 			n_shoals_ended_life++;
@@ -156,7 +155,7 @@ public class MDirOper implements IDirOper, IDirOperBoat, IDirOperShoal {
 		int logTick;
 
 		synchronized (this) {
-			logTick = clock.getClockTick();
+			logTick = log.getClockTick();
 
 			pushMsg(new RequestHelpMessage(id, p));
 		}
@@ -173,7 +172,7 @@ public class MDirOper implements IDirOper, IDirOperBoat, IDirOperShoal {
 		int logTick;
 
 		synchronized (this) {
-			logTick = clock.getClockTick();
+			logTick = log.getClockTick();
 
 			pushMsg(new BoatFullMessage(id));
 		}
