@@ -72,11 +72,11 @@ public class OceanClient extends ProtocolClient implements IOceanBoat, IOceanSho
     }
 
     public void setBoatState(BoatId id, INTERNAL_STATE_BOAT state) {
-        this.sendMessageObject(new OceanProtocolMessage(new SetBoatStateMessage(id, state)));
+        this.sendMessageObjectBlocking(new OceanProtocolMessage(new SetBoatStateMessage(id, state)));
     }
 
     public void setBoatCatch(BoatId id, int stored) {
-        this.sendMessageObject(new OceanProtocolMessage(new SetBoatCatchMessage(id, stored)));
+        this.sendMessageObjectBlocking(new OceanProtocolMessage(new SetBoatCatchMessage(id, stored)));
     }
 
     public Point getWharf() {
@@ -98,11 +98,11 @@ public class OceanClient extends ProtocolClient implements IOceanBoat, IOceanSho
     }
 
     public void setShoalState(ShoalId id, INTERNAL_STATE_SCHOOL state) {
-        this.sendMessageObject(new OceanProtocolMessage(new SetShoalStateMessage(id, state)));
+        this.sendMessageObjectBlocking(new OceanProtocolMessage(new SetShoalStateMessage(id, state)));
     }
 
     public void setShoalSize(ShoalId id, int size) {
-        this.sendMessageObject(new OceanProtocolMessage(new SetShoalSizeMessage(id, size)));
+        this.sendMessageObjectBlocking(new OceanProtocolMessage(new SetShoalSizeMessage(id, size)));
     }
 
     public Point getSpawningArea() {
@@ -112,6 +112,6 @@ public class OceanClient extends ProtocolClient implements IOceanBoat, IOceanSho
     }
 
     public void setDirOperState(DirOperId id, INTERNAL_STATE_DIROPER state) {
-        this.sendMessageObject(new OceanProtocolMessage(new SetDirOperStateMessage(id, state)));
+        this.sendMessageObjectBlocking(new OceanProtocolMessage(new SetDirOperStateMessage(id, state)));
     }
 }
