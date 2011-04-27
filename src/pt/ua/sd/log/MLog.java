@@ -18,6 +18,18 @@ public class MLog {
 	protected static MLog instance;
 	protected Map<Integer, String> list;
 	protected int nextContiguousIndex;
+	
+	protected int tick = 0;
+
+	/**
+	 * get a clock tick on the global clock
+	 * @return int the clock tick id
+	 */
+	synchronized public int getClockTick() {
+//		System.out.println("\t\t\t\t\t\t\t\t\ttick: " + tick);
+//		Thread.dumpStack();
+		return ++tick;
+	}
 
 	private MLog() {
 		this.list = new HashMap<Integer, String>();

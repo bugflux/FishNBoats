@@ -15,7 +15,6 @@ import pt.ua.sd.communication.toboat.NoActionMessage;
 import pt.ua.sd.communication.toboat.ReleaseHelperMessage;
 import pt.ua.sd.communication.toboat.ReturnToWharfMessage;
 import pt.ua.sd.communication.toboat.SetToHighSeaMessage;
-import pt.ua.sd.log.MClock;
 import pt.ua.sd.log.MLog;
 import pt.ua.sd.shoal.IShoalBoat;
 
@@ -35,7 +34,6 @@ public class MBoat implements IBoat, IBoatDirOper, IBoatHelper {
 	protected BoatMessage lifeEnd = new LifeEndMessage();
 	protected BoatMessage releaseHelper = new ReleaseHelperMessage();
 
-	protected final MClock clock = MClock.getClock();
 	protected final MLog log = MLog.getInstance();
 
 	/**
@@ -81,7 +79,7 @@ public class MBoat implements IBoat, IBoatDirOper, IBoatHelper {
 		int logTick;
 
 		synchronized (this) {
-			logTick = clock.getClockTick();
+			logTick = log.getClockTick();
 
 			pushMsg(setToHighSea);
 		}
@@ -97,7 +95,7 @@ public class MBoat implements IBoat, IBoatDirOper, IBoatHelper {
 		int logTick;
 
 		synchronized (this) {
-			logTick = clock.getClockTick();
+			logTick = log.getClockTick();
 
 			pushMsg(returnToWharf);
 		}
@@ -113,7 +111,7 @@ public class MBoat implements IBoat, IBoatDirOper, IBoatHelper {
 		int logTick;
 
 		synchronized (this) {
-			logTick = clock.getClockTick();
+			logTick = log.getClockTick();
 
 			pushMsg(new ChangeCourseMessage(p));
 		}
@@ -130,7 +128,7 @@ public class MBoat implements IBoat, IBoatDirOper, IBoatHelper {
 		int logTick;
 
 		synchronized (this) {
-			logTick = clock.getClockTick();
+			logTick = log.getClockTick();
 
 			pushMsg(new HelpRequestServedMessage(id));
 		}
@@ -146,7 +144,7 @@ public class MBoat implements IBoat, IBoatDirOper, IBoatHelper {
 		int logTick;
 
 		synchronized (this) {
-			logTick = clock.getClockTick();
+			logTick = log.getClockTick();
 
 			pushMsg(releaseHelper);
 		}
@@ -162,7 +160,7 @@ public class MBoat implements IBoat, IBoatDirOper, IBoatHelper {
 		int logTick;
 
 		synchronized (this) {
-			logTick = clock.getClockTick();
+			logTick = log.getClockTick();
 
 			pushMsg(new CastTheNetMessage(s));
 		}
@@ -178,7 +176,7 @@ public class MBoat implements IBoat, IBoatDirOper, IBoatHelper {
 		int logTick;
 
 		synchronized (this) {
-			logTick = clock.getClockTick();
+			logTick = log.getClockTick();
 
 			pushMsg(lifeEnd);
 		}
