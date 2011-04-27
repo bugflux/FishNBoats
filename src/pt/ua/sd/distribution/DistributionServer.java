@@ -68,6 +68,7 @@ public class DistributionServer {
 										&& msg.getMLogAddress().equals(
 												thisMachine)) {
 
+									System.out.println("Launched MLog");
 									runningEntities.add(Entity.MLog);
 									ProtocolEndPoint.sendMessageObject(socket,
 											ack);
@@ -76,6 +77,7 @@ public class DistributionServer {
 										&& msg.getTLogFlusherAddress().equals(
 												thisMachine)) {
 
+									System.out.println("Launched TLogFlusher");
 									runningEntities.add(Entity.TLogFlusher);
 									ProtocolEndPoint.sendMessageObject(socket,
 											ack);
@@ -84,6 +86,7 @@ public class DistributionServer {
 										&& msg.getMOceanAddress().equals(
 												thisMachine)) {
 
+									System.out.println("Launched MOcean");
 									runningEntities.add(Entity.MOcean);
 									ProtocolEndPoint.sendMessageObject(socket,
 											ack);
@@ -92,6 +95,7 @@ public class DistributionServer {
 										&& msg.getMShoalAddress().equals(
 												thisMachine)) {
 
+									System.out.println("Launched MShoal");
 									runningEntities.add(Entity.MShoal);
 									ProtocolEndPoint.sendMessageObject(socket,
 											ack);
@@ -100,6 +104,7 @@ public class DistributionServer {
 										&& msg.getTShoalAddress().equals(
 												thisMachine)) {
 
+									System.out.println("Launched TShoal");
 									runningEntities.add(Entity.TShoal);
 									ProtocolEndPoint.sendMessageObject(socket,
 											ack);
@@ -108,6 +113,7 @@ public class DistributionServer {
 										&& msg.getMBoatAddress().equals(
 												thisMachine)) {
 
+									System.out.println("Launched MBoat");
 									runningEntities.add(Entity.MBoat);
 									ProtocolEndPoint.sendMessageObject(socket,
 											ack);
@@ -116,6 +122,7 @@ public class DistributionServer {
 										&& msg.getTBoatAddress().equals(
 												thisMachine)) {
 
+									System.out.println("Launched TBoat");
 									runningEntities.add(Entity.TBoat);
 									ProtocolEndPoint.sendMessageObject(socket,
 											ack);
@@ -124,7 +131,8 @@ public class DistributionServer {
 										&& msg.getMDirOperAddress().equals(
 												thisMachine)) {
 
-									runningEntities.add(Entity.TBoat);
+									System.out.println("Launched MDirOper");
+									runningEntities.add(Entity.MDirOper;
 									ProtocolEndPoint.sendMessageObject(socket,
 											ack);
 								} else if (!runningEntities
@@ -132,7 +140,8 @@ public class DistributionServer {
 										&& msg.getTDirOperAddress().equals(
 												thisMachine)) {
 
-									runningEntities.add(Entity.TBoat);
+									System.out.println("Launched TDirOper");
+									runningEntities.add(Entity.TDirOper);
 									ProtocolEndPoint.sendMessageObject(socket,
 											ack);
 								}
