@@ -4,7 +4,9 @@
 package pt.ua.sd.distribution;
 
 import java.net.InetAddress;
+import java.net.NetworkInterface;
 import java.net.Socket;
+import java.util.Collections;
 import java.util.HashSet;
 
 import pt.ua.sd.distribution.DistributionMessage.MESSAGE_TYPE;
@@ -38,19 +40,22 @@ import pt.ua.sd.network.ProtocolServer;
 public class DistributionServer {
 	static HashSet<Thread> runningServices = new HashSet<Thread>();
 	static HashSet<Entity> runningEntities = new HashSet<Entity>();
+	static HashSet<String> thisMachine = new HashSet<String>();
+	static {
+		try {
+			for(NetworkInterface ifc : Collections.list(NetworkInterface.getNetworkInterfaces())) {
+				for(InetAddress addr : Collections.list(ifc.getInetAddresses())) {
+					thisMachine.add(addr.getHostAddress());
+					System.out.println(addr.getHostAddress());
+				}
+			}
+		} catch (Throwable t) {
+			assert false;
+		}
+	}
 
 	protected static boolean isThisMachine(InetAddress address) {
-		try {
-			InetAddress addresses[] = InetAddress.getAllByName(InetAddress.getLocalHost().getHostName());
-			for(InetAddress addr : addresses) {
-				System.out.println(addr.getHostAddress());
-			}
-			String thisMachine = InetAddress.getLocalHost().getHostAddress();
-			return address.getHostAddress().equals(thisMachine);
-		} catch (Throwable t) {
-
-		}
-		return false;
+		return thisMachine.contains(address.getHostAddress());
 	}
 
 	public static void main(String args[]) {
@@ -80,8 +85,6 @@ public class DistributionServer {
 							// startup here, start them accordingly
 							if (distributionMessage.getMsgType() == MESSAGE_TYPE.Start) {
 								StartMessage msg = (StartMessage) distributionMessage;
-								System.out.println(msg.getMLogAddress()
-										.getHostAddress() + " " + thisMachine);
 
 								if (!runningEntities.contains(Entity.MLog)
 										&& isThisMachine(msg.getMLogAddress())) {
@@ -90,7 +93,8 @@ public class DistributionServer {
 									runningEntities.add(Entity.MLog);
 								} else if (!runningEntities
 										.contains(Entity.TLogFlusher)
-										&& isThisMachine(msg.getTLogFlusherAddress())) {
+										&& isThisMachine(msg
+												.getTLogFlusherAddress())) {
 
 									System.out.println("Launched TLogFlusher");
 									runningEntities.add(Entity.TLogFlusher);
@@ -126,13 +130,15 @@ public class DistributionServer {
 									runningEntities.add(Entity.TBoat);
 								} else if (!runningEntities
 										.contains(Entity.MDirOper)
-										&& isThisMachine(msg.getMDirOperAddress())) {
+										&& isThisMachine(msg
+												.getMDirOperAddress())) {
 
 									System.out.println("Launched MDirOper");
 									runningEntities.add(Entity.MDirOper);
 								} else if (!runningEntities
 										.contains(Entity.TDirOper)
-										&& isThisMachine(msg.getTDirOperAddress())) {
+										&& isThisMachine(msg
+												.getTDirOperAddress())) {
 
 									System.out.println("Launched TDirOper");
 									runningEntities.add(Entity.TDirOper);

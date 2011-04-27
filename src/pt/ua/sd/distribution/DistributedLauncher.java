@@ -18,16 +18,16 @@ public class DistributedLauncher {
 	public static void main(String[] args) {
 		try {
 
-			InetSocketAddress mBoatAddress = new InetSocketAddress("192.168.8.180",
+			InetSocketAddress mBoatAddress = new InetSocketAddress("172.16.0.130",
 					22141), mDirOperAddress = new InetSocketAddress(
-					"192.168.8.180", 22142), mLogAddress = new InetSocketAddress(
-					"192.168.8.180", 22143), mOceanAddress = new InetSocketAddress(
-					"192.168.8.180", 22144), mShoalAddress = new InetSocketAddress(
-					"192.168.8.180", 22145), tBoatAddress = new InetSocketAddress(
-					"192.168.8.175", 0), tDirOperAddress = new InetSocketAddress(
-					"192.168.8.175", 0), tLogFlusherAddress = new InetSocketAddress(
-					"192.168.8.175", 0), tShoalAddress = new InetSocketAddress(
-					"192.168.8.175", 0);
+					"172.16.0.130", 22142), mLogAddress = new InetSocketAddress(
+					"172.16.0.130", 22143), mOceanAddress = new InetSocketAddress(
+					"172.16.0.130", 22144), mShoalAddress = new InetSocketAddress(
+					"172.16.0.130", 22145), tBoatAddress = new InetSocketAddress(
+					"172.16.0.130", 0), tDirOperAddress = new InetSocketAddress(
+					"172.16.0.130", 0), tLogFlusherAddress = new InetSocketAddress(
+					"172.16.0.130", 0), tShoalAddress = new InetSocketAddress(
+					"172.16.0.130", 0);
 
 			// stop services before starting
 			DistributionClient c = new DistributionClient();
