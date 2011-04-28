@@ -46,7 +46,7 @@ public class ShoalProtocolRunnable implements IProtocolRunnable {
             if (msg instanceof ShoalProtocolMessage) {
                 ShoalProtocolMessage m = (ShoalProtocolMessage) msg;
                 int shoal_id = m.getShoalId().getShoal();
-                if (shoal_id < mShoals.length) {
+                if (shoal_id > mShoals.length) {
                     // TODO: error -> no shoal id
                 }
                 switch ((ShoalMessage.MESSAGE_TYPE) m.getMessage().getMsgType()) {

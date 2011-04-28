@@ -7,7 +7,6 @@ import java.io.Serializable;
 
 import pt.ua.sd.boat.BoatId;
 import pt.ua.sd.communication.toboat.BoatMessage;
-import pt.ua.sd.communication.todiroper.PopMessage;
 import pt.ua.sd.diroper.DirOperId;
 import pt.ua.sd.network.IProtocolMessage;
 
@@ -25,7 +24,7 @@ public class BoatProtocolMessage implements Serializable,IProtocolMessage {
 
 	protected final BoatMessage m;
 	protected final BoatId id;
-	
+	protected final DirOperId dOperId;
 	/**
 	 * Construct a new BoatProtocolMessage given a destination Shoal and the
 	 * message to deliver to it.
@@ -36,10 +35,10 @@ public class BoatProtocolMessage implements Serializable,IProtocolMessage {
 	 * @param m
 	 *            the message to deliver.
 	 */
-	public BoatProtocolMessage(BoatId id, BoatMessage m) {
+	public BoatProtocolMessage(BoatId id, DirOperId dOperId,BoatMessage m) {
 		this.m = m;
 		this.id = id;
-		
+		this.dOperId = dOperId;
 	}
 
 	/**
@@ -54,5 +53,12 @@ public class BoatProtocolMessage implements Serializable,IProtocolMessage {
 	 */
 	public BoatId getBoatId() {
 		return id;
+	}
+        /**
+         * 
+         * @return the director of operation id
+         */
+        public DirOperId getDirOperId() {
+		return dOperId;
 	}
 }

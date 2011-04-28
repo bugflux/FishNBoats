@@ -10,6 +10,9 @@ import pt.ua.sd.boat.BoatStats;
 import pt.ua.sd.boat.BoatStats.INTERNAL_STATE_BOAT;
 import pt.ua.sd.boat.MBoat;
 import pt.ua.sd.boat.TBoat;
+import pt.ua.sd.boat.network.BoatClient;
+import pt.ua.sd.boat.network.BoatProtocolRunnable;
+import pt.ua.sd.boat.network.BoatServer;
 import pt.ua.sd.diroper.DirOperId;
 import pt.ua.sd.diroper.DirOperStats;
 import pt.ua.sd.diroper.DirOperStats.INTERNAL_STATE_DIROPER;
@@ -152,9 +155,17 @@ public class PortoAveiro {
 
         // Boat
         MBoat mBoats[][] = new MBoat[ncompanies][nboats];
+        BoatClient cBoats[][] = new BoatClient[ncompanies][nboats];
         BoatStats sBoats[][] = new BoatStats[ncompanies][nboats];
         TBoat tBoats[][] = new TBoat[ncompanies][nboats];
+        final BoatServer sBoat = new BoatServer(9080, new BoatProtocolRunnable(mBoats));
+        new Thread() {
 
+            @Override
+            public void run() {
+                sBoat.startServer();
+            }
+        }.start();
         // Stats and Monitors
         for (int r = 0; r < nshoals; r++) {
             sShoals[r] = new ShoalStats(new ShoalId(r),
@@ -180,7 +191,7 @@ public class PortoAveiro {
             mDirOpers[r] = new MDirOper(sDirOpers[r].getId(), nshoals, nboats);
             cDirOpers[r]= new DirOperClient(sDirOpers[r].getId(), "127.0.0.1", 9092);
             tDirOpers[r] = new TDirOper(logger, oceanClient, cDirOpers[r],
-                    mBoats[r], cShoals, (DirOperStats) sDirOpers[r].clone());
+                    cBoats[r], cShoals, (DirOperStats) sDirOpers[r].clone());
 
             
             for (int s = 0; s < nboats; s++) {
@@ -189,8 +200,9 @@ public class PortoAveiro {
                         boatCapacity);
                 oceano.addBoat(sBoats[r][s], wharf);
                 mBoats[r][s] = new MBoat(sBoats[r][s].getId());
+                cBoats[r][s] = new BoatClient(sDirOpers[r].getId(), sBoats[r][s].getId(), "127.0.0.1", 9080);
                 tBoats[r][s] = new TBoat((BoatStats) sBoats[r][s].clone(),
-                        boatPeriod, cDirOpers[r], oceanClient, mBoats[r][s]);
+                        boatPeriod, cDirOpers[r], oceanClient, cBoats[r][s]);
                 
             }
         }

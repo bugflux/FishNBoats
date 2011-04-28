@@ -21,6 +21,6 @@ public class GetIdMessage extends BoatMessage {
 	 */
 	@Override
 	public MESSAGE_TYPE getMsgType() {
-		return MESSAGE_TYPE.NoAction;
+		return MESSAGE_TYPE.GetId;
 	}
 }

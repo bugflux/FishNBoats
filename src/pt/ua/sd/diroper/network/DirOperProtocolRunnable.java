@@ -48,7 +48,7 @@ public class DirOperProtocolRunnable implements IProtocolRunnable {
         if (msg instanceof DirOperProtocolMessage) {
             DirOperProtocolMessage m = (DirOperProtocolMessage) msg;
             int diroper_id = m.getId().getId();
-            if (diroper_id < monitor.length) {
+            if (diroper_id > monitor.length) {
                 // TODO: error -> no shoal id
             }
             switch ((DirOperMessage.MESSAGE_TYPE) m.getMessage().getMsgType()) {
