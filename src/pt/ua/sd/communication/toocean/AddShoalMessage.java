@@ -4,6 +4,7 @@
 package pt.ua.sd.communication.toocean;
 
 import java.awt.Point;
+import pt.ua.sd.shoal.MShoal;
 
 import pt.ua.sd.shoal.ShoalStats;
 
@@ -20,6 +21,7 @@ public class AddShoalMessage extends OceanMessage {
 
 	protected final ShoalStats shoal;
 	protected final Point p;
+        protected final MShoal mshoal;
 
 	/**
 	 * Add a new shoal to this Ocean.
@@ -29,11 +31,16 @@ public class AddShoalMessage extends OceanMessage {
 	 * @param p
 	 *            the point to add to.
 	 */
-	public AddShoalMessage(ShoalStats s, Point p) {
+	public AddShoalMessage(ShoalStats s, Point p, MShoal mshoal) {
 		this.shoal = s;
 		this.p = p;
+                this.mshoal=mshoal;
 	}
 
+        public MShoal getShoalMonitor(){
+            return this.mshoal;
+        }
+         
 	/**
 	 * @return the shoal
 	 */

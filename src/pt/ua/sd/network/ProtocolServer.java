@@ -4,10 +4,12 @@
 package pt.ua.sd.network;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import pt.ua.sd.shoal.network.ShoalProtocolRunnable;
 
 /**
  * @author Eriksson Monteiro <eriksson.monteiro@ua.pt>
@@ -15,44 +17,50 @@ import java.util.logging.Logger;
  */
 public class ProtocolServer {
 
-	protected ServerSocket server;
-	protected IProtocolRunnable protocol;
-	protected boolean isClosed = false;
+    protected ServerSocket server;
+    protected IProtocolRunnable protocol;
+    protected boolean isClosed = false;
 
-	public ProtocolServer(int port, IProtocolRunnable protocol) {
+    public ProtocolServer(int port, IProtocolRunnable protocol) {
 
-		this.protocol = protocol;
+        this.protocol = protocol;
 
-		try {
-			this.server = new ServerSocket(port);
-		} catch (IOException ex) {
-			Logger.getLogger(ProtocolServer.class.getName()).log(Level.SEVERE, null, ex);
-			throw new RuntimeException(ex);
-		}
-	}
+        try {
+            this.server = new ServerSocket(port);
+        } catch (IOException ex) {
+            Logger.getLogger(ProtocolServer.class.getName()).log(Level.SEVERE, null, ex);
+            throw new RuntimeException(ex);
+        }
+    }
 
-	synchronized public void startServer() {
-		try {
-			System.out.println("Server started");
-			do {
-				Socket accept = server.accept();
-				protocol.setConnection(accept);
-				new Thread(protocol).start();
-			} while (!isClosed);
-		} catch (IOException ex) {
-			Logger.getLogger(ProtocolServer.class.getName()).log(Level.SEVERE, null, ex);
-			throw new RuntimeException();
-		}
-	}
+    synchronized public void startServer() {
+        try {
+            System.out.println("Server started");
+            do {
+                Socket accept = server.accept();
+                protocol = protocol.getClass().getConstructor(Socket.class).newInstance(accept);
+                new Thread(protocol).start();
 
-	synchronized public void stopServer() {
-		this.isClosed = true;
-	}
+            } while (!isClosed);
+        } catch (NoSuchMethodException ex) {
+            Logger.getLogger(ProtocolServer.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SecurityException ex) {
+            Logger.getLogger(ProtocolServer.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(ProtocolServer.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(ProtocolServer.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalArgumentException ex) {
+            Logger.getLogger(ProtocolServer.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InvocationTargetException ex) {
+            Logger.getLogger(ProtocolServer.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ProtocolServer.class.getName()).log(Level.SEVERE, null, ex);
+            throw new RuntimeException();
+        }
+    }
 
-	public static void main(String[] args) {
-
-		ProtocolServer s = new ProtocolServer(8090, new ProtocolRunnableTest());
-		s.startServer();
-
-	}
+    synchronized public void stopServer() {
+        this.isClosed = true;
+    }
 }

@@ -21,6 +21,6 @@ public class GetWidthMessage extends OceanMessage {
 	 */
 	@Override
 	public MESSAGE_TYPE getMsgType() {
-		return MESSAGE_TYPE.GetHeight;
+		return MESSAGE_TYPE.GetWidth;
 	}
 }

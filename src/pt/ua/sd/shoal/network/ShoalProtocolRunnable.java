@@ -4,13 +4,18 @@
  */
 package pt.ua.sd.shoal.network;
 
+import java.io.IOException;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import pt.ua.sd.communication.toshoal.IsTrapped;
+import pt.ua.sd.communication.toshoal.PopMessage;
 
 import pt.ua.sd.communication.toshoal.ShoalMessage;
 import pt.ua.sd.network.Acknowledge;
 import pt.ua.sd.network.IProtocolMessage;
 import pt.ua.sd.network.IProtocolRunnable;
-import pt.ua.sd.network.ProtocolClient;
+import pt.ua.sd.network.ProtocolEndPoint;
 import pt.ua.sd.shoal.MShoal;
 
 /**
@@ -19,53 +24,71 @@ import pt.ua.sd.shoal.MShoal;
  */
 public class ShoalProtocolRunnable implements IProtocolRunnable {
 
-	private Socket socket;
-	private MShoal[] mShoals;
+    private Socket socket;
+    private static MShoal[] mShoals;
+    private static Acknowledge ack = new Acknowledge();
 
-	public void setConnection(Socket socket) {
-		this.socket = socket;
-	}
+    public ShoalProtocolRunnable(Socket socket) {
+        this.socket=socket;
+    }
 
-	public void setShoalsMonitor(MShoal[] shoals) {
-		this.mShoals = shoals;
-	}
+    public ShoalProtocolRunnable(MShoal[] shoals) {
+        this.mShoals = shoals;
+    }
 
-	public void run() {
-		if (socket == null) {
-			throw new RuntimeException("socket not setted");
-		}
-		ProtocolClient client = new ProtocolClient(socket);
-		IProtocolMessage msg = client.getMessageObject();
-		if (msg == null) {
-			throw new RuntimeException("Message is null");
-		}
-		if (msg instanceof ShoalProtocolMessage) {
-			ShoalProtocolMessage m = (ShoalProtocolMessage) msg;
-			int shoal_id = m.getShoalId().getShoal();
-			if (shoal_id < mShoals.length) {
-				// TODO: error -> no shoal id
-			}
-			switch ((ShoalMessage.MESSAGE_TYPE) m.getMessage().getMsgType()) {
-				case GoToFeedingArea:
-					mShoals[shoal_id].seasonBegin();
-					break;
-				case NoActionMessage:
-					break;
-				case TrappedByTheNet:
-					mShoals[shoal_id].castTheNet();
-					client.sendMessageObject(new pt.ua.sd.network.Acknowledge());
-					break;
-				case RetrieveTheNet:
-					int retrieveTheNet = mShoals[shoal_id].retrieveTheNet();
-					Acknowledge ack = new Acknowledge();
-					ack.setParam("catch", retrieveTheNet + "");
-					client.sendMessageObject(ack);
-					break;
-				default:
-					throw new RuntimeException("Message is not defined");
-			}
-		} else {
-			// TODO: error case
-		}
-	}
+    public void run() {
+        
+            if (socket == null) {
+                throw new RuntimeException("socket not setted");
+            }
+            
+            IProtocolMessage msg = ProtocolEndPoint.getMessageObject(socket);
+            if (msg == null) {
+                throw new RuntimeException("Message is null");
+            }
+            if (msg instanceof ShoalProtocolMessage) {
+                ShoalProtocolMessage m = (ShoalProtocolMessage) msg;
+                int shoal_id = m.getShoalId().getShoal();
+                if (shoal_id < mShoals.length) {
+                    // TODO: error -> no shoal id
+                }
+                switch ((ShoalMessage.MESSAGE_TYPE) m.getMessage().getMsgType()) {
+                    case GoToFeedingArea:
+                        mShoals[shoal_id].seasonBegin();
+                        
+                        ProtocolEndPoint.sendMessageObject(socket, ack);
+                        break;
+                    case NoActionMessage:
+                        ProtocolEndPoint.sendMessageObject(socket,ack);
+                        break;
+                    case TrappedByTheNet:
+                        mShoals[shoal_id].castTheNet();
+                        ProtocolEndPoint.sendMessageObject(socket,ack);
+                        break;
+                    case RetrieveTheNet:
+                        int retrieveTheNet = mShoals[shoal_id].retrieveTheNet();
+                        Acknowledge acknowledge = new Acknowledge();
+                        acknowledge.setParam("catch", retrieveTheNet);
+                        ProtocolEndPoint.sendMessageObject(socket,acknowledge);
+                        break;
+                    case IsTrapped:
+                        int trappedvalue = ((IsTrapped) msg.getMessage()).getTrapped();
+                        mShoals[shoal_id].isTrapped(trappedvalue);
+                        ProtocolEndPoint.sendMessageObject(socket,ack);
+                        break;
+                    case PopMessage:
+                        boolean blocking = ((PopMessage)msg.getMessage()).isBlocking();
+                        ShoalMessage popMsg = mShoals[shoal_id].popMsg(blocking);
+                        Acknowledge acknowledgepop = new Acknowledge();
+                        acknowledgepop.setParam("message",popMsg);
+                        ProtocolEndPoint.sendMessageObject(socket,acknowledgepop);
+                        break;
+                    
+                    default:
+                        throw new RuntimeException("Message is not defined");
+                }
+            } else {
+                // TODO: error case
+            }
+    }
 }

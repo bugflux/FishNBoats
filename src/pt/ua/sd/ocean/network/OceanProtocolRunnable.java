@@ -2,47 +2,167 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package pt.ua.sd.ocean.network;
 
+import com.sun.swing.internal.plaf.basic.resources.basic;
+import java.awt.Point;
 import java.net.Socket;
+import java.util.List;
+import pt.ua.sd.communication.toocean.AddBoatMessage;
+import pt.ua.sd.communication.toocean.AddDirOperMessage;
+import pt.ua.sd.communication.toocean.AddShoalMessage;
+import pt.ua.sd.communication.toocean.CompanionDetectedMessage;
+import pt.ua.sd.communication.toocean.GetRadarMessage;
+import pt.ua.sd.communication.toocean.GetSpawningAreaMessage;
 import pt.ua.sd.communication.toocean.OceanMessage;
+import pt.ua.sd.communication.toocean.SetBoatCatchMessage;
+import pt.ua.sd.communication.toocean.SetBoatStateMessage;
+import pt.ua.sd.communication.toocean.SetDirOperStateMessage;
+import pt.ua.sd.communication.toocean.SetShoalSizeMessage;
+import pt.ua.sd.communication.toocean.SetShoalStateMessage;
+import pt.ua.sd.communication.toocean.TryMoveBoatMessage;
+import pt.ua.sd.communication.toocean.TryMoveShoalMessage;
+import pt.ua.sd.network.Acknowledge;
 import pt.ua.sd.network.IProtocolMessage;
 import pt.ua.sd.network.IProtocolRunnable;
-import pt.ua.sd.network.ProtocolClient;
+import pt.ua.sd.network.ProtocolEndPoint;
+import pt.ua.sd.ocean.MOcean;
+import pt.ua.sd.shoal.IShoalBoat;
 
 /**
  *
  * @author Eriksson Monteiro <eriksson.monteiro@ua.pt>
  */
 public class OceanProtocolRunnable implements IProtocolRunnable {
-	private Socket socket;
 
-	public void setConnection(Socket socket) {
-		this.socket = socket;
-	}
+    private Socket socket;
+    private MOcean ocean;
+    private static Acknowledge ack = new Acknowledge();
 
-	public void setOceanMonitors(){
+    public void setConnection(Socket socket) {
+        this.socket = socket;
+    }
 
-	}
+    public void setOceanMonitors(MOcean ocean) {
+        this.ocean = ocean;
+    }
 
-	public void run() {
-		if (socket == null) {
-			throw new RuntimeException("socket not setted");
-		}
-		ProtocolClient client = new ProtocolClient(socket);
-		IProtocolMessage msg = client.getMessageObject();
-		if (msg == null) {
-			throw new RuntimeException("Message is null");
-		}
-		if(msg instanceof OceanProtocolMessage){
-			//do something
-			switch ((OceanMessage.MESSAGE_TYPE) msg.getMessage().getMsgType()) {
+    public void run() {
+        if (socket == null) {
+            throw new RuntimeException("socket not setted");
+        }
+        
+        IProtocolMessage msg = ProtocolEndPoint.getMessageObject(socket);
 
-			}
-		}else{
-			//return a error
-		}
-	}
+        if (msg == null) {
+            throw new RuntimeException("Message is null");
+        }
+        if (msg instanceof OceanProtocolMessage) {
+            //do something
+            switch ((OceanMessage.MESSAGE_TYPE) msg.getMessage().getMsgType()) {
+                case AddBoat:
+                    AddBoatMessage madd = (AddBoatMessage) msg.getMessage();
+                    ocean.addBoat(madd.getBoat(), madd.getPoint());
+                    ProtocolEndPoint.sendMessageObject(socket, ack);
+                    break;
+                case AddDirOper:
+                    AddDirOperMessage maddOper = (AddDirOperMessage) msg.getMessage();
+                    ocean.addDirOper(maddOper.getDirOper());
+                    ProtocolEndPoint.sendMessageObject(socket, ack);
+                    break;
+                case AddShoal:
+                    AddShoalMessage maddShaol = (AddShoalMessage) msg.getMessage();
+                    ocean.addShoal(maddShaol.getShoal(), maddShaol.getShoalMonitor(), maddShaol.getPoint());
+                    ProtocolEndPoint.sendMessageObject(socket, ack);
+                    break;
+                case CompanionDetected:
+                    CompanionDetectedMessage mCompanion = (CompanionDetectedMessage) msg.getMessage();
+                    IShoalBoat companionDetected = ocean.companionDetected(mCompanion.getBoat(), mCompanion.getHelper());
+                    Acknowledge ackcompanion = new Acknowledge();
+                    ackcompanion.setParam("companion", companionDetected);
+                    ProtocolEndPoint.sendMessageObject(socket, ackcompanion);
+                    break;
+                case GetHeight:
+                    Integer height = ocean.getHeight();
+                    Acknowledge ackheight = new Acknowledge();
+                    ackheight.setParam("height", height);
+                    ProtocolEndPoint.sendMessageObject(socket, ackheight);
+                    break;
+                case GetWidth:
+                    Integer width = ocean.getWidth();
+                    Acknowledge ackwidth = new Acknowledge();
+                    ackwidth.setParam("width", width);
+                    ProtocolEndPoint.sendMessageObject(socket, ackwidth);
+                    break;
+                case GetRadar:
+                    GetRadarMessage mradar = (GetRadarMessage) msg.getMessage();
+                    List<Point> radarPoint = ocean.getRadar(mradar.getBoat());
+                    Acknowledge ackradar = new Acknowledge();
+                    ackradar.setParam("radar", radarPoint);
+                    ProtocolEndPoint.sendMessageObject(socket, ackradar);
+                    break;
 
+                case GetSpawningArea:
+                    Point spawnPoint = ocean.getSpawningArea();
+                    Acknowledge ackspawn = new Acknowledge();
+                    ackspawn.setParam("radar", spawnPoint);
+                    ProtocolEndPoint.sendMessageObject(socket, ackspawn);
+                    break;
+
+                case GetWharf:
+                    Point wharfPoint = ocean.getWharf();
+                    Acknowledge ackwharf = new Acknowledge();
+                    ackwharf.setParam("radar", wharfPoint);
+                    ProtocolEndPoint.sendMessageObject(socket, ackwharf);
+                    break;
+                case SetBoatCatch:
+                    SetBoatCatchMessage mcatch = (SetBoatCatchMessage) msg.getMessage();
+                    ocean.setBoatCatch(mcatch.getBoat(), mcatch.getCatched());
+                    ProtocolEndPoint.sendMessageObject(socket, ack);
+                    break;
+
+                case SetBoatState:
+                    SetBoatStateMessage mBoatState = (SetBoatStateMessage) msg.getMessage();
+                    ocean.setBoatState(mBoatState.getBoat(), mBoatState.getState());
+                    ProtocolEndPoint.sendMessageObject(socket, ack);
+                    break;
+
+                case SetDirOperState:
+                    SetDirOperStateMessage mDoperState = (SetDirOperStateMessage) msg.getMessage();
+                    ocean.setDirOperState(mDoperState.getDirOper(), mDoperState.getState());
+                    ProtocolEndPoint.sendMessageObject(socket, ack);
+                    break;
+
+                case SetShoalSize:
+                    SetShoalSizeMessage mShoalSize = (SetShoalSizeMessage) msg.getMessage();
+                    ocean.setShoalSize(mShoalSize.getShoal(), mShoalSize.getSize());
+                    ProtocolEndPoint.sendMessageObject(socket, ack);
+                    break;
+
+                case SetShoalState:
+                    SetShoalStateMessage mShoalState = (SetShoalStateMessage) msg.getMessage();
+                    ocean.setShoalState(mShoalState.getShoal(), mShoalState.getState());
+                    ProtocolEndPoint.sendMessageObject(socket, ack);
+                    break;
+
+                case TryMoveBoat:
+                    TryMoveBoatMessage mtrymoveboat = (TryMoveBoatMessage) msg.getMessage();
+                    Point boatPoint = ocean.tryMoveBoat(mtrymoveboat.getBoat(), mtrymoveboat.getPoint());
+                    Acknowledge ackTryMoveBoat = new Acknowledge();
+                    ackTryMoveBoat.setParam("point",boatPoint);
+                    ProtocolEndPoint.sendMessageObject(socket, ackTryMoveBoat);
+                    break;
+                case TryMoveShoal:
+                    TryMoveShoalMessage mtrymoveshaol = (TryMoveShoalMessage) msg.getMessage();
+                    Point shoalPoint = ocean.tryMoveShoal(mtrymoveshaol.getShoal(), mtrymoveshaol.getPoint());
+                    Acknowledge ackTryMoveShoal = new Acknowledge();
+                    ackTryMoveShoal.setParam("point",shoalPoint);
+                    ProtocolEndPoint.sendMessageObject(socket, ackTryMoveShoal);
+                    break;
+            }
+        } else {
+            //return a error
+            throw new RuntimeException("Message is null");
+        }
+    }
 }
