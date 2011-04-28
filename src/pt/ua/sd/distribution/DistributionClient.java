@@ -7,7 +7,6 @@ import java.net.InetAddress;
 import java.net.Socket;
 
 import pt.ua.sd.network.Acknowledge;
-import pt.ua.sd.network.ProtocolClient;
 import pt.ua.sd.network.ProtocolEndPoint;
 
 /**
@@ -46,51 +45,59 @@ public class DistributionClient {
 	public boolean startEntities(StartMessage start) {
 		boolean result = true;
 
-		ProtocolClient c;
+		Socket s;
 
 		// always test if cast to acknowledge works!
 		try {
 			// start Log
-			c = new ProtocolClient(start.getMLogAddress().getHostAddress(),
+			s = new Socket(start.getMLogAddress().getHostAddress(),
 					DistributionConfig.DISTRIBUTION_SERVER_PORT);
-			Acknowledge.class.cast(c.sendMessageObjectBlocking(start));
+			Acknowledge.class.cast(ProtocolEndPoint.sendMessageObjectBlocking(
+					s, start));
 
-			c = new ProtocolClient(start.getTLogFlusherAddress()
-					.getHostAddress(),
+			s = new Socket(start.getTLogFlusherAddress().getHostAddress(),
 					DistributionConfig.DISTRIBUTION_SERVER_PORT);
-			Acknowledge.class.cast(c.sendMessageObjectBlocking(start));
+			Acknowledge.class.cast(ProtocolEndPoint.sendMessageObjectBlocking(
+					s, start));
 
 			// start Ocean
-			c = new ProtocolClient(start.getMOceanAddress().getHostAddress(),
+			s = new Socket(start.getMOceanAddress().getHostAddress(),
 					DistributionConfig.DISTRIBUTION_SERVER_PORT);
-			Acknowledge.class.cast(c.sendMessageObjectBlocking(start));
+			Acknowledge.class.cast(ProtocolEndPoint.sendMessageObjectBlocking(
+					s, start));
 
 			// start Shoal
-			c = new ProtocolClient(start.getMShoalAddress().getHostAddress(),
+			s = new Socket(start.getMShoalAddress().getHostAddress(),
 					DistributionConfig.DISTRIBUTION_SERVER_PORT);
-			Acknowledge.class.cast(c.sendMessageObjectBlocking(start));
+			Acknowledge.class.cast(ProtocolEndPoint.sendMessageObjectBlocking(
+					s, start));
 
-			c = new ProtocolClient(start.getTShoalAddress().getHostAddress(),
+			s = new Socket(start.getTShoalAddress().getHostAddress(),
 					DistributionConfig.DISTRIBUTION_SERVER_PORT);
-			Acknowledge.class.cast(c.sendMessageObjectBlocking(start));
+			Acknowledge.class.cast(ProtocolEndPoint.sendMessageObjectBlocking(
+					s, start));
 
 			// start Boat
-			c = new ProtocolClient(start.getMBoatAddress().getHostAddress(),
+			s = new Socket(start.getMBoatAddress().getHostAddress(),
 					DistributionConfig.DISTRIBUTION_SERVER_PORT);
-			Acknowledge.class.cast(c.sendMessageObjectBlocking(start));
+			Acknowledge.class.cast(ProtocolEndPoint.sendMessageObjectBlocking(
+					s, start));
 
-			c = new ProtocolClient(start.getTBoatAddress().getHostAddress(),
+			s = new Socket(start.getTBoatAddress().getHostAddress(),
 					DistributionConfig.DISTRIBUTION_SERVER_PORT);
-			Acknowledge.class.cast(c.sendMessageObjectBlocking(start));
+			Acknowledge.class.cast(ProtocolEndPoint.sendMessageObjectBlocking(
+					s, start));
 
 			// start DirOper
-			c = new ProtocolClient(start.getMDirOperAddress().getHostAddress(),
+			s = new Socket(start.getMDirOperAddress().getHostAddress(),
 					DistributionConfig.DISTRIBUTION_SERVER_PORT);
-			Acknowledge.class.cast(c.sendMessageObjectBlocking(start));
+			Acknowledge.class.cast(ProtocolEndPoint.sendMessageObjectBlocking(
+					s, start));
 
-			c = new ProtocolClient(start.getTDirOperAddress().getHostAddress(),
+			s = new Socket(start.getTDirOperAddress().getHostAddress(),
 					DistributionConfig.DISTRIBUTION_SERVER_PORT);
-			Acknowledge.class.cast(c.sendMessageObjectBlocking(start));
+			Acknowledge.class.cast(ProtocolEndPoint.sendMessageObjectBlocking(
+					s, start));
 
 		} catch (Throwable t) {
 			t.printStackTrace();

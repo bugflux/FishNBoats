@@ -41,6 +41,12 @@ public class DistributionProtocolRunnable implements IProtocolRunnable {
 			assert false;
 		}
 	}
+	
+	public DistributionProtocolRunnable() {}
+
+	public DistributionProtocolRunnable(Socket s) {
+		this.socket = s;
+	}
 
 	protected boolean isThisMachine(InetAddress address) {
 		return thisMachine.contains(address.getHostAddress());
@@ -134,13 +140,4 @@ public class DistributionProtocolRunnable implements IProtocolRunnable {
 			t.printStackTrace();
 		}
 	}
-
-	/**
-	 * @see pt.ua.sd.network.IProtocolRunnable#setConnection(java.net.Socket)
-	 */
-	@Override
-	public void setConnection(Socket socket) {
-		this.socket = socket;
-	}
-
 }
