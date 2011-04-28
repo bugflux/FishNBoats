@@ -5,8 +5,11 @@
 package pt.ua.sd.ocean.network;
 
 import java.awt.Point;
+import java.io.IOException;
 import java.net.Socket;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import pt.ua.sd.communication.toocean.AddBoatMessage;
 import pt.ua.sd.communication.toocean.AddDirOperMessage;
 import pt.ua.sd.communication.toocean.AddShoalMessage;
@@ -164,6 +167,11 @@ public class OceanProtocolRunnable implements IProtocolRunnable {
         } else {
             //return a error
             throw new RuntimeException("Message is null");
+        }
+        try {
+            socket.close();
+        } catch (IOException ex) {
+            Logger.getLogger(OceanProtocolRunnable.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

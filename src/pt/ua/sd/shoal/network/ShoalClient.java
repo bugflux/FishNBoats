@@ -45,8 +45,10 @@ public class ShoalClient implements IShoal, IShoalBoat, IShoalDirOper, Serializa
             socket = new Socket(host, port);
             ProtocolEndPoint.sendMessageObjectBlocking(socket, new ShoalProtocolMessage(id, new TrappedByTheNetMessage()));
         } catch (UnknownHostException ex) {
+            ex.printStackTrace();
             Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
+            ex.printStackTrace();
             Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             if (socket != null) {
@@ -67,8 +69,10 @@ public class ShoalClient implements IShoal, IShoalBoat, IShoalDirOper, Serializa
             Acknowledge ack = (Acknowledge) response;
             return (Integer) ack.getParam("catch");
         } catch (UnknownHostException ex) {
+            ex.printStackTrace();
             Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
+            ex.printStackTrace();
             Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
         }finally{
             if(socket!=null)
@@ -89,8 +93,10 @@ public class ShoalClient implements IShoal, IShoalBoat, IShoalDirOper, Serializa
             socket = new Socket(host, port);
             ProtocolEndPoint.sendMessageObjectBlocking(socket, new ShoalProtocolMessage(id, new GoToFeedingAreaMessage()));
         } catch (UnknownHostException ex) {
+            ex.printStackTrace();
             Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
+            ex.printStackTrace();
             Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
         }finally{
             if(socket!=null){
@@ -112,8 +118,10 @@ public class ShoalClient implements IShoal, IShoalBoat, IShoalDirOper, Serializa
             Acknowledge ack = (Acknowledge) response;
             return (ShoalMessage) ack.getParam("message");
         } catch (UnknownHostException ex) {
+            ex.printStackTrace();
             Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
+            ex.printStackTrace();
             Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
         }finally{
             if(socket!=null){
@@ -134,8 +142,10 @@ public class ShoalClient implements IShoal, IShoalBoat, IShoalDirOper, Serializa
             socket = new Socket(host, port);
             IProtocolMessage response = ProtocolEndPoint.sendMessageObjectBlocking(socket, new ShoalProtocolMessage(id, new IsTrapped(amount)));
         } catch (UnknownHostException ex) {
+            ex.printStackTrace();
             Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
+            ex.printStackTrace();
             Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
         }finally{
             if(socket!=null){

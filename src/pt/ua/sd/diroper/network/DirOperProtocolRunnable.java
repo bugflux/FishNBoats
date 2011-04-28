@@ -4,7 +4,10 @@
  */
 package pt.ua.sd.diroper.network;
 
+import java.io.IOException;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import pt.ua.sd.communication.todiroper.BackAtWharfMessage;
 import pt.ua.sd.communication.todiroper.BoatFullMessage;
 import pt.ua.sd.communication.todiroper.DirOperMessage;
@@ -36,65 +39,70 @@ public class DirOperProtocolRunnable implements IProtocolRunnable {
 
     @Override
     public void run() {
-        if (socket == null) {
-            throw new RuntimeException("socket not setted");
-        }
-
-        IProtocolMessage msg = ProtocolEndPoint.getMessageObject(socket);
-        if (msg == null) {
-            throw new RuntimeException("Message is null");
-        }
-
-        if (msg instanceof DirOperProtocolMessage) {
-            DirOperProtocolMessage m = (DirOperProtocolMessage) msg;
-            int diroper_id = m.getId().getId();
-            if (diroper_id > monitor.length) {
-                // TODO: error -> no shoal id
+        try {
+            if (socket == null) {
+                throw new RuntimeException("socket not setted");
             }
-            switch ((DirOperMessage.MESSAGE_TYPE) m.getMessage().getMsgType()) {
-                case BackAtWharf:
-                    BackAtWharfMessage bAtwharf = ((BackAtWharfMessage) m.getMessage());
-                    monitor[diroper_id].backAtWharf(bAtwharf.getBoatId(), bAtwharf.getStored());
-                    ProtocolEndPoint.sendMessageObject(socket, ack);
-                    break;
-                case BoatFull:
-                    BoatFullMessage bfull = ((BoatFullMessage) m.getMessage());
-                    monitor[diroper_id].boatFull(bfull.getId());
-                    ProtocolEndPoint.sendMessageObject(socket, ack);
-                    break;
-                case ClearMessage:
-                    monitor[diroper_id].clearMessages();
-                    ProtocolEndPoint.sendMessageObject(socket, ack);
-                    break;
-                case FishingDone:
-                    FishingDoneMessage bfishingdone = ((FishingDoneMessage) m.getMessage());
-                    monitor[diroper_id].fishingDone(bfishingdone.getId());
-                    ProtocolEndPoint.sendMessageObject(socket, ack);
-                    break;
-                case LifeEnd:
-                    monitor[diroper_id].endLife();
-                    ProtocolEndPoint.sendMessageObject(socket, ack);
-                    break;
-                case PopMessage:
-                    DirOperMessage popMsg = monitor[diroper_id].popMsg();
-                    Acknowledge acknowledge = new Acknowledge();
-                    acknowledge.setParam("message", popMsg);
-                    ProtocolEndPoint.sendMessageObject(socket, acknowledge);
-                    break;
-                case RequestHelp:
-                    RequestHelpMessage bhelp = ((RequestHelpMessage) m.getMessage());
-                    monitor[diroper_id].requestHelp(bhelp.getBoatId(), bhelp.getLocation());
-                    ProtocolEndPoint.sendMessageObject(socket, ack);
-                    break;
-                case SeasonEnd:
-                    monitor[diroper_id].endSeason();
-                    ProtocolEndPoint.sendMessageObject(socket, ack);
-                    break;
-                default:
-                    throw new RuntimeException("Message is not defined");
+
+            IProtocolMessage msg = ProtocolEndPoint.getMessageObject(socket);
+            if (msg == null) {
+                throw new RuntimeException("Message is null");
             }
-        } else {
-            // TODO: error case
+
+            if (msg instanceof DirOperProtocolMessage) {
+                DirOperProtocolMessage m = (DirOperProtocolMessage) msg;
+                int diroper_id = m.getId().getId();
+                if (diroper_id > monitor.length) {
+                    // TODO: error -> no shoal id
+                }
+                switch ((DirOperMessage.MESSAGE_TYPE) m.getMessage().getMsgType()) {
+                    case BackAtWharf:
+                        BackAtWharfMessage bAtwharf = ((BackAtWharfMessage) m.getMessage());
+                        monitor[diroper_id].backAtWharf(bAtwharf.getBoatId(), bAtwharf.getStored());
+                        ProtocolEndPoint.sendMessageObject(socket, ack);
+                        break;
+                    case BoatFull:
+                        BoatFullMessage bfull = ((BoatFullMessage) m.getMessage());
+                        monitor[diroper_id].boatFull(bfull.getId());
+                        ProtocolEndPoint.sendMessageObject(socket, ack);
+                        break;
+                    case ClearMessage:
+                        monitor[diroper_id].clearMessages();
+                        ProtocolEndPoint.sendMessageObject(socket, ack);
+                        break;
+                    case FishingDone:
+                        FishingDoneMessage bfishingdone = ((FishingDoneMessage) m.getMessage());
+                        monitor[diroper_id].fishingDone(bfishingdone.getId());
+                        ProtocolEndPoint.sendMessageObject(socket, ack);
+                        break;
+                    case LifeEnd:
+                        monitor[diroper_id].endLife();
+                        ProtocolEndPoint.sendMessageObject(socket, ack);
+                        break;
+                    case PopMessage:
+                        DirOperMessage popMsg = monitor[diroper_id].popMsg();
+                        Acknowledge acknowledge = new Acknowledge();
+                        acknowledge.setParam("message", popMsg);
+                        ProtocolEndPoint.sendMessageObject(socket, acknowledge);
+                        break;
+                    case RequestHelp:
+                        RequestHelpMessage bhelp = ((RequestHelpMessage) m.getMessage());
+                        monitor[diroper_id].requestHelp(bhelp.getBoatId(), bhelp.getLocation());
+                        ProtocolEndPoint.sendMessageObject(socket, ack);
+                        break;
+                    case SeasonEnd:
+                        monitor[diroper_id].endSeason();
+                        ProtocolEndPoint.sendMessageObject(socket, ack);
+                        break;
+                    default:
+                        throw new RuntimeException("Message is not defined");
+                }
+            } else {
+                // TODO: error case
+            }
+            socket.close();
+        } catch (IOException ex) {
+            Logger.getLogger(DirOperProtocolRunnable.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

@@ -4,7 +4,10 @@
  */
 package pt.ua.sd.shoal.network;
 
+import java.io.IOException;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import pt.ua.sd.communication.toshoal.IsTrapped;
 import pt.ua.sd.communication.toshoal.PopMessage;
 
@@ -18,6 +21,7 @@ import pt.ua.sd.shoal.MShoal;
 /**
  * 
  * @author Eriksson Monteiro <eriksson.monteiro@ua.pt>
+ * @author André Prata
  */
 public class ShoalProtocolRunnable implements IProtocolRunnable {
 
@@ -87,5 +91,10 @@ public class ShoalProtocolRunnable implements IProtocolRunnable {
             } else {
                 // TODO: error case
             }
+        try {
+            socket.close();
+        } catch (IOException ex) {
+            Logger.getLogger(ShoalProtocolRunnable.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

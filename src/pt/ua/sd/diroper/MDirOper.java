@@ -14,7 +14,7 @@ import pt.ua.sd.communication.todiroper.FishingDoneMessage;
 import pt.ua.sd.communication.todiroper.LifeEndMessage;
 import pt.ua.sd.communication.todiroper.RequestHelpMessage;
 import pt.ua.sd.communication.todiroper.SeasonEndMessage;
-import pt.ua.sd.log.MLog;
+import pt.ua.sd.log.network.LogClient;
 
 /**
  * @author André Prata
@@ -30,7 +30,7 @@ public class MDirOper implements IDirOper, IDirOperBoat, IDirOperShoal {
 	protected DirOperMessage seasonEnd = new SeasonEndMessage();
 	protected DirOperMessage lifeEnd = new LifeEndMessage();
 
-	protected MLog log = MLog.getInstance();
+	protected LogClient log;
 	protected int n_shoals_ended_season = 0;
 	protected int n_shoals_ended_life = 0;
 
@@ -45,10 +45,11 @@ public class MDirOper implements IDirOper, IDirOperBoat, IDirOperShoal {
 	 * @param nboats
 	 *            the number of boats this DirOper handles.
 	 */
-	public MDirOper(DirOperId id, int nshoals, int nboats) {
+	public MDirOper(DirOperId id, int nshoals, int nboats, LogClient log) {
 		this.nshoals = nshoals;
 		this.id = id;
 		this.nboats = nboats;
+                this.log = log;
 	}
 
 	/**

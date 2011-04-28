@@ -8,7 +8,7 @@ import pt.ua.sd.communication.toshoal.NoActionMessage;
 import pt.ua.sd.communication.toshoal.RetrieveTheNetMessage;
 import pt.ua.sd.communication.toshoal.ShoalMessage;
 import pt.ua.sd.communication.toshoal.TrappedByTheNetMessage;
-import pt.ua.sd.log.MLog;
+import pt.ua.sd.log.network.LogClient;
 
 /**
  * @author André Prata
@@ -25,7 +25,7 @@ public class MShoal implements IShoal, IShoalBoat, IShoalDirOper {
 	protected boolean escaped = false;
 	protected int n_boat_cast_the_net = 0;
 
-	protected MLog log = MLog.getInstance();
+	protected LogClient log;
 	protected ShoalMessage message;
 	protected ShoalMessage goToFeedingArea = new GoToFeedingAreaMessage();
 	protected ShoalMessage noAction = new NoActionMessage();
@@ -40,9 +40,10 @@ public class MShoal implements IShoal, IShoalBoat, IShoalDirOper {
 	 * @param ndiroper
 	 *            the number of DirOpers that exist.
 	 */
-	public MShoal(ShoalId id, int ndiroper) {
+	public MShoal(ShoalId id, int ndiroper,LogClient log) {
 		this.ndiroper = ndiroper;
 		this.id = id;
+                this.log = log;
 	}
 
 	/**

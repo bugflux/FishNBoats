@@ -23,6 +23,9 @@ import pt.ua.sd.diroper.network.DirOperProtocolRunnable;
 import pt.ua.sd.diroper.network.DirOperServer;
 import pt.ua.sd.log.MLog;
 import pt.ua.sd.log.TLogFlusher;
+import pt.ua.sd.log.network.LogClient;
+import pt.ua.sd.log.network.LogProtocolRunnable;
+import pt.ua.sd.log.network.LogServer;
 import pt.ua.sd.ocean.MOcean;
 import pt.ua.sd.ocean.network.OceanClient;
 import pt.ua.sd.ocean.network.OceanProtocolRunnable;
@@ -61,8 +64,8 @@ public class PortoAveiro {
 
         int maxShoalPerSquare = 1, maxBoatsPerSquare = 3;
 
-        File logFile = null;
-
+        //File logFile = null;
+        String logFile = null;
         if (args.length != 0) {
             try {
                 width = Integer.valueOf(args[0]);
@@ -80,16 +83,28 @@ public class PortoAveiro {
                 eco_system = Double.valueOf(args[12]);
                 seasonMoves = Integer.valueOf(args[13]);
                 shoalPeriod = Integer.valueOf(args[14]);
-                logFile = new File(args[15]);
+               // logFile = new File(args[15]);
+                logFile = args[15];
             } catch (Throwable t) {
                 System.out.println("Invalid arguments!");
                 System.exit(-1);
             }
         }
 
-        // Logger
-        MLog logger = MLog.getInstance();
-        TLogFlusher logFlusher = null;
+        final LogServer slogger = new LogServer(9081, new LogProtocolRunnable(),logFile);
+        
+        new Thread(){
+
+            @Override
+            public void run() {
+                slogger.startServer();
+            }
+        
+        }.start();
+        
+        LogClient clogger = new LogClient("127.0.0.1", 9081);
+        
+        /*TLogFlusher logFlusher = null;
         if (logFile == null) {
             logFlusher = new TLogFlusher(System.out);
         } else {
@@ -100,12 +115,12 @@ public class PortoAveiro {
                 System.exit(-1);
             }
         }
-
+        logFlusher.start();*/
         // Ocean
         Point wharf = new Point(0, 0);
         Point reproducingZone = new Point(width - 1, height - 1);
         MOcean oceano = new MOcean(height, width, maxShoalPerSquare,
-                maxBoatsPerSquare, wharf, reproducingZone);
+                maxBoatsPerSquare, wharf, reproducingZone,clogger);
         
         final OceanServer oceanServer = new OceanServer(9091, new OceanProtocolRunnable(oceano));
         new Thread() {
@@ -171,7 +186,7 @@ public class PortoAveiro {
             sShoals[r] = new ShoalStats(new ShoalId(r),
                     INTERNAL_STATE_SCHOOL.spawning, new Point(reproducingZone),
                     shoalSize, minShoalDetectable);
-            mShoals[r] = new MShoal(sShoals[r].getId(), ncompanies);
+            mShoals[r] = new MShoal(sShoals[r].getId(), ncompanies,clogger);
             cShoals[r] = new ShoalClient(sShoals[r].getId(),9090,"127.0.0.1");
             
             oceano.addShoal(sShoals[r], cShoals[r], reproducingZone);
@@ -188,9 +203,9 @@ public class PortoAveiro {
                     INTERNAL_STATE_DIROPER.starting_a_campaign,
                     new DirOperId(r));
             oceano.addDirOper(sDirOpers[r]);
-            mDirOpers[r] = new MDirOper(sDirOpers[r].getId(), nshoals, nboats);
+            mDirOpers[r] = new MDirOper(sDirOpers[r].getId(), nshoals, nboats,clogger);
             cDirOpers[r]= new DirOperClient(sDirOpers[r].getId(), "127.0.0.1", 9092);
-            tDirOpers[r] = new TDirOper(logger, oceanClient, cDirOpers[r],
+            tDirOpers[r] = new TDirOper(clogger, oceanClient, cDirOpers[r],
                     cBoats[r], cShoals, (DirOperStats) sDirOpers[r].clone());
 
             
@@ -199,7 +214,7 @@ public class PortoAveiro {
                         INTERNAL_STATE_BOAT.at_the_wharf, new Point(wharf),
                         boatCapacity);
                 oceano.addBoat(sBoats[r][s], wharf);
-                mBoats[r][s] = new MBoat(sBoats[r][s].getId());
+                mBoats[r][s] = new MBoat(sBoats[r][s].getId(),clogger);
                 cBoats[r][s] = new BoatClient(sDirOpers[r].getId(), sBoats[r][s].getId(), "127.0.0.1", 9080);
                 tBoats[r][s] = new TBoat((BoatStats) sBoats[r][s].clone(),
                         boatPeriod, cDirOpers[r], oceanClient, cBoats[r][s]);
@@ -222,7 +237,7 @@ public class PortoAveiro {
             tDirOpers[r].start();
         }
 
-        logFlusher.start();
+        //logFlusher.start();
 
         // join
         try {
@@ -239,9 +254,9 @@ public class PortoAveiro {
             for (int r = 0; r < ncompanies; r++) {
                 tDirOpers[r].join();
             }
-
-            logFlusher.interrupt();
-            logFlusher.join();
+            //TODO:terminar o logger
+            //logFlusher.interrupt();
+            //logFlusher.join();
 
         } catch (InterruptedException e) {
             throw new RuntimeException(e);

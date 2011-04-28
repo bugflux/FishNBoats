@@ -15,7 +15,7 @@ import pt.ua.sd.boat.BoatStats;
 import pt.ua.sd.diroper.DirOperId;
 import pt.ua.sd.diroper.DirOperStats;
 import pt.ua.sd.diroper.DirOperStats.INTERNAL_STATE_DIROPER;
-import pt.ua.sd.log.MLog;
+import pt.ua.sd.log.network.LogClient;
 import pt.ua.sd.shoal.IShoalBoat;
 import pt.ua.sd.shoal.ShoalId;
 import pt.ua.sd.shoal.ShoalStats;
@@ -38,7 +38,7 @@ public class MOcean implements IOceanBoat, IOceanShoal, IOceanDirOper {
     protected final FishingGBoard gmap;
     protected final Point wharf;
     protected final Point reproducingZone;
-    protected final MLog log = MLog.getInstance();
+    protected final LogClient log;
 
     /**
      * Create a new MOcean object with the given parameters.
@@ -53,7 +53,7 @@ public class MOcean implements IOceanBoat, IOceanShoal, IOceanDirOper {
      *            The maximum number of boats that can occupy one square.
      */
     public MOcean(int height, int width, int maxShoalPerSquare,
-            int maxBoatsPerSquare, Point wharf, Point reproducingZone) {
+            int maxBoatsPerSquare, Point wharf, Point reproducingZone,LogClient log) {
         assert (height > 0);
         assert (width > 0);
 
@@ -65,7 +65,7 @@ public class MOcean implements IOceanBoat, IOceanShoal, IOceanDirOper {
 
         assert isValid(wharf);
         assert isValid(reproducingZone);
-
+        this.log = log;
         this.wharf = wharf;
         this.reproducingZone = reproducingZone;
 

@@ -16,7 +16,7 @@ import pt.ua.sd.communication.todiroper.DirOperMessage.MESSAGE_TYPE;
 import pt.ua.sd.communication.todiroper.FishingDoneMessage;
 import pt.ua.sd.communication.todiroper.RequestHelpMessage;
 import pt.ua.sd.diroper.DirOperStats.INTERNAL_STATE_DIROPER;
-import pt.ua.sd.log.MLog;
+import pt.ua.sd.log.ILogger;
 import pt.ua.sd.ocean.IOceanDirOper;
 import pt.ua.sd.shoal.IShoalDirOper;
 
@@ -32,13 +32,13 @@ public class TDirOper extends Thread {
 	protected final IOceanDirOper ocean;
 	protected final IShoalDirOper shoals[];
 	protected final IBoatDirOper boats[];
-	protected final MLog logger;
+	protected final ILogger logger;
 	// record the boats that arrived to wharf. true: confirmed, false: underway
 	protected final HashMap<BoatId, Boolean> boatsAtWharf = new HashMap<BoatId, Boolean>();
 	protected int totalCatch = 0;
 	protected final HashMap<BoatId, BoatId> assignedCompanions = new HashMap<BoatId, BoatId>();
 
-	public TDirOper(MLog logger, IOceanDirOper ocean, IDirOper monitor,
+	public TDirOper(ILogger logger, IOceanDirOper ocean, IDirOper monitor,
 			IBoatDirOper[] boats, IShoalDirOper shoals[], DirOperStats stats) {
 		this.ocean = ocean;
 		this.boats = boats;
