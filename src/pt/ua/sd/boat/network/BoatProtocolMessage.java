@@ -7,6 +7,8 @@ import java.io.Serializable;
 
 import pt.ua.sd.boat.BoatId;
 import pt.ua.sd.communication.toboat.BoatMessage;
+import pt.ua.sd.communication.todiroper.PopMessage;
+import pt.ua.sd.diroper.DirOperId;
 import pt.ua.sd.network.IProtocolMessage;
 
 

@@ -4,10 +4,7 @@
  */
 package pt.ua.sd.shoal.network;
 
-import java.io.IOException;
 import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import pt.ua.sd.communication.toshoal.IsTrapped;
 import pt.ua.sd.communication.toshoal.PopMessage;
 

@@ -15,6 +15,9 @@ import pt.ua.sd.diroper.DirOperStats;
 import pt.ua.sd.diroper.DirOperStats.INTERNAL_STATE_DIROPER;
 import pt.ua.sd.diroper.MDirOper;
 import pt.ua.sd.diroper.TDirOper;
+import pt.ua.sd.diroper.network.DirOperClient;
+import pt.ua.sd.diroper.network.DirOperProtocolRunnable;
+import pt.ua.sd.diroper.network.DirOperServer;
 import pt.ua.sd.log.MLog;
 import pt.ua.sd.log.TLogFlusher;
 import pt.ua.sd.ocean.MOcean;
@@ -115,13 +118,23 @@ public class PortoAveiro {
         
         // DirOper
         MDirOper mDirOpers[] = new MDirOper[ncompanies];
+        DirOperClient cDirOpers[]= new DirOperClient[ncompanies];
         TDirOper tDirOpers[] = new TDirOper[ncompanies];
         DirOperStats sDirOpers[] = new DirOperStats[ncompanies];
         
-        MShoal mShoals[] = new MShoal[nshoals];
+        final DirOperServer dOperServer = new DirOperServer(9092, new DirOperProtocolRunnable(mDirOpers));
+        new Thread() {
+
+            @Override
+            public void run() {
+                dOperServer.startServer();
+            }
+        }.start();
+        
+        
         
         // Shoal
-        
+        MShoal mShoals[] = new MShoal[nshoals];
         final ShoalServer sShoal = new ShoalServer(9090, new ShoalProtocolRunnable(mShoals));
         new Thread() {
 
@@ -154,17 +167,19 @@ public class PortoAveiro {
             
             tShoals[r] = new TShoal((ShoalStats) sShoals[r].clone(),
                     shoalPeriod, seasonMoves, nCampaign, cShoals[r], oceanClient,
-                    mDirOpers, growing_factor, eco_system, catchPercentage);
+                    cDirOpers, growing_factor, eco_system, catchPercentage);
             
         }
 
         for (int r = 0; r < ncompanies; r++) {
+            
             sDirOpers[r] = new DirOperStats(
                     INTERNAL_STATE_DIROPER.starting_a_campaign,
                     new DirOperId(r));
             oceano.addDirOper(sDirOpers[r]);
             mDirOpers[r] = new MDirOper(sDirOpers[r].getId(), nshoals, nboats);
-            tDirOpers[r] = new TDirOper(logger, oceanClient, mDirOpers[r],
+            cDirOpers[r]= new DirOperClient(sDirOpers[r].getId(), "127.0.0.1", 9092);
+            tDirOpers[r] = new TDirOper(logger, oceanClient, cDirOpers[r],
                     mBoats[r], cShoals, (DirOperStats) sDirOpers[r].clone());
 
             
@@ -175,7 +190,7 @@ public class PortoAveiro {
                 oceano.addBoat(sBoats[r][s], wharf);
                 mBoats[r][s] = new MBoat(sBoats[r][s].getId());
                 tBoats[r][s] = new TBoat((BoatStats) sBoats[r][s].clone(),
-                        boatPeriod, mDirOpers[r], oceanClient, mBoats[r][s]);
+                        boatPeriod, cDirOpers[r], oceanClient, mBoats[r][s]);
                 
             }
         }
