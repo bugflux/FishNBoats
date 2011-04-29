@@ -200,7 +200,7 @@ public class PortoAveiro {
             oceano.addDirOper(sDirOpers[r]);
             mDirOpers[r] = new MDirOper(sDirOpers[r].getId(), nshoals, nboats,clogger);
             cDirOpers[r]= new DirOperClient(sDirOpers[r].getId(), "127.0.0.1", 9092);
-            tDirOpers[r] = new TDirOper(clogger, oceanClient, cDirOpers[r],
+            tDirOpers[r] = new TDirOper(oceanClient, cDirOpers[r],
                     cBoats[r], cShoals, (DirOperStats) sDirOpers[r].clone());
 
             
