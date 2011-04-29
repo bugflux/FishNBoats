@@ -24,7 +24,7 @@ public class AbortMessage extends DistributionMessage {
 	public MESSAGE_TYPE getMsgType() {
 		return MESSAGE_TYPE.Abort;
 	}
-	
+
 	@Override
 	public Message getMessage() {
 		return this;

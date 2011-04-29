@@ -14,7 +14,9 @@ public abstract class DistributionMessage extends Message implements Serializabl
 
 	public enum MESSAGE_TYPE implements Message.MESSAGE_TYPE {
 		Start, Abort;
-		
-		public int getPriority() { return 0; };
+
+		public int getPriority() {
+			return 0;
+		};
 	};
 }

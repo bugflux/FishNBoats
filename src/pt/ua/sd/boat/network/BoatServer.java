@@ -11,7 +11,7 @@ import pt.ua.sd.network.ProtocolServer;
  */
 public class BoatServer extends ProtocolServer {
 
-    public BoatServer(int port, BoatProtocolRunnable runnable) {
-        super(port, runnable);
-    }
+	public BoatServer(int port, BoatProtocolRunnable runnable) {
+		super(port, runnable);
+	}
 }

@@ -3,11 +3,10 @@
  */
 package pt.ua.sd.communication.toshoal;
 
-
 /**
  * @author André Prata
  * @author Eriksson Monteiro
- *
+ * 
  */
 public class TrappedByTheNetMessage extends ShoalMessage {
 

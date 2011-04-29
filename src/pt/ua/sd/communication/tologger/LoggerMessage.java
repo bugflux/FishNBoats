@@ -22,7 +22,6 @@ public abstract class LoggerMessage extends Message {
 
 		getTickClock, pushMessage, popContiguous;
 		// smaller is more important!
-		
 
 		@Override
 		public int getPriority() {

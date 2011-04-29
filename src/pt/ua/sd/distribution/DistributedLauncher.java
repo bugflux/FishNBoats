@@ -18,16 +18,16 @@ public class DistributedLauncher {
 	public static void main(String[] args) {
 		try {
 			// must run at this pc, because of the graphic session!
-			InetSocketAddress mOceanAddress      = new InetSocketAddress("172.16.0.130", 22144);
+			InetSocketAddress mOceanAddress = new InetSocketAddress("172.16.0.130", 22144);
 
-			InetSocketAddress mBoatAddress       = new InetSocketAddress("192.168.8.171", 22141);
-			InetSocketAddress mDirOperAddress    = new InetSocketAddress("192.168.8.173", 22142);
-			InetSocketAddress mLogAddress        = new InetSocketAddress("192.168.8.174", 22143);
-			InetSocketAddress mShoalAddress      = new InetSocketAddress("192.168.8.175", 22145);
-			InetSocketAddress tBoatAddress       = new InetSocketAddress("192.168.8.176", 0);
-			InetSocketAddress tDirOperAddress    = new InetSocketAddress("192.168.8.177", 0);
+			InetSocketAddress mBoatAddress = new InetSocketAddress("192.168.8.171", 22141);
+			InetSocketAddress mDirOperAddress = new InetSocketAddress("192.168.8.173", 22142);
+			InetSocketAddress mLogAddress = new InetSocketAddress("192.168.8.174", 22143);
+			InetSocketAddress mShoalAddress = new InetSocketAddress("192.168.8.175", 22145);
+			InetSocketAddress tBoatAddress = new InetSocketAddress("192.168.8.176", 0);
+			InetSocketAddress tDirOperAddress = new InetSocketAddress("192.168.8.177", 0);
 			InetSocketAddress tLogFlusherAddress = new InetSocketAddress("192.168.8.178", 0);
-			InetSocketAddress tShoalAddress      = new InetSocketAddress("192.168.8.180", 0);
+			InetSocketAddress tShoalAddress = new InetSocketAddress("192.168.8.180", 0);
 
 			// stop services before starting
 			DistributionClient c = new DistributionClient();

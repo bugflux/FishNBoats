@@ -10,12 +10,11 @@ import pt.ua.sd.communication.toboat.BoatMessage;
 import pt.ua.sd.diroper.DirOperId;
 import pt.ua.sd.network.IProtocolMessage;
 
-
 /**
  * @author Eriksson Monteiro <eriksson.monteiro@ua.pt>
  * @author André Prata <andreprata@ua.pt>
  */
-public class BoatProtocolMessage implements Serializable,IProtocolMessage {
+public class BoatProtocolMessage implements Serializable, IProtocolMessage {
 
 	/**
 	 * 
@@ -25,17 +24,19 @@ public class BoatProtocolMessage implements Serializable,IProtocolMessage {
 	protected final BoatMessage m;
 	protected final BoatId id;
 	protected final DirOperId dOperId;
+
 	/**
 	 * Construct a new BoatProtocolMessage given a destination Shoal and the
 	 * message to deliver to it.
+	 * 
 	 * @param sId
-	 *			  the id of the shoal that send the message
+	 *            the id of the shoal that send the message
 	 * @param id
 	 *            the shoal to deliver the message to.
 	 * @param m
 	 *            the message to deliver.
 	 */
-	public BoatProtocolMessage(BoatId id, DirOperId dOperId,BoatMessage m) {
+	public BoatProtocolMessage(BoatId id, DirOperId dOperId, BoatMessage m) {
 		this.m = m;
 		this.id = id;
 		this.dOperId = dOperId;
@@ -54,11 +55,12 @@ public class BoatProtocolMessage implements Serializable,IProtocolMessage {
 	public BoatId getBoatId() {
 		return id;
 	}
-        /**
-         * 
-         * @return the director of operation id
-         */
-        public DirOperId getDirOperId() {
+
+	/**
+	 * 
+	 * @return the director of operation id
+	 */
+	public DirOperId getDirOperId() {
 		return dOperId;
 	}
 }

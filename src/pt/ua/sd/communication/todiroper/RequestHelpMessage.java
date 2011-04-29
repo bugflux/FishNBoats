@@ -9,7 +9,7 @@ import pt.ua.sd.boat.BoatId;
 /**
  * @author André Prata
  * @author Eriksson Monteiro
- *
+ * 
  */
 public class RequestHelpMessage extends DirOperMessage {
 
@@ -22,11 +22,13 @@ public class RequestHelpMessage extends DirOperMessage {
 	protected final BoatId boatId;
 
 	/**
-	 * Constructs a new RequestHelp message to the DirOper to send one
-	 * boat to a given location and help catch fish.
+	 * Constructs a new RequestHelp message to the DirOper to send one boat to a
+	 * given location and help catch fish.
 	 * 
-	 * @param boatId The ID of the boat requesting help.
-	 * @param location The current location where the catch is planned.
+	 * @param boatId
+	 *            The ID of the boat requesting help.
+	 * @param location
+	 *            The current location where the catch is planned.
 	 */
 	public RequestHelpMessage(BoatId boatId, Point location) {
 		this.location = location;

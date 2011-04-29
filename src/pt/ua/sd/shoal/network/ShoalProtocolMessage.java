@@ -25,9 +25,9 @@ public class ShoalProtocolMessage implements Serializable, IProtocolMessage {
 	/**
 	 * Construct a new ShoalProtocolMessage given a destination Shoal and the
 	 * message to deliver to it.
-	 *
-	 * @param  b
-	 *			  the boat that send the message
+	 * 
+	 * @param b
+	 *            the boat that send the message
 	 * @param id
 	 *            the shoal to deliver the message to.
 	 * @param m
@@ -36,7 +36,7 @@ public class ShoalProtocolMessage implements Serializable, IProtocolMessage {
 	public ShoalProtocolMessage(ShoalId id, ShoalMessage m) {
 		this.m = m;
 		this.id = id;
-		
+
 	}
 
 	/**

@@ -16,34 +16,38 @@ import pt.ua.sd.shoal.ShoalId;
 /**
  * @author André Prata
  * @author Eriksson Monteiro
- *
+ * 
  */
 public class FishingGBoard {
 
 	protected final GBoard gmap;
-	protected final int sizeFactor; // gmap height and width will be factorTimes the map's height and width 
+	protected final int sizeFactor; // gmap height and width will be factorTimes
+									// the map's height and width
 	protected final int backgroundLayer = 0;
 	protected final int moverLayer = 1;
 	protected final int gmapLayers = 2;
 	protected final Gelem backgroundGelem;
-	protected final String boatIcons[] = {"res/boat_g.png", "res/boat_p.png", "res/boat_r.png", "res/boat_y.png", "res/boat_b.png"};
+	protected final String boatIcons[] = { "res/boat_g.png", "res/boat_p.png", "res/boat_r.png", "res/boat_y.png",
+			"res/boat_b.png" };
 	protected final String fishIcon = "res/fish.png";
 	protected final Gelem boatGelems[] = new Gelem[boatIcons.length];
 	protected final Gelem shoalGelem;
 	protected Object map[][];
 
 	/**
-	 * Build a new graphic map of width vs height cells.
-	 * The map handles movers. All movers are draw in the same layer.
+	 * Build a new graphic map of width vs height cells. The map handles movers.
+	 * All movers are draw in the same layer.
 	 * 
-	 * sizeFactor must guarantee that it is possible to draw sizeFactor * sizeFactor
-	 * movers in a cell position. Only BoatId and ShoalId are supported, given their
-	 * getCompany and getShoal methods, to determine the best gelem to use.
-	 *
-	 * If a cell is full, the mover will not be drawn. This causes no problems when removing.
+	 * sizeFactor must guarantee that it is possible to draw sizeFactor *
+	 * sizeFactor movers in a cell position. Only BoatId and ShoalId are
+	 * supported, given their getCompany and getShoal methods, to determine the
+	 * best gelem to use.
+	 * 
+	 * If a cell is full, the mover will not be drawn. This causes no problems
+	 * when removing.
 	 * 
 	 * Make sure to implement movers .equals() method.
-	 *
+	 * 
 	 * @param width
 	 * @param height
 	 * @param sizeFactor
@@ -54,8 +58,10 @@ public class FishingGBoard {
 		map = new Object[height * sizeFactor][width * sizeFactor];
 
 		// graphic stuff
-		gmap = new GBoard("Pescaria", height * sizeFactor, width * sizeFactor, 50 / sizeFactor, 50 / sizeFactor, gmapLayers);
-		//backgroundGelem = new ImageGelem("res/water.jpg", gmap, 100, height*sizeFactor, width*sizeFactor);
+		gmap = new GBoard("Pescaria", height * sizeFactor, width * sizeFactor, 50 / sizeFactor, 50 / sizeFactor,
+				gmapLayers);
+		// backgroundGelem = new ImageGelem("res/water.jpg", gmap, 100,
+		// height*sizeFactor, width*sizeFactor);
 		backgroundGelem = new FilledGelem(Color.blue, 95, sizeFactor, sizeFactor);
 
 		for (int r = 0; r < height; r++) {
@@ -132,7 +138,6 @@ public class FishingGBoard {
 	}
 
 	protected boolean isValid(Point p) {
-		return p.y >= 0 && p.y < gmap.numberOfLines()
-				&& p.x >= 0 && p.x < gmap.numberOfColumns();
+		return p.y >= 0 && p.y < gmap.numberOfLines() && p.x >= 0 && p.x < gmap.numberOfColumns();
 	}
 }

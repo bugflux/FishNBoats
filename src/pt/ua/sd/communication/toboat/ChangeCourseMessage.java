@@ -8,7 +8,7 @@ import java.awt.Point;
 /**
  * @author André Prata
  * @author Eriksson Monteiro
- *
+ * 
  */
 public class ChangeCourseMessage extends BoatMessage {
 
@@ -20,10 +20,11 @@ public class ChangeCourseMessage extends BoatMessage {
 	protected final Point newDestination;
 
 	/**
-	 * Constructs a ChangeCourse message with the order
-	 * to move to a new destination point.
+	 * Constructs a ChangeCourse message with the order to move to a new
+	 * destination point.
 	 * 
-	 * @param newDestination the new destination Point for the boat to move to.
+	 * @param newDestination
+	 *            the new destination Point for the boat to move to.
 	 */
 	public ChangeCourseMessage(Point newDestination) {
 		this.newDestination = newDestination;

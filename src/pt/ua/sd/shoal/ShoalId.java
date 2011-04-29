@@ -8,7 +8,7 @@ import java.io.Serializable;
 /**
  * @author André Prata
  * @author Eriksson Monteiro
- *
+ * 
  */
 public class ShoalId implements Serializable {
 
@@ -22,7 +22,8 @@ public class ShoalId implements Serializable {
 	/**
 	 * Create a new ShoalId with a shoal integer identifier
 	 * 
-	 * @param shoal the integer identifier
+	 * @param shoal
+	 *            the integer identifier
 	 */
 	public ShoalId(int shoal) {
 		this.shoal = shoal;
@@ -37,7 +38,9 @@ public class ShoalId implements Serializable {
 		return shoal;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -48,7 +51,9 @@ public class ShoalId implements Serializable {
 		return result;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override

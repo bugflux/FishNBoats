@@ -53,8 +53,7 @@ public class TBoat extends Thread {
 	 *            the monitor of this boat
 	 * 
 	 */
-	public TBoat(BoatStats stats, int period, IDirOperBoat diroper,
-			IOceanBoat ocean, IBoat monitor) {
+	public TBoat(BoatStats stats, int period, IDirOperBoat diroper, IOceanBoat ocean, IBoat monitor) {
 		this.diroper = diroper;
 		this.ocean = ocean;
 		this.monitor = monitor;
@@ -71,8 +70,7 @@ public class TBoat extends Thread {
 		BoatMessage popMsg;
 		boolean lifeEnd = false;
 		boolean seasonEnd = false;
-		rand = new Random(new Date().getTime() * Thread.currentThread().getId()
-				* stats.getId().getBoat());
+		rand = new Random(new Date().getTime() * Thread.currentThread().getId() * stats.getId().getBoat());
 
 		Point joiningDestination = null;
 		IBoatHelper mHelper = null;
@@ -102,11 +100,9 @@ public class TBoat extends Thread {
 						ChangeCourseMessage m = (ChangeCourseMessage) popMsg;
 						joiningDestination = m.getNewDestination();
 						changeState(INTERNAL_STATE_BOAT.joining_a_companion);
-					} else if (MESSAGE_TYPE.ReturnToWharf == popMsg
-							.getMsgType()) {
+					} else if (MESSAGE_TYPE.ReturnToWharf == popMsg.getMsgType()) {
 						changeState(INTERNAL_STATE_BOAT.returning_to_wharf);
-					} else if (MESSAGE_TYPE.HelpRequestServed == popMsg
-							.getMsgType()) {
+					} else if (MESSAGE_TYPE.HelpRequestServed == popMsg.getMsgType()) {
 						HelpRequestServedMessage m = (HelpRequestServedMessage) popMsg;
 						mHelper = m.getHelper();
 						mHelper.changeCourse(stats.getPosition());
@@ -121,8 +117,7 @@ public class TBoat extends Thread {
 					popMsg = monitor.popMsg(false);
 					if (MESSAGE_TYPE.NoAction == popMsg.getMsgType()) {
 						trackSchool(mHelper);
-					} else if (MESSAGE_TYPE.ReturnToWharf == popMsg
-							.getMsgType()) {
+					} else if (MESSAGE_TYPE.ReturnToWharf == popMsg.getMsgType()) {
 						mHelper.releaseHelper();
 						diroper.fishingDone(stats.getId());
 						changeState(INTERNAL_STATE_BOAT.returning_to_wharf);
@@ -142,8 +137,7 @@ public class TBoat extends Thread {
 					} else if (MESSAGE_TYPE.CastTheNet == popMsg.getMsgType()) {
 						CastTheNetMessage m = (CastTheNetMessage) popMsg;
 						castTheNet(m.getShoal());
-					} else if (MESSAGE_TYPE.ReleaseHelper == popMsg
-							.getMsgType()) {
+					} else if (MESSAGE_TYPE.ReleaseHelper == popMsg.getMsgType()) {
 						changeState(INTERNAL_STATE_BOAT.searching_for_fish);
 					} else {
 						assert false;
@@ -224,8 +218,7 @@ public class TBoat extends Thread {
 			diroper.requestHelp(stats.getId(), follow);
 			changePosition(follow);
 		} else {
-			changePosition(new Point(rand.nextInt(oceanWidth),
-					rand.nextInt(oceanHeight)));
+			changePosition(new Point(rand.nextInt(oceanWidth), rand.nextInt(oceanHeight)));
 		}
 	}
 
@@ -281,8 +274,7 @@ public class TBoat extends Thread {
 				helper.releaseHelper();
 				diroper.fishingDone(stats.getId());
 				conditionalResetState();
-				changePosition(new Point(rand.nextInt(oceanWidth),
-						rand.nextInt(oceanHeight)));
+				changePosition(new Point(rand.nextInt(oceanWidth), rand.nextInt(oceanHeight)));
 			}
 		}
 	}

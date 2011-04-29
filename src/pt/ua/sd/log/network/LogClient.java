@@ -23,80 +23,83 @@ import pt.ua.sd.shoal.network.ShoalClient;
  */
 public class LogClient implements ILogger {
 
-    private String host;
-    private int port;
+	private String host;
+	private int port;
 
-    public LogClient(String host, int port) {
-        this.host = host;
-        this.port = port;
-    }
+	public LogClient(String host, int port) {
+		this.host = host;
+		this.port = port;
+	}
 
-    @Override
-    public int getClockTick() {
-        Socket socket = null;
-        try {
-            socket = new Socket(host, port);
-            IProtocolMessage response = ProtocolEndPoint.sendMessageObjectBlocking(socket, new LogProtocolMessage(new GetTickClockMessage()));
-            Acknowledge ack = (Acknowledge) response;
-            return (Integer) ack.getParam("tick");
-        } catch (UnknownHostException ex) {
-            Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (socket != null) {
-                try {
-                    socket.close();
-                } catch (IOException ex) {
-                    Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-        return -1;
-    }
+	@Override
+	public int getClockTick() {
+		Socket socket = null;
+		try {
+			socket = new Socket(host, port);
+			IProtocolMessage response = ProtocolEndPoint.sendMessageObjectBlocking(socket, new LogProtocolMessage(
+					new GetTickClockMessage()));
+			Acknowledge ack = (Acknowledge) response;
+			return (Integer) ack.getParam("tick");
+		} catch (UnknownHostException ex) {
+			Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
+		} catch (IOException ex) {
+			Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
+		} finally {
+			if (socket != null) {
+				try {
+					socket.close();
+				} catch (IOException ex) {
+					Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
+				}
+			}
+		}
+		return -1;
+	}
 
-    @Override
-    public void push(String type, String entity, String message, int tick) {
-        Socket socket = null;
-        try {
-            socket = new Socket(host, port);
-            ProtocolEndPoint.sendMessageObjectBlocking(socket, new LogProtocolMessage(new PushMessage(type, entity, message, tick)));
-        } catch (UnknownHostException ex) {
-            Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (socket != null) {
-                try {
-                    socket.close();
-                } catch (IOException ex) {
-                    Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-    }
+	@Override
+	public void push(String type, String entity, String message, int tick) {
+		Socket socket = null;
+		try {
+			socket = new Socket(host, port);
+			ProtocolEndPoint.sendMessageObjectBlocking(socket, new LogProtocolMessage(new PushMessage(type, entity,
+					message, tick)));
+		} catch (UnknownHostException ex) {
+			Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
+		} catch (IOException ex) {
+			Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
+		} finally {
+			if (socket != null) {
+				try {
+					socket.close();
+				} catch (IOException ex) {
+					Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
+				}
+			}
+		}
+	}
 
-    @Override
-    public String popContiguous() {
-        Socket socket = null;
-        try {
-            socket = new Socket(host, port);
-            IProtocolMessage response = ProtocolEndPoint.sendMessageObjectBlocking(socket, new LogProtocolMessage(new PopContiguousMessage()));
-            Acknowledge ack = (Acknowledge) response;
-            return (String) ack.getParam("catch");
-        } catch (UnknownHostException ex) {
-            Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (socket != null) {
-                try {
-                    socket.close();
-                } catch (IOException ex) {
-                    Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-        return null;
-    }
+	@Override
+	public String popContiguous() {
+		Socket socket = null;
+		try {
+			socket = new Socket(host, port);
+			IProtocolMessage response = ProtocolEndPoint.sendMessageObjectBlocking(socket, new LogProtocolMessage(
+					new PopContiguousMessage()));
+			Acknowledge ack = (Acknowledge) response;
+			return (String) ack.getParam("catch");
+		} catch (UnknownHostException ex) {
+			Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
+		} catch (IOException ex) {
+			Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
+		} finally {
+			if (socket != null) {
+				try {
+					socket.close();
+				} catch (IOException ex) {
+					Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
+				}
+			}
+		}
+		return null;
+	}
 }

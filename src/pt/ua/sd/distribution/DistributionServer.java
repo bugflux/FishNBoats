@@ -28,8 +28,7 @@ import pt.ua.sd.network.ProtocolServer;
 public class DistributionServer {
 
 	public static void main(String args[]) {
-		ProtocolServer s = new ProtocolServer(
-				DistributionConfig.DISTRIBUTION_SERVER_PORT,
+		ProtocolServer s = new ProtocolServer(DistributionConfig.DISTRIBUTION_SERVER_PORT,
 				new DistributionProtocolRunnable());
 
 		s.startServer();

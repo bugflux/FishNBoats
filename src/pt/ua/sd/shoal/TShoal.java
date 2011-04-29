@@ -36,7 +36,7 @@ public class TShoal extends Thread {
 	protected final int oceanHeight, oceanWidth;
 	protected final Point oceanSpawningArea;
 	protected Socket socket;
-	
+
 	/**
 	 * Construct a new Shoal Thread. Shoals execute at least nCampaign times
 	 * seasonMoves iterations. It is the responsibility of the Shoal to update
@@ -65,10 +65,8 @@ public class TShoal extends Thread {
 	 *            the maximum Fish that might be caught by the net. A percentage
 	 *            of the total size of the fish in a given moment. [0..1].
 	 */
-	public TShoal(ShoalStats stats, int period, int seasonMoves,
-			int nCampaigns, IShoal monitor, IOceanShoal ocean,
-			IDirOperShoal diroper[], int growing_factor,
-			double eco_system_capacity, double maxCatchPercentage) {
+	public TShoal(ShoalStats stats, int period, int seasonMoves, int nCampaigns, IShoal monitor, IOceanShoal ocean,
+			IDirOperShoal diroper[], int growing_factor, double eco_system_capacity, double maxCatchPercentage) {
 		this.period = period;
 		this.monitor = monitor;
 		this.ocean = ocean;
@@ -84,12 +82,12 @@ public class TShoal extends Thread {
 		this.oceanWidth = ocean.getWidth();
 		this.oceanSpawningArea = ocean.getSpawningArea();
 	}
+
 	protected Random rand;
 
 	@Override
 	public void run() {
-		rand = new Random(new Date().getTime() * Thread.currentThread().getId()
-				* stats.getId().getShoal());
+		rand = new Random(new Date().getTime() * Thread.currentThread().getId() * stats.getId().getShoal());
 		ShoalMessage popMsg;
 		int campaigns;
 		int moves;
@@ -107,42 +105,42 @@ public class TShoal extends Thread {
 			while (!seasonOver) {
 
 				switch (stats.getState()) {
-					case spawning:
-						// BLOCK waiting to go to feeding area
-						popMsg = monitor.popMsg(true);
-						if (MESSAGE_TYPE.GoToFeedingArea == popMsg.getMsgType()) {
-							goToFeedingArea();
+				case spawning:
+					// BLOCK waiting to go to feeding area
+					popMsg = monitor.popMsg(true);
+					if (MESSAGE_TYPE.GoToFeedingArea == popMsg.getMsgType()) {
+						goToFeedingArea();
+					} else {
+						assert false; // cannot receive other messages in this
+						// state
+					}
+					break;
+
+				case feeding:
+					feed(); // does nothing
+
+					popMsg = monitor.popMsg(false);
+					if (MESSAGE_TYPE.NoActionMessage == popMsg.getMsgType()) {
+						if (moves < seasonMoves) {
+							swimAbout();
 						} else {
-							assert false; // cannot receive other messages in this
-							// state
+							seasonOver = swimToSpawningArea();
 						}
-						break;
+					} else if (MESSAGE_TYPE.TrappedByTheNet == popMsg.getMsgType()) {
+						isTrapped();
+					} else {
+						assert false; // cannot receive other messages in this
+						// state
+					}
+					break;
 
-					case feeding:
-						feed(); // does nothing
+				case trapped_by_the_net:
+					trap(); // indicate how many fish were lost
+					escapeTheNet();
+					break;
 
-						popMsg = monitor.popMsg(false);
-						if (MESSAGE_TYPE.NoActionMessage == popMsg.getMsgType()) {
-							if (moves < seasonMoves) {
-								swimAbout();
-							} else {
-								seasonOver = swimToSpawningArea();
-							}
-						} else if (MESSAGE_TYPE.TrappedByTheNet == popMsg.getMsgType()) {
-							isTrapped();
-						} else {
-							assert false; // cannot receive other messages in this
-							// state
-						}
-						break;
-
-					case trapped_by_the_net:
-						trap(); // indicate how many fish were lost
-						escapeTheNet();
-						break;
-
-					default:
-						assert false;
+				default:
+					assert false;
 				}
 
 				moves++;
@@ -166,8 +164,7 @@ public class TShoal extends Thread {
 	 */
 	protected void spawn() {
 		int currentSize = stats.getSize();
-		int newSize = (int) (currentSize * (1 + growing_factor - eco_system_capacity
-				* currentSize));
+		int newSize = (int) (currentSize * (1 + growing_factor - eco_system_capacity * currentSize));
 		changeSize(newSize);
 	}
 
@@ -189,8 +186,7 @@ public class TShoal extends Thread {
 	 * The shoal tries to move to a random position.
 	 */
 	protected void swimAbout() {
-		changePosition(new Point(rand.nextInt(oceanWidth),
-				rand.nextInt(oceanHeight)));
+		changePosition(new Point(rand.nextInt(oceanWidth), rand.nextInt(oceanHeight)));
 	}
 
 	/**
@@ -308,9 +304,10 @@ public class TShoal extends Thread {
 
 	/**
 	 * define the socket which the thread should use
+	 * 
 	 * @param socket
 	 */
-	public void setClientSocket(Socket socket){
+	public void setClientSocket(Socket socket) {
 		this.socket = socket;
 	}
 }

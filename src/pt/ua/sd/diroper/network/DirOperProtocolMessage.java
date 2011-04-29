@@ -13,7 +13,7 @@ import pt.ua.sd.network.IProtocolMessage;
  * @author Eriksson Monteiro <eriksson.monteiro@ua.pt>
  * @author André Prata <andreprata@ua.pt>
  */
-public class DirOperProtocolMessage implements Serializable,IProtocolMessage {
+public class DirOperProtocolMessage implements Serializable, IProtocolMessage {
 
 	/**
 	 * 

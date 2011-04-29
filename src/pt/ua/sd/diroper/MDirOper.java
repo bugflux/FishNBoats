@@ -161,8 +161,7 @@ public class MDirOper implements IDirOper, IDirOperBoat, IDirOperShoal {
 			pushMsg(new RequestHelpMessage(id, p));
 		}
 
-		log.push("Request help", id.toString(), "help " + id + " at " + "("
-				+ p.y + "," + p.x + ")", logTick);
+		log.push("Request help", id.toString(), "help " + id + " at " + "(" + p.y + "," + p.x + ")", logTick);
 	}
 
 	/**

@@ -116,8 +116,7 @@ public class MBoat implements IBoat, IBoatDirOper, IBoatHelper {
 			pushMsg(new ChangeCourseMessage(p));
 		}
 
-		log.push("Change course", id.toString(), "helping at " + "(" + p.y
-				+ "," + p.x + ")", logTick);
+		log.push("Change course", id.toString(), "helping at " + "(" + p.y + "," + p.x + ")", logTick);
 	}
 
 	/**

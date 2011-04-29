@@ -28,8 +28,8 @@ public class Acknowledge implements IProtocolMessage {
 		return params.get(param);
 	}
 
-	public void setParam(String param, Object value){
-		if(param.contains(param)){
+	public void setParam(String param, Object value) {
+		if (param.contains(param)) {
 			params.remove(param);
 		}
 		params.put(param, value);

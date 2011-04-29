@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 /**
  * @author André Prata
  * @author Eriksson Monteiro
- *
+ * 
  */
 public class TLogFlusher extends Thread {
 

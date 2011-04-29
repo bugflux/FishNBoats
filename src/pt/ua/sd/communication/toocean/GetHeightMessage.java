@@ -3,7 +3,6 @@
  */
 package pt.ua.sd.communication.toocean;
 
-
 /**
  * @author André Prata <andreprata@ua.pt>
  * @author Eriksson Monteiro <eriksson.monteiro@ua.pt>

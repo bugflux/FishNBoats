@@ -13,18 +13,18 @@ import pt.ua.sd.network.IProtocolMessage;
  */
 public class LogProtocolMessage implements IProtocolMessage, Serializable {
 
-    /**
+	/**
      * 
      */
-    private static final long serialVersionUID = -628384051581925384L;
-    private LoggerMessage message;
+	private static final long serialVersionUID = -628384051581925384L;
+	private LoggerMessage message;
 
-    public LogProtocolMessage(LoggerMessage message) {
-        this.message = message;
-    }
+	public LogProtocolMessage(LoggerMessage message) {
+		this.message = message;
+	}
 
-    @Override
-    public LoggerMessage getMessage() {
-        return message;
-    }
+	@Override
+	public LoggerMessage getMessage() {
+		return message;
+	}
 }

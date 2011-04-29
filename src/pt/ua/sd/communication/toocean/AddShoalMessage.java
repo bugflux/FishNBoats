@@ -21,7 +21,7 @@ public class AddShoalMessage extends OceanMessage {
 
 	protected final ShoalStats shoal;
 	protected final Point p;
-        protected final MShoal mshoal;
+	protected final MShoal mshoal;
 
 	/**
 	 * Add a new shoal to this Ocean.
@@ -34,13 +34,13 @@ public class AddShoalMessage extends OceanMessage {
 	public AddShoalMessage(ShoalStats s, Point p, MShoal mshoal) {
 		this.shoal = s;
 		this.p = p;
-                this.mshoal=mshoal;
+		this.mshoal = mshoal;
 	}
 
-        public MShoal getShoalMonitor(){
-            return this.mshoal;
-        }
-         
+	public MShoal getShoalMonitor() {
+		return this.mshoal;
+	}
+
 	/**
 	 * @return the shoal
 	 */

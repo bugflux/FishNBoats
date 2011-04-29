@@ -72,9 +72,11 @@ public interface IOceanBoat {
 
 	/**
 	 * Set the catch storage for a boat.
-	 *  
-	 * @param id the id of the boat.
-	 * @param stored the (total) amount stored.
+	 * 
+	 * @param id
+	 *            the id of the boat.
+	 * @param stored
+	 *            the (total) amount stored.
 	 */
 	public void setBoatCatch(BoatId id, int stored);
 

@@ -43,8 +43,7 @@ import pt.ua.sd.shoal.ShoalStats.INTERNAL_STATE_SCHOOL;
  * @author Eriksson Monteiro <eriksson.monteiro@ua.pt>
  * @author André Prata <andreprata@ua.pt>
  */
-public class OceanClient implements IOceanBoat, IOceanShoal, IOceanDirOper,
-		Serializable {
+public class OceanClient implements IOceanBoat, IOceanShoal, IOceanDirOper, Serializable {
 	/**
 	 * 
 	 */
@@ -62,25 +61,20 @@ public class OceanClient implements IOceanBoat, IOceanShoal, IOceanDirOper,
 		Socket socket = null;
 		try {
 			socket = new Socket(host, port);
-			IProtocolMessage response = ProtocolEndPoint
-					.sendMessageObjectBlocking(socket,
-							new OceanProtocolMessage(new TryMoveBoatMessage(id,
-									p)));
+			IProtocolMessage response = ProtocolEndPoint.sendMessageObjectBlocking(socket, new OceanProtocolMessage(
+					new TryMoveBoatMessage(id, p)));
 			Acknowledge ack = (Acknowledge) response;
 			return (Point) ack.getParam("point");
 		} catch (UnknownHostException ex) {
-			Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE,
-					null, ex);
+			Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (IOException ex) {
-			Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE,
-					null, ex);
+			Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE, null, ex);
 		} finally {
 			if (socket != null)
 				try {
 					socket.close();
 				} catch (IOException ex) {
-					Logger.getLogger(OceanClient.class.getName()).log(
-							Level.SEVERE, null, ex);
+					Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE, null, ex);
 				}
 		}
 		return null;
@@ -91,24 +85,20 @@ public class OceanClient implements IOceanBoat, IOceanShoal, IOceanDirOper,
 		Socket socket = null;
 		try {
 			socket = new Socket(host, port);
-			IProtocolMessage response = ProtocolEndPoint
-					.sendMessageObjectBlocking(socket,
-							new OceanProtocolMessage(new GetRadarMessage(id)));
+			IProtocolMessage response = ProtocolEndPoint.sendMessageObjectBlocking(socket, new OceanProtocolMessage(
+					new GetRadarMessage(id)));
 			Acknowledge ack = (Acknowledge) response;
 			return (List<Point>) ack.getParam("radar");
 		} catch (UnknownHostException ex) {
-			Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE,
-					null, ex);
+			Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (IOException ex) {
-			Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE,
-					null, ex);
+			Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE, null, ex);
 		} finally {
 			if (socket != null)
 				try {
 					socket.close();
 				} catch (IOException ex) {
-					Logger.getLogger(OceanClient.class.getName()).log(
-							Level.SEVERE, null, ex);
+					Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE, null, ex);
 				}
 		}
 		return null;
@@ -118,24 +108,20 @@ public class OceanClient implements IOceanBoat, IOceanShoal, IOceanDirOper,
 		Socket socket = null;
 		try {
 			socket = new Socket(host, port);
-			IProtocolMessage response = ProtocolEndPoint
-					.sendMessageObjectBlocking(socket,
-							new OceanProtocolMessage(new GetHeightMessage()));
+			IProtocolMessage response = ProtocolEndPoint.sendMessageObjectBlocking(socket, new OceanProtocolMessage(
+					new GetHeightMessage()));
 			Acknowledge ack = (Acknowledge) response;
 			return (Integer) ack.getParam("height");
 		} catch (UnknownHostException ex) {
-			Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE,
-					null, ex);
+			Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (IOException ex) {
-			Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE,
-					null, ex);
+			Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE, null, ex);
 		} finally {
 			if (socket != null)
 				try {
 					socket.close();
 				} catch (IOException ex) {
-					Logger.getLogger(OceanClient.class.getName()).log(
-							Level.SEVERE, null, ex);
+					Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE, null, ex);
 				}
 		}
 		return -1;
@@ -145,24 +131,20 @@ public class OceanClient implements IOceanBoat, IOceanShoal, IOceanDirOper,
 		Socket socket = null;
 		try {
 			socket = new Socket(host, port);
-			IProtocolMessage response = ProtocolEndPoint
-					.sendMessageObjectBlocking(socket,
-							new OceanProtocolMessage(new GetWidthMessage()));
+			IProtocolMessage response = ProtocolEndPoint.sendMessageObjectBlocking(socket, new OceanProtocolMessage(
+					new GetWidthMessage()));
 			Acknowledge ack = (Acknowledge) response;
 			return (Integer) ack.getParam("width");
 		} catch (UnknownHostException ex) {
-			Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE,
-					null, ex);
+			Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (IOException ex) {
-			Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE,
-					null, ex);
+			Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE, null, ex);
 		} finally {
 			if (socket != null)
 				try {
 					socket.close();
 				} catch (IOException ex) {
-					Logger.getLogger(OceanClient.class.getName()).log(
-							Level.SEVERE, null, ex);
+					Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE, null, ex);
 				}
 		}
 
@@ -173,23 +155,18 @@ public class OceanClient implements IOceanBoat, IOceanShoal, IOceanDirOper,
 		Socket socket = null;
 		try {
 			socket = new Socket(host, port);
-			ProtocolEndPoint
-					.sendMessageObjectBlocking(socket,
-							new OceanProtocolMessage(new SetBoatStateMessage(
-									id, state)));
+			ProtocolEndPoint.sendMessageObjectBlocking(socket, new OceanProtocolMessage(new SetBoatStateMessage(id,
+					state)));
 		} catch (UnknownHostException ex) {
-			Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE,
-					null, ex);
+			Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (IOException ex) {
-			Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE,
-					null, ex);
+			Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE, null, ex);
 		} finally {
 			if (socket != null) {
 				try {
 					socket.close();
 				} catch (IOException ex) {
-					Logger.getLogger(OceanClient.class.getName()).log(
-							Level.SEVERE, null, ex);
+					Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE, null, ex);
 				}
 			}
 		}
@@ -199,22 +176,18 @@ public class OceanClient implements IOceanBoat, IOceanShoal, IOceanDirOper,
 		Socket socket = null;
 		try {
 			socket = new Socket(host, port);
-			ProtocolEndPoint.sendMessageObjectBlocking(socket,
-					new OceanProtocolMessage(
-							new SetBoatCatchMessage(id, stored)));
+			ProtocolEndPoint.sendMessageObjectBlocking(socket, new OceanProtocolMessage(new SetBoatCatchMessage(id,
+					stored)));
 		} catch (UnknownHostException ex) {
-			Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE,
-					null, ex);
+			Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (IOException ex) {
-			Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE,
-					null, ex);
+			Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE, null, ex);
 		} finally {
 			if (socket != null)
 				try {
 					socket.close();
 				} catch (IOException ex) {
-					Logger.getLogger(OceanClient.class.getName()).log(
-							Level.SEVERE, null, ex);
+					Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE, null, ex);
 				}
 		}
 	}
@@ -223,24 +196,20 @@ public class OceanClient implements IOceanBoat, IOceanShoal, IOceanDirOper,
 		Socket socket = null;
 		try {
 			socket = new Socket(host, port);
-			IProtocolMessage response = ProtocolEndPoint
-					.sendMessageObjectBlocking(socket,
-							new OceanProtocolMessage(new GetWharfMessage()));
+			IProtocolMessage response = ProtocolEndPoint.sendMessageObjectBlocking(socket, new OceanProtocolMessage(
+					new GetWharfMessage()));
 			Acknowledge ack = (Acknowledge) response;
 			return (Point) ack.getParam("point");
 		} catch (UnknownHostException ex) {
-			Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE,
-					null, ex);
+			Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (IOException ex) {
-			Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE,
-					null, ex);
+			Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE, null, ex);
 		} finally {
 			if (socket != null)
 				try {
 					socket.close();
 				} catch (IOException ex) {
-					Logger.getLogger(OceanClient.class.getName()).log(
-							Level.SEVERE, null, ex);
+					Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE, null, ex);
 				}
 		}
 		return null;
@@ -250,25 +219,20 @@ public class OceanClient implements IOceanBoat, IOceanShoal, IOceanDirOper,
 		Socket socket = null;
 		try {
 			socket = new Socket(host, port);
-			IProtocolMessage response = ProtocolEndPoint
-					.sendMessageObjectBlocking(socket,
-							new OceanProtocolMessage(
-									new CompanionDetectedMessage(id, helper)));
+			IProtocolMessage response = ProtocolEndPoint.sendMessageObjectBlocking(socket, new OceanProtocolMessage(
+					new CompanionDetectedMessage(id, helper)));
 			Acknowledge ack = (Acknowledge) response;
 			return (IShoalBoat) ack.getParam("companion");
 		} catch (UnknownHostException ex) {
-			Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE,
-					null, ex);
+			Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (IOException ex) {
-			Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE,
-					null, ex);
+			Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE, null, ex);
 		} finally {
 			if (socket != null)
 				try {
 					socket.close();
 				} catch (IOException ex) {
-					Logger.getLogger(OceanClient.class.getName()).log(
-							Level.SEVERE, null, ex);
+					Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE, null, ex);
 				}
 		}
 		return null;
@@ -278,25 +242,20 @@ public class OceanClient implements IOceanBoat, IOceanShoal, IOceanDirOper,
 		Socket socket = null;
 		try {
 			socket = new Socket(host, port);
-			IProtocolMessage response = ProtocolEndPoint
-					.sendMessageObjectBlocking(socket,
-							new OceanProtocolMessage(new TryMoveShoalMessage(
-									id, p)));
+			IProtocolMessage response = ProtocolEndPoint.sendMessageObjectBlocking(socket, new OceanProtocolMessage(
+					new TryMoveShoalMessage(id, p)));
 			Acknowledge ack = (Acknowledge) response;
 			return (Point) ack.getParam("point");
 		} catch (UnknownHostException ex) {
-			Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE,
-					null, ex);
+			Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (IOException ex) {
-			Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE,
-					null, ex);
+			Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE, null, ex);
 		} finally {
 			if (socket != null)
 				try {
 					socket.close();
 				} catch (IOException ex) {
-					Logger.getLogger(OceanClient.class.getName()).log(
-							Level.SEVERE, null, ex);
+					Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE, null, ex);
 				}
 		}
 		return null;
@@ -306,22 +265,18 @@ public class OceanClient implements IOceanBoat, IOceanShoal, IOceanDirOper,
 		Socket socket = null;
 		try {
 			socket = new Socket(host, port);
-			ProtocolEndPoint.sendMessageObjectBlocking(socket,
-					new OceanProtocolMessage(
-							new SetShoalStateMessage(id, state)));
+			ProtocolEndPoint.sendMessageObjectBlocking(socket, new OceanProtocolMessage(new SetShoalStateMessage(id,
+					state)));
 		} catch (UnknownHostException ex) {
-			Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE,
-					null, ex);
+			Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (IOException ex) {
-			Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE,
-					null, ex);
+			Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE, null, ex);
 		} finally {
 			if (socket != null)
 				try {
 					socket.close();
 				} catch (IOException ex) {
-					Logger.getLogger(OceanClient.class.getName()).log(
-							Level.SEVERE, null, ex);
+					Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE, null, ex);
 				}
 		}
 	}
@@ -330,23 +285,18 @@ public class OceanClient implements IOceanBoat, IOceanShoal, IOceanDirOper,
 		Socket socket = null;
 		try {
 			socket = new Socket(host, port);
-			ProtocolEndPoint
-					.sendMessageObjectBlocking(socket,
-							new OceanProtocolMessage(new SetShoalSizeMessage(
-									id, size)));
+			ProtocolEndPoint.sendMessageObjectBlocking(socket, new OceanProtocolMessage(new SetShoalSizeMessage(id,
+					size)));
 		} catch (UnknownHostException ex) {
-			Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE,
-					null, ex);
+			Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (IOException ex) {
-			Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE,
-					null, ex);
+			Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE, null, ex);
 		} finally {
 			if (socket != null) {
 				try {
 					socket.close();
 				} catch (IOException ex) {
-					Logger.getLogger(OceanClient.class.getName()).log(
-							Level.SEVERE, null, ex);
+					Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE, null, ex);
 				}
 			}
 		}
@@ -356,25 +306,20 @@ public class OceanClient implements IOceanBoat, IOceanShoal, IOceanDirOper,
 		Socket socket = null;
 		try {
 			socket = new Socket(host, port);
-			IProtocolMessage response = ProtocolEndPoint
-					.sendMessageObjectBlocking(socket,
-							new OceanProtocolMessage(
-									new GetSpawningAreaMessage()));
+			IProtocolMessage response = ProtocolEndPoint.sendMessageObjectBlocking(socket, new OceanProtocolMessage(
+					new GetSpawningAreaMessage()));
 			Acknowledge ack = (Acknowledge) response;
 			return (Point) ack.getParam("point");
 		} catch (UnknownHostException ex) {
-			Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE,
-					null, ex);
+			Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (IOException ex) {
-			Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE,
-					null, ex);
+			Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE, null, ex);
 		} finally {
 			if (socket != null)
 				try {
 					socket.close();
 				} catch (IOException ex) {
-					Logger.getLogger(OceanClient.class.getName()).log(
-							Level.SEVERE, null, ex);
+					Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE, null, ex);
 				}
 		}
 		return null;
@@ -384,22 +329,18 @@ public class OceanClient implements IOceanBoat, IOceanShoal, IOceanDirOper,
 		Socket socket = null;
 		try {
 			socket = new Socket(host, port);
-			ProtocolEndPoint.sendMessageObjectBlocking(socket,
-					new OceanProtocolMessage(new SetDirOperStateMessage(id,
-							state)));
+			ProtocolEndPoint.sendMessageObjectBlocking(socket, new OceanProtocolMessage(new SetDirOperStateMessage(id,
+					state)));
 		} catch (UnknownHostException ex) {
-			Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE,
-					null, ex);
+			Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (IOException ex) {
-			Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE,
-					null, ex);
+			Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE, null, ex);
 		} finally {
 			if (socket != null)
 				try {
 					socket.close();
 				} catch (IOException ex) {
-					Logger.getLogger(OceanClient.class.getName()).log(
-							Level.SEVERE, null, ex);
+					Logger.getLogger(OceanClient.class.getName()).log(Level.SEVERE, null, ex);
 				}
 		}
 	}

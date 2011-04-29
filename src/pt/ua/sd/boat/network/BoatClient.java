@@ -35,226 +35,235 @@ import pt.ua.sd.shoal.network.ShoalClient;
  * @author Eriksson Monteiro <eriksson.monteiro@ua.pt>
  * @author André Prata <andreprata@ua.pt>
  */
-public class BoatClient implements IBoat, IBoatDirOper, IBoatHelper,Serializable {
+public class BoatClient implements IBoat, IBoatDirOper, IBoatHelper, Serializable {
 
-    /**
+	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 6323734479640900664L;
 
 	private BoatId id;
-    private DirOperId dOperId;
-    private String host;
-    private int port;
+	private DirOperId dOperId;
+	private String host;
+	private int port;
 
-    public BoatClient(DirOperId dOperId, BoatId id, String host, int port) {
-        this.id = id;
-        this.host = host;
-        this.port = port;
-        this.dOperId = dOperId;
-    }
+	public BoatClient(DirOperId dOperId, BoatId id, String host, int port) {
+		this.id = id;
+		this.host = host;
+		this.port = port;
+		this.dOperId = dOperId;
+	}
 
-    @Override
-    public BoatMessage popMsg(boolean blocking) {
-        
-        Socket socket = null;
-        try {
-            socket = new Socket(host, port);
-            IProtocolMessage response = ProtocolEndPoint.sendMessageObjectBlocking(socket, new BoatProtocolMessage(id,dOperId, new PopMessage(blocking)));
-            Acknowledge ack = (Acknowledge) response;
-            return (BoatMessage) ack.getParam("message");
-        } catch (UnknownHostException ex) {
-            Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (socket != null) {
-                try {
-                    socket.close();
-                } catch (IOException ex) {
-                    Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-        return null;
-    }
+	@Override
+	public BoatMessage popMsg(boolean blocking) {
 
-    @Override
-    public void setToHighSea() {
-        
-        Socket socket = null;
-        try {
-            socket = new Socket(host, port);
-            ProtocolEndPoint.sendMessageObjectBlocking(socket, new BoatProtocolMessage(id,dOperId ,new SetToHighSeaMessage()));
-        } catch (UnknownHostException ex) {
-            Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (socket != null) {
-                try {
-                    socket.close();
-                } catch (IOException ex) {
-                    Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-    }
+		Socket socket = null;
+		try {
+			socket = new Socket(host, port);
+			IProtocolMessage response = ProtocolEndPoint.sendMessageObjectBlocking(socket, new BoatProtocolMessage(id,
+					dOperId, new PopMessage(blocking)));
+			Acknowledge ack = (Acknowledge) response;
+			return (BoatMessage) ack.getParam("message");
+		} catch (UnknownHostException ex) {
+			Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
+		} catch (IOException ex) {
+			Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
+		} finally {
+			if (socket != null) {
+				try {
+					socket.close();
+				} catch (IOException ex) {
+					Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
+				}
+			}
+		}
+		return null;
+	}
 
-    @Override
-    public void returnToWharf() {
-        
-        Socket socket = null;
-        try {
-            socket = new Socket(host, port);
-            ProtocolEndPoint.sendMessageObjectBlocking(socket, new BoatProtocolMessage(id,dOperId, new ReturnToWharfMessage()));
-        } catch (UnknownHostException ex) {
-            Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (socket != null) {
-                try {
-                    socket.close();
-                } catch (IOException ex) {
-                    Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-    }
+	@Override
+	public void setToHighSea() {
 
-    @Override
-    public BoatId getId() {
-        
-        Socket socket = null;
-        try {
-            socket = new Socket(host, port);
-            IProtocolMessage response = ProtocolEndPoint.sendMessageObjectBlocking(socket, new BoatProtocolMessage(id,dOperId, new GetIdMessage()));
-            Acknowledge ack = (Acknowledge) response;
-            return (BoatId) ack.getParam("id");
-        } catch (UnknownHostException ex) {
-            Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (socket != null) {
-                try {
-                    socket.close();
-                } catch (IOException ex) {
-                    Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-        return null;
-    }
+		Socket socket = null;
+		try {
+			socket = new Socket(host, port);
+			ProtocolEndPoint.sendMessageObjectBlocking(socket, new BoatProtocolMessage(id, dOperId,
+					new SetToHighSeaMessage()));
+		} catch (UnknownHostException ex) {
+			Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
+		} catch (IOException ex) {
+			Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
+		} finally {
+			if (socket != null) {
+				try {
+					socket.close();
+				} catch (IOException ex) {
+					Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
+				}
+			}
+		}
+	}
 
-    @Override
-    public void lifeEnd() {
-        
-        Socket socket = null;
-        try {
-            socket = new Socket(host, port);
-            ProtocolEndPoint.sendMessageObjectBlocking(socket, new BoatProtocolMessage(id,dOperId, new LifeEndMessage()));
-        } catch (UnknownHostException ex) {
-            Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (socket != null) {
-                try {
-                    socket.close();
-                } catch (IOException ex) {
-                    Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-    }
+	@Override
+	public void returnToWharf() {
 
-    @Override
-    public void helpRequestServed(IBoatHelper helper) {
-        
-        Socket socket = null;
-        try {
-            socket = new Socket(host, port);
-            ProtocolEndPoint.sendMessageObjectBlocking(socket, new BoatProtocolMessage(id,dOperId, new HelpRequestServedMessage(helper)));
-        } catch (UnknownHostException ex) {
-            Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (socket != null) {
-                try {
-                    socket.close();
-                } catch (IOException ex) {
-                    Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-    }
+		Socket socket = null;
+		try {
+			socket = new Socket(host, port);
+			ProtocolEndPoint.sendMessageObjectBlocking(socket, new BoatProtocolMessage(id, dOperId,
+					new ReturnToWharfMessage()));
+		} catch (UnknownHostException ex) {
+			Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
+		} catch (IOException ex) {
+			Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
+		} finally {
+			if (socket != null) {
+				try {
+					socket.close();
+				} catch (IOException ex) {
+					Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
+				}
+			}
+		}
+	}
 
-    @Override
-    public void changeCourse(Point p) {
-        
-        Socket socket = null;
-        try {
-            socket = new Socket(host, port);
-            ProtocolEndPoint.sendMessageObjectBlocking(socket, new BoatProtocolMessage(id,dOperId, new ChangeCourseMessage(p)));
-        } catch (UnknownHostException ex) {
-            Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (socket != null) {
-                try {
-                    socket.close();
-                } catch (IOException ex) {
-                    Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-    }
+	@Override
+	public BoatId getId() {
 
-    @Override
-    public void castTheNet(IShoalBoat s) {
-       
-        Socket socket = null;
-        try {
-            socket = new Socket(host, port);
-            ProtocolEndPoint.sendMessageObjectBlocking(socket, new BoatProtocolMessage(id,dOperId, new CastTheNetMessage(s)));
-        } catch (UnknownHostException ex) {
-            Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (socket != null) {
-                try {
-                    socket.close();
-                } catch (IOException ex) {
-                    Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-    }
+		Socket socket = null;
+		try {
+			socket = new Socket(host, port);
+			IProtocolMessage response = ProtocolEndPoint.sendMessageObjectBlocking(socket, new BoatProtocolMessage(id,
+					dOperId, new GetIdMessage()));
+			Acknowledge ack = (Acknowledge) response;
+			return (BoatId) ack.getParam("id");
+		} catch (UnknownHostException ex) {
+			Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
+		} catch (IOException ex) {
+			Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
+		} finally {
+			if (socket != null) {
+				try {
+					socket.close();
+				} catch (IOException ex) {
+					Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
+				}
+			}
+		}
+		return null;
+	}
 
-    @Override
-    public void releaseHelper() {
-        
-        Socket socket = null;
-        try {
-            socket = new Socket(host, port);
-            ProtocolEndPoint.sendMessageObjectBlocking(socket, new BoatProtocolMessage(id, dOperId,new ReleaseHelperMessage()));
-        } catch (UnknownHostException ex) {
-            Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (socket != null) {
-                try {
-                    socket.close();
-                } catch (IOException ex) {
-                    Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-    }
+	@Override
+	public void lifeEnd() {
+
+		Socket socket = null;
+		try {
+			socket = new Socket(host, port);
+			ProtocolEndPoint.sendMessageObjectBlocking(socket, new BoatProtocolMessage(id, dOperId,
+					new LifeEndMessage()));
+		} catch (UnknownHostException ex) {
+			Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
+		} catch (IOException ex) {
+			Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
+		} finally {
+			if (socket != null) {
+				try {
+					socket.close();
+				} catch (IOException ex) {
+					Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
+				}
+			}
+		}
+	}
+
+	@Override
+	public void helpRequestServed(IBoatHelper helper) {
+
+		Socket socket = null;
+		try {
+			socket = new Socket(host, port);
+			ProtocolEndPoint.sendMessageObjectBlocking(socket, new BoatProtocolMessage(id, dOperId,
+					new HelpRequestServedMessage(helper)));
+		} catch (UnknownHostException ex) {
+			Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
+		} catch (IOException ex) {
+			Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
+		} finally {
+			if (socket != null) {
+				try {
+					socket.close();
+				} catch (IOException ex) {
+					Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
+				}
+			}
+		}
+	}
+
+	@Override
+	public void changeCourse(Point p) {
+
+		Socket socket = null;
+		try {
+			socket = new Socket(host, port);
+			ProtocolEndPoint.sendMessageObjectBlocking(socket, new BoatProtocolMessage(id, dOperId,
+					new ChangeCourseMessage(p)));
+		} catch (UnknownHostException ex) {
+			Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
+		} catch (IOException ex) {
+			Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
+		} finally {
+			if (socket != null) {
+				try {
+					socket.close();
+				} catch (IOException ex) {
+					Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
+				}
+			}
+		}
+	}
+
+	@Override
+	public void castTheNet(IShoalBoat s) {
+
+		Socket socket = null;
+		try {
+			socket = new Socket(host, port);
+			ProtocolEndPoint.sendMessageObjectBlocking(socket, new BoatProtocolMessage(id, dOperId,
+					new CastTheNetMessage(s)));
+		} catch (UnknownHostException ex) {
+			Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
+		} catch (IOException ex) {
+			Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
+		} finally {
+			if (socket != null) {
+				try {
+					socket.close();
+				} catch (IOException ex) {
+					Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
+				}
+			}
+		}
+	}
+
+	@Override
+	public void releaseHelper() {
+
+		Socket socket = null;
+		try {
+			socket = new Socket(host, port);
+			ProtocolEndPoint.sendMessageObjectBlocking(socket, new BoatProtocolMessage(id, dOperId,
+					new ReleaseHelperMessage()));
+		} catch (UnknownHostException ex) {
+			Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
+		} catch (IOException ex) {
+			Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
+		} finally {
+			if (socket != null) {
+				try {
+					socket.close();
+				} catch (IOException ex) {
+					Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
+				}
+			}
+		}
+	}
 }
