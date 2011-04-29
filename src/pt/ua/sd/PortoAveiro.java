@@ -127,7 +127,7 @@ public class PortoAveiro {
 					INTERNAL_STATE_DIROPER.starting_a_campaign,
 					new DirOperId(r));
 			mDirOpers[r] = new MDirOper(sDirOpers[r].getId(), nshoals, nboats, logger);
-			tDirOpers[r] = new TDirOper(logger, oceano, mDirOpers[r],
+			tDirOpers[r] = new TDirOper(oceano, mDirOpers[r],
 					mBoats[r], mShoals, (DirOperStats) sDirOpers[r].clone());
 
 			oceano.addDirOper(sDirOpers[r]);
