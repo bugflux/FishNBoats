@@ -37,7 +37,12 @@ import pt.ua.sd.shoal.network.ShoalClient;
  */
 public class BoatClient implements IBoat, IBoatDirOper, IBoatHelper,Serializable {
 
-    private BoatId id;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6323734479640900664L;
+
+	private BoatId id;
     private DirOperId dOperId;
     private String host;
     private int port;
@@ -80,7 +85,7 @@ public class BoatClient implements IBoat, IBoatDirOper, IBoatHelper,Serializable
         Socket socket = null;
         try {
             socket = new Socket(host, port);
-            IProtocolMessage response = ProtocolEndPoint.sendMessageObjectBlocking(socket, new BoatProtocolMessage(id,dOperId ,new SetToHighSeaMessage()));
+            ProtocolEndPoint.sendMessageObjectBlocking(socket, new BoatProtocolMessage(id,dOperId ,new SetToHighSeaMessage()));
         } catch (UnknownHostException ex) {
             Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -102,7 +107,7 @@ public class BoatClient implements IBoat, IBoatDirOper, IBoatHelper,Serializable
         Socket socket = null;
         try {
             socket = new Socket(host, port);
-            IProtocolMessage response = ProtocolEndPoint.sendMessageObjectBlocking(socket, new BoatProtocolMessage(id,dOperId, new ReturnToWharfMessage()));
+            ProtocolEndPoint.sendMessageObjectBlocking(socket, new BoatProtocolMessage(id,dOperId, new ReturnToWharfMessage()));
         } catch (UnknownHostException ex) {
             Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -149,7 +154,7 @@ public class BoatClient implements IBoat, IBoatDirOper, IBoatHelper,Serializable
         Socket socket = null;
         try {
             socket = new Socket(host, port);
-            IProtocolMessage response = ProtocolEndPoint.sendMessageObjectBlocking(socket, new BoatProtocolMessage(id,dOperId, new LifeEndMessage()));
+            ProtocolEndPoint.sendMessageObjectBlocking(socket, new BoatProtocolMessage(id,dOperId, new LifeEndMessage()));
         } catch (UnknownHostException ex) {
             Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -171,7 +176,7 @@ public class BoatClient implements IBoat, IBoatDirOper, IBoatHelper,Serializable
         Socket socket = null;
         try {
             socket = new Socket(host, port);
-            IProtocolMessage response = ProtocolEndPoint.sendMessageObjectBlocking(socket, new BoatProtocolMessage(id,dOperId, new HelpRequestServedMessage(helper)));
+            ProtocolEndPoint.sendMessageObjectBlocking(socket, new BoatProtocolMessage(id,dOperId, new HelpRequestServedMessage(helper)));
         } catch (UnknownHostException ex) {
             Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -193,7 +198,7 @@ public class BoatClient implements IBoat, IBoatDirOper, IBoatHelper,Serializable
         Socket socket = null;
         try {
             socket = new Socket(host, port);
-            IProtocolMessage response = ProtocolEndPoint.sendMessageObjectBlocking(socket, new BoatProtocolMessage(id,dOperId, new ChangeCourseMessage(p)));
+            ProtocolEndPoint.sendMessageObjectBlocking(socket, new BoatProtocolMessage(id,dOperId, new ChangeCourseMessage(p)));
         } catch (UnknownHostException ex) {
             Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -215,7 +220,7 @@ public class BoatClient implements IBoat, IBoatDirOper, IBoatHelper,Serializable
         Socket socket = null;
         try {
             socket = new Socket(host, port);
-            IProtocolMessage response = ProtocolEndPoint.sendMessageObjectBlocking(socket, new BoatProtocolMessage(id,dOperId, new CastTheNetMessage(s)));
+            ProtocolEndPoint.sendMessageObjectBlocking(socket, new BoatProtocolMessage(id,dOperId, new CastTheNetMessage(s)));
         } catch (UnknownHostException ex) {
             Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -237,7 +242,7 @@ public class BoatClient implements IBoat, IBoatDirOper, IBoatHelper,Serializable
         Socket socket = null;
         try {
             socket = new Socket(host, port);
-            IProtocolMessage response = ProtocolEndPoint.sendMessageObjectBlocking(socket, new BoatProtocolMessage(id, dOperId,new ReleaseHelperMessage()));
+            ProtocolEndPoint.sendMessageObjectBlocking(socket, new BoatProtocolMessage(id, dOperId,new ReleaseHelperMessage()));
         } catch (UnknownHostException ex) {
             Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {

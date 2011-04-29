@@ -13,7 +13,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * @author Eriksson Monteiro
  * 
  */
-public class MLog implements ILogger{
+public class MLog implements ILogger {
 
 	protected static MLog instance;
 	protected Map<Integer, String> list;

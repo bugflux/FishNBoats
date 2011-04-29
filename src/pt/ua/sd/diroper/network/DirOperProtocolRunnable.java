@@ -1,6 +1,5 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * 
  */
 package pt.ua.sd.diroper.network;
 
@@ -20,8 +19,9 @@ import pt.ua.sd.network.IProtocolRunnable;
 import pt.ua.sd.network.ProtocolEndPoint;
 
 /**
+ * @author André Prata
+ * @author Eriksson Monteiro
  *
- * @author eriksson
  */
 public class DirOperProtocolRunnable implements IProtocolRunnable {
 
@@ -34,7 +34,7 @@ public class DirOperProtocolRunnable implements IProtocolRunnable {
     }
 
     public DirOperProtocolRunnable(MDirOper[] monitor) {
-        this.monitor = monitor;
+        DirOperProtocolRunnable.monitor = monitor;
     }
 
     @Override

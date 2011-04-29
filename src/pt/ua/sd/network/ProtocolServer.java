@@ -9,7 +9,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import pt.ua.sd.shoal.network.ShoalProtocolRunnable;
 
 /**
  * @author Eriksson Monteiro <eriksson.monteiro@ua.pt>

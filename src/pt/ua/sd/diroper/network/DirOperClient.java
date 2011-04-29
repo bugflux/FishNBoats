@@ -94,7 +94,7 @@ public class DirOperClient implements IDirOper, IDirOperShoal, IDirOperBoat {
         Socket socket = null;
         try {
             socket = new Socket(host, port);
-            IProtocolMessage response = ProtocolEndPoint.sendMessageObjectBlocking(socket, new DirOperProtocolMessage(id, new SeasonEndMessage()));
+            ProtocolEndPoint.sendMessageObjectBlocking(socket, new DirOperProtocolMessage(id, new SeasonEndMessage()));
         } catch (UnknownHostException ex) {
             Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -115,7 +115,7 @@ public class DirOperClient implements IDirOper, IDirOperShoal, IDirOperBoat {
         Socket socket = null;
         try {
             socket = new Socket(host, port);
-            IProtocolMessage response = ProtocolEndPoint.sendMessageObjectBlocking(socket, new DirOperProtocolMessage(id, new LifeEndMessage()));
+            ProtocolEndPoint.sendMessageObjectBlocking(socket, new DirOperProtocolMessage(id, new LifeEndMessage()));
         } catch (UnknownHostException ex) {
             Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -136,7 +136,7 @@ public class DirOperClient implements IDirOper, IDirOperShoal, IDirOperBoat {
         Socket socket = null;
         try {
             socket = new Socket(host, port);
-            IProtocolMessage response = ProtocolEndPoint.sendMessageObjectBlocking(socket, new DirOperProtocolMessage(this.id, new BackAtWharfMessage(id, stored)));
+            ProtocolEndPoint.sendMessageObjectBlocking(socket, new DirOperProtocolMessage(this.id, new BackAtWharfMessage(id, stored)));
         } catch (UnknownHostException ex) {
             Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -157,7 +157,7 @@ public class DirOperClient implements IDirOper, IDirOperShoal, IDirOperBoat {
         Socket socket = null;
         try {
             socket = new Socket(host, port);
-            IProtocolMessage response = ProtocolEndPoint.sendMessageObjectBlocking(socket, new DirOperProtocolMessage(this.id, new RequestHelpMessage(id, p)));
+            ProtocolEndPoint.sendMessageObjectBlocking(socket, new DirOperProtocolMessage(this.id, new RequestHelpMessage(id, p)));
         } catch (UnknownHostException ex) {
             Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -178,7 +178,7 @@ public class DirOperClient implements IDirOper, IDirOperShoal, IDirOperBoat {
         Socket socket = null;
         try {
             socket = new Socket(host, port);
-            IProtocolMessage response = ProtocolEndPoint.sendMessageObjectBlocking(socket, new DirOperProtocolMessage(this.id, new FishingDoneMessage(id)));
+            ProtocolEndPoint.sendMessageObjectBlocking(socket, new DirOperProtocolMessage(this.id, new FishingDoneMessage(id)));
         } catch (UnknownHostException ex) {
             Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -199,7 +199,7 @@ public class DirOperClient implements IDirOper, IDirOperShoal, IDirOperBoat {
         Socket socket = null;
         try {
             socket = new Socket(host, port);
-            IProtocolMessage response = ProtocolEndPoint.sendMessageObjectBlocking(socket, new DirOperProtocolMessage(this.id, new BoatFullMessage(id)));
+            ProtocolEndPoint.sendMessageObjectBlocking(socket, new DirOperProtocolMessage(this.id, new BoatFullMessage(id)));
         } catch (UnknownHostException ex) {
             Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {

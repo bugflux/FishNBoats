@@ -1,6 +1,5 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * 
  */
 package pt.ua.sd.shoal.network;
 
@@ -34,7 +33,7 @@ public class ShoalProtocolRunnable implements IProtocolRunnable {
     }
 
     public ShoalProtocolRunnable(MShoal[] shoals) {
-        this.mShoals = shoals;
+        ShoalProtocolRunnable.mShoals = shoals;
     }
 
     public void run() {

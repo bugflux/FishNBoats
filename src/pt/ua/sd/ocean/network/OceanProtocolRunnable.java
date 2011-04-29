@@ -1,6 +1,5 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * 
  */
 package pt.ua.sd.ocean.network;
 
@@ -31,8 +30,8 @@ import pt.ua.sd.ocean.MOcean;
 import pt.ua.sd.shoal.IShoalBoat;
 
 /**
- *
  * @author Eriksson Monteiro <eriksson.monteiro@ua.pt>
+ * @author André Prata <andreprata@ua.pt>
  */
 public class OceanProtocolRunnable implements IProtocolRunnable {
 
@@ -46,7 +45,7 @@ public class OceanProtocolRunnable implements IProtocolRunnable {
     }
 
     public OceanProtocolRunnable(MOcean ocean) {
-        this.ocean = ocean;
+        OceanProtocolRunnable.ocean = ocean;
     }
 
        

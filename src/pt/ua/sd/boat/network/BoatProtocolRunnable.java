@@ -1,6 +1,5 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * 
  */
 package pt.ua.sd.boat.network;
 
@@ -8,6 +7,7 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import pt.ua.sd.boat.BoatId;
 import pt.ua.sd.boat.MBoat;
 import pt.ua.sd.communication.toboat.BoatMessage;
@@ -21,8 +21,9 @@ import pt.ua.sd.network.IProtocolRunnable;
 import pt.ua.sd.network.ProtocolEndPoint;
 
 /**
+ * @author André Prata
+ * @author Eriksson Monteiro
  *
- * @author eriksson
  */
 public class BoatProtocolRunnable implements IProtocolRunnable {
 
@@ -35,7 +36,7 @@ public class BoatProtocolRunnable implements IProtocolRunnable {
     }
 
     public BoatProtocolRunnable(MBoat[][] monitor) {
-        this.monitor = monitor;
+        BoatProtocolRunnable.monitor = monitor;
     }
 
     @Override

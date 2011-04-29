@@ -29,7 +29,12 @@ import pt.ua.sd.shoal.ShoalId;
  */
 public class ShoalClient implements IShoal, IShoalBoat, IShoalDirOper, Serializable {
 
-    private ShoalId id;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1113640032766861068L;
+
+	private ShoalId id;
     private int port;
     private String host;
 
@@ -140,7 +145,7 @@ public class ShoalClient implements IShoal, IShoalBoat, IShoalDirOper, Serializa
         Socket socket=null;
         try {
             socket = new Socket(host, port);
-            IProtocolMessage response = ProtocolEndPoint.sendMessageObjectBlocking(socket, new ShoalProtocolMessage(id, new IsTrapped(amount)));
+            ProtocolEndPoint.sendMessageObjectBlocking(socket, new ShoalProtocolMessage(id, new IsTrapped(amount)));
         } catch (UnknownHostException ex) {
             ex.printStackTrace();
             Logger.getLogger(ShoalClient.class.getName()).log(Level.SEVERE, null, ex);

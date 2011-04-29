@@ -1,9 +1,6 @@
 package pt.ua.sd;
 
 import java.awt.Point;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 
 import pt.ua.sd.boat.BoatId;
 import pt.ua.sd.boat.BoatStats;
@@ -21,8 +18,6 @@ import pt.ua.sd.diroper.TDirOper;
 import pt.ua.sd.diroper.network.DirOperClient;
 import pt.ua.sd.diroper.network.DirOperProtocolRunnable;
 import pt.ua.sd.diroper.network.DirOperServer;
-import pt.ua.sd.log.MLog;
-import pt.ua.sd.log.TLogFlusher;
 import pt.ua.sd.log.network.LogClient;
 import pt.ua.sd.log.network.LogProtocolRunnable;
 import pt.ua.sd.log.network.LogServer;
@@ -120,7 +115,7 @@ public class PortoAveiro {
         Point wharf = new Point(0, 0);
         Point reproducingZone = new Point(width - 1, height - 1);
         MOcean oceano = new MOcean(height, width, maxShoalPerSquare,
-                maxBoatsPerSquare, wharf, reproducingZone,clogger);
+                maxBoatsPerSquare, wharf, reproducingZone, clogger);
         
         final OceanServer oceanServer = new OceanServer(9091, new OceanProtocolRunnable(oceano));
         new Thread() {
