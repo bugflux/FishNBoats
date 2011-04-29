@@ -49,7 +49,7 @@ public class DistributionClient {
 
 		// always test if cast to acknowledge works!
 		try {
-			// start Log
+			// order here shouldn't matter!!
 			s = new Socket(start.getMLogAddress().getHostAddress(),
 					DistributionConfig.DISTRIBUTION_SERVER_PORT);
 			Acknowledge.class.cast(ProtocolEndPoint.sendMessageObjectBlocking(
@@ -60,25 +60,23 @@ public class DistributionClient {
 			Acknowledge.class.cast(ProtocolEndPoint.sendMessageObjectBlocking(
 					s, start));
 
-			// start Ocean
 			s = new Socket(start.getMOceanAddress().getHostAddress(),
 					DistributionConfig.DISTRIBUTION_SERVER_PORT);
 			Acknowledge.class.cast(ProtocolEndPoint.sendMessageObjectBlocking(
 					s, start));
 
-			// start Shoal
 			s = new Socket(start.getMShoalAddress().getHostAddress(),
 					DistributionConfig.DISTRIBUTION_SERVER_PORT);
 			Acknowledge.class.cast(ProtocolEndPoint.sendMessageObjectBlocking(
 					s, start));
 
-			s = new Socket(start.getTShoalAddress().getHostAddress(),
+			s = new Socket(start.getMBoatAddress().getHostAddress(),
 					DistributionConfig.DISTRIBUTION_SERVER_PORT);
 			Acknowledge.class.cast(ProtocolEndPoint.sendMessageObjectBlocking(
 					s, start));
 
-			// start Boat
-			s = new Socket(start.getMBoatAddress().getHostAddress(),
+
+			s = new Socket(start.getMDirOperAddress().getHostAddress(),
 					DistributionConfig.DISTRIBUTION_SERVER_PORT);
 			Acknowledge.class.cast(ProtocolEndPoint.sendMessageObjectBlocking(
 					s, start));
@@ -88,8 +86,7 @@ public class DistributionClient {
 			Acknowledge.class.cast(ProtocolEndPoint.sendMessageObjectBlocking(
 					s, start));
 
-			// start DirOper
-			s = new Socket(start.getMDirOperAddress().getHostAddress(),
+			s = new Socket(start.getTShoalAddress().getHostAddress(),
 					DistributionConfig.DISTRIBUTION_SERVER_PORT);
 			Acknowledge.class.cast(ProtocolEndPoint.sendMessageObjectBlocking(
 					s, start));
@@ -98,7 +95,7 @@ public class DistributionClient {
 					DistributionConfig.DISTRIBUTION_SERVER_PORT);
 			Acknowledge.class.cast(ProtocolEndPoint.sendMessageObjectBlocking(
 					s, start));
-
+		
 		} catch (Throwable t) {
 			t.printStackTrace();
 			result = false;
