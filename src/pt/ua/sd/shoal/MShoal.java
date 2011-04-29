@@ -8,7 +8,7 @@ import pt.ua.sd.communication.toshoal.NoActionMessage;
 import pt.ua.sd.communication.toshoal.RetrieveTheNetMessage;
 import pt.ua.sd.communication.toshoal.ShoalMessage;
 import pt.ua.sd.communication.toshoal.TrappedByTheNetMessage;
-import pt.ua.sd.log.MLog;
+import pt.ua.sd.log.ILogger;
 
 /**
  * @author André Prata
@@ -19,16 +19,13 @@ public class MShoal implements IShoal, IShoalBoat, IShoalDirOper {
 
 	protected final ShoalId id;
 	protected final int ndiroper;
-
 	protected int n_diropers_began_season = 0;
 	protected int trappedAmount = 0;
 	protected boolean isTrapped = false;
 	protected boolean escaped = false;
-
 	protected int n_boat_cast_the_net = 0;
 
-	protected MLog log = MLog.getInstance();
-
+	protected ILogger log;
 	protected ShoalMessage message;
 	protected ShoalMessage goToFeedingArea = new GoToFeedingAreaMessage();
 	protected ShoalMessage noAction = new NoActionMessage();
@@ -43,9 +40,10 @@ public class MShoal implements IShoal, IShoalBoat, IShoalDirOper {
 	 * @param ndiroper
 	 *            the number of DirOpers that exist.
 	 */
-	public MShoal(ShoalId id, int ndiroper) {
+	public MShoal(ShoalId id, int ndiroper, ILogger log) {
 		this.ndiroper = ndiroper;
 		this.id = id;
+                this.log = log;
 	}
 
 	/**
@@ -90,9 +88,8 @@ public class MShoal implements IShoal, IShoalBoat, IShoalDirOper {
 				n_diropers_began_season = 0;
 				pushMsg(goToFeedingArea);
 				notify();
-			}
-			else {
-				while(n_diropers_began_season != 0) {
+			} else {
+				while (n_diropers_began_season != 0) {
 					try {
 						wait();
 					} catch (InterruptedException e) {
@@ -199,8 +196,7 @@ public class MShoal implements IShoal, IShoalBoat, IShoalDirOper {
 
 	protected void pushMsg(ShoalMessage msg) {
 		if (message == null
-				|| msg.getMsgType().getPriority() <= message.getMsgType()
-						.getPriority()) {
+				|| msg.getMsgType().getPriority() <= message.getMsgType().getPriority()) {
 			message = msg;
 		}
 		notify();

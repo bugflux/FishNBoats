@@ -93,7 +93,7 @@ public class PortoAveiro {
 		Point wharf = new Point(0, 0);
 		Point reproducingZone = new Point(width - 1, height - 1);
 		MOcean oceano = new MOcean(height, width, maxShoalPerSquare,
-				maxBoatsPerSquare, wharf, reproducingZone);
+				maxBoatsPerSquare, wharf, reproducingZone, logger);
 
 		// DirOper
 		MDirOper mDirOpers[] = new MDirOper[ncompanies];
@@ -115,7 +115,7 @@ public class PortoAveiro {
 			sShoals[r] = new ShoalStats(new ShoalId(r),
 					INTERNAL_STATE_SCHOOL.spawning, new Point(reproducingZone),
 					shoalSize, minShoalDetectable);
-			mShoals[r] = new MShoal(sShoals[r].getId(), ncompanies);
+			mShoals[r] = new MShoal(sShoals[r].getId(), ncompanies, logger);
 			tShoals[r] = new TShoal((ShoalStats) sShoals[r].clone(),
 					shoalPeriod, seasonMoves, nCampaign, mShoals[r], oceano,
 					mDirOpers, growing_factor, eco_system, catchPercentage);
@@ -126,7 +126,7 @@ public class PortoAveiro {
 			sDirOpers[r] = new DirOperStats(
 					INTERNAL_STATE_DIROPER.starting_a_campaign,
 					new DirOperId(r));
-			mDirOpers[r] = new MDirOper(sDirOpers[r].getId(), nshoals, nboats);
+			mDirOpers[r] = new MDirOper(sDirOpers[r].getId(), nshoals, nboats, logger);
 			tDirOpers[r] = new TDirOper(logger, oceano, mDirOpers[r],
 					mBoats[r], mShoals, (DirOperStats) sDirOpers[r].clone());
 
@@ -135,7 +135,7 @@ public class PortoAveiro {
 				sBoats[r][s] = new BoatStats(new BoatId(r, s),
 						INTERNAL_STATE_BOAT.at_the_wharf, new Point(wharf),
 						boatCapacity);
-				mBoats[r][s] = new MBoat(sBoats[r][s].getId());
+				mBoats[r][s] = new MBoat(sBoats[r][s].getId(), logger);
 				tBoats[r][s] = new TBoat((BoatStats) sBoats[r][s].clone(),
 						boatPeriod, mDirOpers[r], oceano, mBoats[r][s]);
 				oceano.addBoat(sBoats[r][s], wharf);

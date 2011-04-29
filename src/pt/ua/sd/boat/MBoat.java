@@ -15,7 +15,7 @@ import pt.ua.sd.communication.toboat.NoActionMessage;
 import pt.ua.sd.communication.toboat.ReleaseHelperMessage;
 import pt.ua.sd.communication.toboat.ReturnToWharfMessage;
 import pt.ua.sd.communication.toboat.SetToHighSeaMessage;
-import pt.ua.sd.log.MLog;
+import pt.ua.sd.log.ILogger;
 import pt.ua.sd.shoal.IShoalBoat;
 
 /**
@@ -26,7 +26,6 @@ import pt.ua.sd.shoal.IShoalBoat;
 public class MBoat implements IBoat, IBoatDirOper, IBoatHelper {
 
 	protected final BoatId id;
-
 	protected LinkedList<BoatMessage> messages = new LinkedList<BoatMessage>();
 	protected BoatMessage noAction = new NoActionMessage();
 	protected BoatMessage setToHighSea = new SetToHighSeaMessage();
@@ -34,7 +33,7 @@ public class MBoat implements IBoat, IBoatDirOper, IBoatHelper {
 	protected BoatMessage lifeEnd = new LifeEndMessage();
 	protected BoatMessage releaseHelper = new ReleaseHelperMessage();
 
-	protected final MLog log = MLog.getInstance();
+	protected final ILogger log;
 
 	/**
 	 * Construct a new boat monitor. This is used to communicate with a single
@@ -43,8 +42,9 @@ public class MBoat implements IBoat, IBoatDirOper, IBoatHelper {
 	 * @param id
 	 *            the id of the boat associated with this monitor.
 	 */
-	public MBoat(BoatId id) {
+	public MBoat(BoatId id, ILogger log) {
 		this.id = id;
+		this.log = log;
 	}
 
 	/**
