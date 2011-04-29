@@ -19,7 +19,7 @@ public interface IDirOper {
 	 * @return the first message in the queue.
 	 */
 	public DirOperMessage popMsg();
-	
+
 	/**
 	 * Clears the list of pending messages for the Thread.
 	 */

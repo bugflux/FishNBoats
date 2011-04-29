@@ -3,7 +3,6 @@
  */
 package pt.ua.sd.boat;
 
-
 /**
  * @author André Prata
  * @author Eriksson Monteiro

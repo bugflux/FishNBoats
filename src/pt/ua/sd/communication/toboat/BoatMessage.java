@@ -14,9 +14,8 @@ public abstract class BoatMessage extends Message {
 
 	public enum MESSAGE_TYPE implements Message.MESSAGE_TYPE {
 
-		SetToHighSea(20), LifeEnd(0), ChangeCourse(30), HelpRequestServed(40), ReturnToWharf(
-				10), NoAction(Integer.MAX_VALUE), CastTheNet(40), ReleaseHelper(
-				40);
+		SetToHighSea(20), LifeEnd(0), ChangeCourse(30), HelpRequestServed(40), ReturnToWharf(10), NoAction(
+				Integer.MAX_VALUE), CastTheNet(40), ReleaseHelper(40);
 
 		// smaller is more important!
 		protected int priority;

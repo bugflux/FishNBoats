@@ -65,10 +65,8 @@ public class TShoal extends Thread {
 	 *            the maximum Fish that might be caught by the net. A percentage
 	 *            of the total size of the fish in a given moment. [0..1].
 	 */
-	public TShoal(ShoalStats stats, int period, int seasonMoves,
-			int nCampaigns, IShoal monitor, IOceanShoal ocean,
-			IDirOperShoal diroper[], int growing_factor,
-			double eco_system_capacity, double maxCatchPercentage) {
+	public TShoal(ShoalStats stats, int period, int seasonMoves, int nCampaigns, IShoal monitor, IOceanShoal ocean,
+			IDirOperShoal diroper[], int growing_factor, double eco_system_capacity, double maxCatchPercentage) {
 		this.period = period;
 		this.monitor = monitor;
 		this.ocean = ocean;
@@ -89,8 +87,7 @@ public class TShoal extends Thread {
 
 	@Override
 	public void run() {
-		rand = new Random(new Date().getTime() * Thread.currentThread().getId()
-				* stats.getId().getShoal());
+		rand = new Random(new Date().getTime() * Thread.currentThread().getId() * stats.getId().getShoal());
 		ShoalMessage popMsg;
 		int campaigns;
 		int moves;
@@ -129,8 +126,7 @@ public class TShoal extends Thread {
 						} else {
 							seasonOver = swimToSpawningArea();
 						}
-					} else if (MESSAGE_TYPE.TrappedByTheNet == popMsg
-							.getMsgType()) {
+					} else if (MESSAGE_TYPE.TrappedByTheNet == popMsg.getMsgType()) {
 						isTrapped();
 					} else {
 						assert false; // cannot receive other messages in this
@@ -168,8 +164,7 @@ public class TShoal extends Thread {
 	 */
 	protected void spawn() {
 		int currentSize = stats.getSize();
-		int newSize = (int) (currentSize * (1 + growing_factor - eco_system_capacity
-				* currentSize));
+		int newSize = (int) (currentSize * (1 + growing_factor - eco_system_capacity * currentSize));
 		changeSize(newSize);
 	}
 
@@ -192,8 +187,7 @@ public class TShoal extends Thread {
 	 * The shoal tries to move to a random position.
 	 */
 	protected void swimAbout() {
-		changePosition(new Point(rand.nextInt(oceanWidth),
-				rand.nextInt(oceanHeight)));
+		changePosition(new Point(rand.nextInt(oceanWidth), rand.nextInt(oceanHeight)));
 	}
 
 	/**

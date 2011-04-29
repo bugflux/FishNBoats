@@ -18,11 +18,12 @@ public class MLog implements ILogger {
 	protected static MLog instance;
 	protected Map<Integer, String> list;
 	protected int nextContiguousIndex;
-	
+
 	protected int tick = 0;
 
 	/**
 	 * get a clock tick on the global clock
+	 * 
 	 * @return int the clock tick id
 	 */
 	synchronized public int getClockTick() {
@@ -63,13 +64,11 @@ public class MLog implements ILogger {
 	 * @param tick
 	 *            global clock tick
 	 */
-	synchronized public void push(String type, String entity, String message,
-			int tick) {
+	synchronized public void push(String type, String entity, String message, int tick) {
 		assert tick >= nextContiguousIndex; // uniqueness
 		assert !list.containsKey(tick); // uniqueness
 
-		list.put(tick, String.format("%7s: %13s %-25s %-40s",
-				String.valueOf(tick), entity + ",", type + ",", message));
+		list.put(tick, String.format("%7s: %13s %-25s %-40s", String.valueOf(tick), entity + ",", type + ",", message));
 		// System.out.println(list.get(tick));
 
 		notify();

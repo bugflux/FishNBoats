@@ -32,8 +32,7 @@ public class BoatStats {
 	 * @param capacity
 	 *            The maximum capacity of fish storage.
 	 */
-	public BoatStats(BoatId id, INTERNAL_STATE_BOAT state, Point location,
-			int capacity) {
+	public BoatStats(BoatId id, INTERNAL_STATE_BOAT state, Point location, int capacity) {
 		this.id = id;
 		this.state = state;
 		this.location = location;
@@ -167,12 +166,12 @@ public class BoatStats {
 
 	@Override
 	public String toString() {
-		return getId() + ", State " + state + ", Position (" + location.y + ","
-				+ location.x + "), Catch " + stored + ", Capacity " + capacity;
+		return getId() + ", State " + state + ", Position (" + location.y + "," + location.x + "), Catch " + stored
+				+ ", Capacity " + capacity;
 	}
-	
+
 	@Override
 	public Object clone() {
-		return new BoatStats(id, state, (Point)location.clone(), capacity);
+		return new BoatStats(id, state, (Point) location.clone(), capacity);
 	}
 }

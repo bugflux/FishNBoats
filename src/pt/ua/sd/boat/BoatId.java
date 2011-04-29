@@ -6,11 +6,11 @@ package pt.ua.sd.boat;
 /**
  * @author André Prata
  * @author Eriksson Monteiro
- *
+ * 
  */
 public class BoatId {
 	protected final int company, boat;
-	
+
 	public BoatId(int company, int boat) {
 		this.company = company;
 		this.boat = boat;
@@ -30,7 +30,9 @@ public class BoatId {
 		return boat;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -42,7 +44,9 @@ public class BoatId {
 		return result;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -60,7 +64,7 @@ public class BoatId {
 			return false;
 		return true;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Boat (" + company + "," + boat + ")";

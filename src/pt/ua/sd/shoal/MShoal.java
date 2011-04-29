@@ -43,7 +43,7 @@ public class MShoal implements IShoal, IShoalBoat, IShoalDirOper {
 	public MShoal(ShoalId id, int ndiroper, ILogger log) {
 		this.ndiroper = ndiroper;
 		this.id = id;
-                this.log = log;
+		this.log = log;
 	}
 
 	/**
@@ -195,8 +195,7 @@ public class MShoal implements IShoal, IShoalBoat, IShoalDirOper {
 	}
 
 	protected void pushMsg(ShoalMessage msg) {
-		if (message == null
-				|| msg.getMsgType().getPriority() <= message.getMsgType().getPriority()) {
+		if (message == null || msg.getMsgType().getPriority() <= message.getMsgType().getPriority()) {
 			message = msg;
 		}
 		notify();

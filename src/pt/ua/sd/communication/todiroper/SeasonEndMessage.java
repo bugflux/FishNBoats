@@ -3,11 +3,10 @@
  */
 package pt.ua.sd.communication.todiroper;
 
-
 /**
  * @author André Prata
  * @author Eriksson Monteiro
- *
+ * 
  */
 public class SeasonEndMessage extends DirOperMessage {
 

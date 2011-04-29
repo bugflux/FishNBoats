@@ -78,7 +78,7 @@ public class PortoAveiro {
 		// Logger
 		MLog logger = MLog.getInstance();
 		TLogFlusher logFlusher = null;
-		if(logFile == null) {
+		if (logFile == null) {
 			logFlusher = new TLogFlusher(System.out);
 		} else {
 			try {
@@ -92,8 +92,7 @@ public class PortoAveiro {
 		// Ocean
 		Point wharf = new Point(0, 0);
 		Point reproducingZone = new Point(width - 1, height - 1);
-		MOcean oceano = new MOcean(height, width, maxShoalPerSquare,
-				maxBoatsPerSquare, wharf, reproducingZone, logger);
+		MOcean oceano = new MOcean(height, width, maxShoalPerSquare, maxBoatsPerSquare, wharf, reproducingZone, logger);
 
 		// DirOper
 		MDirOper mDirOpers[] = new MDirOper[ncompanies];
@@ -112,32 +111,26 @@ public class PortoAveiro {
 
 		// Stats and Monitors
 		for (int r = 0; r < nshoals; r++) {
-			sShoals[r] = new ShoalStats(new ShoalId(r),
-					INTERNAL_STATE_SCHOOL.spawning, new Point(reproducingZone),
+			sShoals[r] = new ShoalStats(new ShoalId(r), INTERNAL_STATE_SCHOOL.spawning, new Point(reproducingZone),
 					shoalSize, minShoalDetectable);
 			mShoals[r] = new MShoal(sShoals[r].getId(), ncompanies, logger);
-			tShoals[r] = new TShoal((ShoalStats) sShoals[r].clone(),
-					shoalPeriod, seasonMoves, nCampaign, mShoals[r], oceano,
-					mDirOpers, growing_factor, eco_system, catchPercentage);
+			tShoals[r] = new TShoal((ShoalStats) sShoals[r].clone(), shoalPeriod, seasonMoves, nCampaign, mShoals[r],
+					oceano, mDirOpers, growing_factor, eco_system, catchPercentage);
 			oceano.addShoal(sShoals[r], mShoals[r], reproducingZone);
 		}
 
 		for (int r = 0; r < ncompanies; r++) {
-			sDirOpers[r] = new DirOperStats(
-					INTERNAL_STATE_DIROPER.starting_a_campaign,
-					new DirOperId(r));
+			sDirOpers[r] = new DirOperStats(INTERNAL_STATE_DIROPER.starting_a_campaign, new DirOperId(r));
 			mDirOpers[r] = new MDirOper(sDirOpers[r].getId(), nshoals, nboats, logger);
-			tDirOpers[r] = new TDirOper(oceano, mDirOpers[r],
-					mBoats[r], mShoals, (DirOperStats) sDirOpers[r].clone());
+			tDirOpers[r] = new TDirOper(oceano, mDirOpers[r], mBoats[r], mShoals, (DirOperStats) sDirOpers[r].clone());
 
 			oceano.addDirOper(sDirOpers[r]);
 			for (int s = 0; s < nboats; s++) {
-				sBoats[r][s] = new BoatStats(new BoatId(r, s),
-						INTERNAL_STATE_BOAT.at_the_wharf, new Point(wharf),
+				sBoats[r][s] = new BoatStats(new BoatId(r, s), INTERNAL_STATE_BOAT.at_the_wharf, new Point(wharf),
 						boatCapacity);
 				mBoats[r][s] = new MBoat(sBoats[r][s].getId(), logger);
-				tBoats[r][s] = new TBoat((BoatStats) sBoats[r][s].clone(),
-						boatPeriod, mDirOpers[r], oceano, mBoats[r][s]);
+				tBoats[r][s] = new TBoat((BoatStats) sBoats[r][s].clone(), boatPeriod, mDirOpers[r], oceano,
+						mBoats[r][s]);
 				oceano.addBoat(sBoats[r][s], wharf);
 			}
 		}

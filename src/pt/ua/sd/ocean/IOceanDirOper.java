@@ -12,7 +12,7 @@ import pt.ua.sd.diroper.DirOperStats.INTERNAL_STATE_DIROPER;
  * 
  */
 public interface IOceanDirOper {
-	
+
 	/**
 	 * Set the DirOperState for a current DirOper.
 	 * 

@@ -38,8 +38,8 @@ public class TDirOper extends Thread {
 
 	protected final HashMap<BoatId, BoatId> assignedCompanions = new HashMap<BoatId, BoatId>();
 
-	public TDirOper(IOceanDirOper ocean, IDirOper monitor,
-			IBoatDirOper[] boats, IShoalDirOper shoals[], DirOperStats stats) {
+	public TDirOper(IOceanDirOper ocean, IDirOper monitor, IBoatDirOper[] boats, IShoalDirOper shoals[],
+			DirOperStats stats) {
 		this.ocean = ocean;
 		this.boats = boats;
 		this.monitor = monitor;
@@ -99,8 +99,8 @@ public class TDirOper extends Thread {
 					if (boatsConfirmedAtWharf() == boats.length) {
 						changeState(INTERNAL_STATE_DIROPER.ending_a_campaign);
 					}
-//				} else if (MESSAGE_TYPE.LifeEnd == popMsg.getMsgType()) {
-//					lifeEnding = true;
+					// } else if (MESSAGE_TYPE.LifeEnd == popMsg.getMsgType()) {
+					// lifeEnding = true;
 				} else if (MESSAGE_TYPE.FishingDone == popMsg.getMsgType()) {
 					FishingDoneMessage m = (FishingDoneMessage) popMsg;
 					removeCompanion(m.getId());
@@ -136,8 +136,7 @@ public class TDirOper extends Thread {
 			}
 		}
 
-		System.out
-				.println(stats.getId() + " dying. Total catch: " + totalCatch);
+		System.out.println(stats.getId() + " dying. Total catch: " + totalCatch);
 	}
 
 	/**
@@ -196,8 +195,7 @@ public class TDirOper extends Thread {
 	 */
 	protected void setBoatsToWharf() {
 		for (IBoatDirOper b : boats) {
-			if (!boatsAtWharf.containsKey(b.getId())
-					&& !assignedCompanions.containsValue(b.getId())) {
+			if (!boatsAtWharf.containsKey(b.getId()) && !assignedCompanions.containsValue(b.getId())) {
 				b.returnToWharf();
 				boatsAtWharf.put(b.getId(), false);
 			}
@@ -211,8 +209,7 @@ public class TDirOper extends Thread {
 	 *            the id of the boat to set to wharf.
 	 */
 	protected void setBoatToWharf(BoatId id) {
-		if (!assignedCompanions.containsValue(id)
-				&& !boatsAtWharf.containsKey(id)) {
+		if (!assignedCompanions.containsValue(id) && !boatsAtWharf.containsKey(id)) {
 			boats[id.getBoat()].returnToWharf();
 			boatsAtWharf.put(id, false);
 		}
@@ -241,17 +238,13 @@ public class TDirOper extends Thread {
 	protected void assignCompanion(BoatId id, Point p) {
 		// don't hand help to boats that are expected to help others
 		// also if it's arriving at wharf, let him be!
-		if (!assignedCompanions.containsKey(id)
-				&& !assignedCompanions.containsValue(id)) {
+		if (!assignedCompanions.containsKey(id) && !assignedCompanions.containsValue(id)) {
 			// don't hand helpers that are already helping others
 			for (IBoatDirOper helper : boats) {
-				if (!helper.getId().equals(id)
-						&& !assignedCompanions.containsKey(helper.getId())
+				if (!helper.getId().equals(id) && !assignedCompanions.containsKey(helper.getId())
 						&& !assignedCompanions.containsValue(helper.getId())
 						&& !boatsAtWharf.containsKey(helper.getId())) {
-					boats[id.getBoat()]
-							.helpRequestServed((IBoatHelper) boats[helper
-									.getId().getBoat()]);
+					boats[id.getBoat()].helpRequestServed((IBoatHelper) boats[helper.getId().getBoat()]);
 					assignedCompanions.put(id, helper.getId());
 					break;
 				}
@@ -297,7 +290,7 @@ public class TDirOper extends Thread {
 	 *            the new local state.
 	 */
 	protected void changeState(INTERNAL_STATE_DIROPER state) {
-		if(stats.getState() != state) {
+		if (stats.getState() != state) {
 			stats.setState(state);
 			ocean.setDirOperState(stats.getId(), stats.getState());
 		}

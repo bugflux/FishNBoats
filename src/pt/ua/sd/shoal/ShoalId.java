@@ -6,15 +6,16 @@ package pt.ua.sd.shoal;
 /**
  * @author André Prata
  * @author Eriksson Monteiro
- *
+ * 
  */
 public class ShoalId {
 	protected final int shoal;
-	
+
 	/**
 	 * Create a new ShoalId with a shoal integer identifier
 	 * 
-	 * @param shoal the integer identifier
+	 * @param shoal
+	 *            the integer identifier
 	 */
 	public ShoalId(int shoal) {
 		this.shoal = shoal;
@@ -29,7 +30,9 @@ public class ShoalId {
 		return shoal;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -40,7 +43,9 @@ public class ShoalId {
 		return result;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -56,7 +61,7 @@ public class ShoalId {
 			return false;
 		return true;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Shoal (" + shoal + ")";

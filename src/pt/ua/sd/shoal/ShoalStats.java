@@ -32,8 +32,7 @@ public class ShoalStats {
 	 * @param size
 	 *            The initial fish count in the shoal.
 	 */
-	public ShoalStats(ShoalId id, INTERNAL_STATE_SCHOOL state, Point location,
-			int size, int minDetectable) {
+	public ShoalStats(ShoalId id, INTERNAL_STATE_SCHOOL state, Point location, int size, int minDetectable) {
 		this.id = id;
 		this.state = state;
 		this.location = location;
@@ -71,6 +70,7 @@ public class ShoalStats {
 
 	/**
 	 * Get the Id of this Shoal.
+	 * 
 	 * @return the numeric id.
 	 */
 	public ShoalId getId() {
@@ -124,12 +124,11 @@ public class ShoalStats {
 
 	@Override
 	public String toString() {
-		return getId() + ", State " + state + ", Position (" + location.y + ","
-				+ location.x + "), Size " + size;
+		return getId() + ", State " + state + ", Position (" + location.y + "," + location.x + "), Size " + size;
 	}
-	
+
 	@Override
 	public Object clone() {
-		return new ShoalStats(id, state, (Point)location.clone(), size, minDetectable);
+		return new ShoalStats(id, state, (Point) location.clone(), size, minDetectable);
 	}
 }

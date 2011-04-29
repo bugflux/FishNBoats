@@ -3,11 +3,10 @@
  */
 package pt.ua.sd.communication.toboat;
 
-
 /**
  * @author André Prata
  * @author Eriksson Monteiro
- *
+ * 
  */
 public class SetToHighSeaMessage extends BoatMessage {
 

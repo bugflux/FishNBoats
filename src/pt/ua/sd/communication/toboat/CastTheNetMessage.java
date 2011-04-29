@@ -8,7 +8,7 @@ import pt.ua.sd.shoal.IShoalBoat;
 /**
  * @author André Prata
  * @author Eriksson Monteiro
- *
+ * 
  */
 public class CastTheNetMessage extends BoatMessage {
 
@@ -17,7 +17,8 @@ public class CastTheNetMessage extends BoatMessage {
 	/**
 	 * Constructs a CastTheNetMessage with the monitor of the shoal.
 	 * 
-	 * @param s the monitor of the shoal to cast the net on.
+	 * @param s
+	 *            the monitor of the shoal to cast the net on.
 	 */
 	public CastTheNetMessage(IShoalBoat s) {
 		this.s = s;
