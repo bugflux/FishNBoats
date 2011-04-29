@@ -17,29 +17,26 @@ public class DistributedLauncher {
 	 */
 	public static void main(String[] args) {
 		try {
+			// must run at this pc, because of the graphic session!
+			InetSocketAddress mOceanAddress      = new InetSocketAddress("172.16.0.130", 22144);
 
-			InetSocketAddress mBoatAddress = new InetSocketAddress("172.16.0.130",
-					22141), mDirOperAddress = new InetSocketAddress(
-					"172.16.0.130", 22142), mLogAddress = new InetSocketAddress(
-					"172.16.0.130", 22143), mOceanAddress = new InetSocketAddress(
-					"172.16.0.130", 22144), mShoalAddress = new InetSocketAddress(
-					"172.16.0.130", 22145), tBoatAddress = new InetSocketAddress(
-					"172.16.0.130", 0), tDirOperAddress = new InetSocketAddress(
-					"172.16.0.130", 0), tLogFlusherAddress = new InetSocketAddress(
-					"172.16.0.130", 0), tShoalAddress = new InetSocketAddress(
-					"172.16.0.130", 0);
+			InetSocketAddress mBoatAddress       = new InetSocketAddress("192.168.8.171", 22141);
+			InetSocketAddress mDirOperAddress    = new InetSocketAddress("192.168.8.173", 22142);
+			InetSocketAddress mLogAddress        = new InetSocketAddress("192.168.8.174", 22143);
+			InetSocketAddress mShoalAddress      = new InetSocketAddress("192.168.8.175", 22145);
+			InetSocketAddress tBoatAddress       = new InetSocketAddress("192.168.8.176", 0);
+			InetSocketAddress tDirOperAddress    = new InetSocketAddress("192.168.8.177", 0);
+			InetSocketAddress tLogFlusherAddress = new InetSocketAddress("192.168.8.178", 0);
+			InetSocketAddress tShoalAddress      = new InetSocketAddress("192.168.8.180", 0);
 
 			// stop services before starting
 			DistributionClient c = new DistributionClient();
-			c.stopEntities(new InetAddress[] { mLogAddress.getAddress(),
-					tLogFlusherAddress.getAddress(),
-					mOceanAddress.getAddress(), mShoalAddress.getAddress(),
-					tShoalAddress.getAddress(), mBoatAddress.getAddress(),
-					tBoatAddress.getAddress(), mDirOperAddress.getAddress(),
+			c.stopEntities(new InetAddress[] { mLogAddress.getAddress(), tLogFlusherAddress.getAddress(),
+					mOceanAddress.getAddress(), mShoalAddress.getAddress(), tShoalAddress.getAddress(),
+					mBoatAddress.getAddress(), tBoatAddress.getAddress(), mDirOperAddress.getAddress(),
 					tDirOperAddress.getAddress() });
 
-			StartMessage startMessage = new StartMessage(
-					new DistributionConfig());
+			StartMessage startMessage = new StartMessage(new DistributionConfig());
 			startMessage.setMBoat(mBoatAddress);
 			startMessage.setMDirOper(mDirOperAddress);
 			startMessage.setMLog(mLogAddress);
