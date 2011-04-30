@@ -4,9 +4,10 @@
 package pt.ua.sd.communication.toshoal;
 
 /**
+ * A specialized Message: Go to Feeding Area
+ * 
  * @author André Prata
  * @author Eriksson Monteiro
- * 
  */
 public class GoToFeedingAreaMessage extends ShoalMessage {
 

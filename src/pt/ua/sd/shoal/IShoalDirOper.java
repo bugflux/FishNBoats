@@ -4,9 +4,10 @@
 package pt.ua.sd.shoal;
 
 /**
+ * Exposes Shoal methods to DirOpers
+ * 
  * @author André Prata
  * @author Eriksson Monteiro
- * 
  */
 public interface IShoalDirOper {
 

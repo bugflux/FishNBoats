@@ -4,9 +4,10 @@
 package pt.ua.sd.log;
 
 /**
+ * Exposes the Logging methods
+ * 
  * @author André Prata
  * @author Eriksson Monteiro
- * 
  */
 public interface ILogger {
 

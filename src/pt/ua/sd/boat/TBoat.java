@@ -19,9 +19,11 @@ import pt.ua.sd.ocean.IOceanBoat;
 import pt.ua.sd.shoal.IShoalBoat;
 
 /**
+ * The Boat Thread, that simulates a boat's actions, reflected mainly in the
+ * Ocean.
+ * 
  * @author André Prata
  * @author Eriksson Monteiro
- * 
  */
 public class TBoat extends Thread {
 

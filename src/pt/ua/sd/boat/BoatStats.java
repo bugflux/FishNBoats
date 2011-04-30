@@ -6,9 +6,11 @@ package pt.ua.sd.boat;
 import java.awt.Point;
 
 /**
+ * This class contains all state information relative to a Boat, identified by
+ * its BoatId.
+ * 
  * @author André Prata
  * @author Eriksson Monteiro
- * 
  */
 public class BoatStats {
 	public enum INTERNAL_STATE_BOAT {

@@ -6,9 +6,10 @@ package pt.ua.sd.communication.toboat;
 import pt.ua.sd.boat.IBoatHelper;
 
 /**
+ * A specialized Message: Help Request Served
+ * 
  * @author André Prata
  * @author Eriksson Monteiro
- * 
  */
 public class HelpRequestServedMessage extends BoatMessage {
 

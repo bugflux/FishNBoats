@@ -4,9 +4,10 @@
 package pt.ua.sd.shoal;
 
 /**
+ * Global distinct identifier of a Shoal
+ * 
  * @author André Prata
  * @author Eriksson Monteiro
- * 
  */
 public class ShoalId {
 	protected final int shoal;

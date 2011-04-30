@@ -4,9 +4,10 @@
 package pt.ua.sd.communication.toshoal;
 
 /**
+ * A specialized Message: Retrieve the Net
+ * 
  * @author André Prata
  * @author Eriksson Monteiro
- * 
  */
 public class RetrieveTheNetMessage extends ShoalMessage {
 

@@ -6,9 +6,10 @@ package pt.ua.sd.communication.todiroper;
 import pt.ua.sd.boat.BoatId;
 
 /**
+ * A specialized Message: Fishing operation is Done
+ * 
  * @author André Prata
  * @author Eriksson Monteiro
- * 
  */
 public class FishingDoneMessage extends DirOperMessage {
 

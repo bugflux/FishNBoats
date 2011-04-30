@@ -4,9 +4,10 @@
 package pt.ua.sd.diroper;
 
 /**
+ * Exposes DirOper communication interface to Shoals
+ * 
  * @author André Prata
  * @author Eriksson Monteiro
- * 
  */
 public interface IDirOperShoal {
 

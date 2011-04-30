@@ -6,9 +6,10 @@ package pt.ua.sd.shoal;
 import pt.ua.sd.communication.toshoal.ShoalMessage;
 
 /**
+ * Exposes Shoal methods to Shoal threads
+ * 
  * @author André Prata
  * @author Eriksson Monteiro
- * 
  */
 public interface IShoal {
 

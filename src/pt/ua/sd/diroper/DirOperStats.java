@@ -4,9 +4,10 @@
 package pt.ua.sd.diroper;
 
 /**
+ * Aggregates all the state information of a DirOper.
+ * 
  * @author André Prata
  * @author Eriksson Monteiro
- * 
  */
 public class DirOperStats {
 

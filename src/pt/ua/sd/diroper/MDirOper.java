@@ -17,9 +17,10 @@ import pt.ua.sd.communication.todiroper.SeasonEndMessage;
 import pt.ua.sd.log.ILogger;
 
 /**
+ * Point of communication with a DirOper
+ * 
  * @author André Prata
  * @author Eriksson Monteiro
- * 
  */
 public class MDirOper implements IDirOper, IDirOperBoat, IDirOperShoal {
 

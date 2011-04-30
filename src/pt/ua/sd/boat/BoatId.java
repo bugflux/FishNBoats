@@ -4,9 +4,10 @@
 package pt.ua.sd.boat;
 
 /**
+ * The BoatId class distinctively identifies a Boat in the world.
+ * 
  * @author André Prata
  * @author Eriksson Monteiro
- * 
  */
 public class BoatId {
 	protected final int company, boat;

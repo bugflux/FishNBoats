@@ -4,9 +4,10 @@
 package pt.ua.sd.communication.toshoal;
 
 /**
+ * A specialized Message: Trapped by the Net
+ * 
  * @author André Prata
  * @author Eriksson Monteiro
- * 
  */
 public class TrappedByTheNetMessage extends ShoalMessage {
 

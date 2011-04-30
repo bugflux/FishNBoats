@@ -9,9 +9,10 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
+ * Point of synchronization to orderly record log messages
+ * 
  * @author André Prata
  * @author Eriksson Monteiro
- * 
  */
 public class MLog implements ILogger {
 

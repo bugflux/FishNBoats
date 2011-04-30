@@ -10,9 +10,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ * Extractor of messages from the Log repository.
+ * 
  * @author André Prata
  * @author Eriksson Monteiro
- * 
  */
 public class TLogFlusher extends Thread {
 

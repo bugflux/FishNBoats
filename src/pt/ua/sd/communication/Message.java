@@ -1,14 +1,13 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * 
  */
-
 package pt.ua.sd.communication;
 
 /**
+ * Message is a common class from which all specialized Messages derive.
+ * 
  * @author André Prata
  * @author Eriksson Monteiro
- * 
  */
 public abstract class Message {
 	public interface MESSAGE_TYPE {

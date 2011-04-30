@@ -7,9 +7,10 @@ import java.awt.Point;
 import pt.ua.sd.boat.BoatId;
 
 /**
+ * A specialized Message: Request Help of a boat
+ * 
  * @author André Prata
  * @author Eriksson Monteiro
- * 
  */
 public class RequestHelpMessage extends DirOperMessage {
 	protected final Point location;

@@ -6,9 +6,10 @@ package pt.ua.sd.shoal;
 import java.awt.Point;
 
 /**
+ * Combined state information of a given Shoal
+ * 
  * @author André Prata
  * @author Eriksson Monteiro
- * 
  */
 public class ShoalStats {
 	public enum INTERNAL_STATE_SCHOOL {

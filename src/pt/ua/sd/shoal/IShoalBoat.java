@@ -4,9 +4,10 @@
 package pt.ua.sd.shoal;
 
 /**
+ * Exposes Shoal methods to Boats
+ * 
  * @author André Prata
  * @author Eriksson Monteiro
- * 
  */
 public interface IShoalBoat {
 

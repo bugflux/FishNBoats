@@ -4,9 +4,10 @@
 package pt.ua.sd.communication.toshoal;
 
 /**
+ * A specialized Message: No Action pending
+ * 
  * @author André Prata
  * @author Eriksson Monteiro
- * 
  */
 public class NoActionMessage extends ShoalMessage {
 

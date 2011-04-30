@@ -6,9 +6,10 @@ package pt.ua.sd.communication.toboat;
 import pt.ua.sd.communication.Message;
 
 /**
+ * Ancestor of all Boat related Messages.
+ * 
  * @author André Prata
  * @author Eriksson Monteiro
- * 
  */
 public abstract class BoatMessage extends Message {
 

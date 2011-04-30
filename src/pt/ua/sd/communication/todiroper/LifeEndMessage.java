@@ -4,9 +4,10 @@
 package pt.ua.sd.communication.todiroper;
 
 /**
+ * A specialized Message: Life End
+ * 
  * @author André Prata
  * @author Eriksson Monteiro
- * 
  */
 public class LifeEndMessage extends DirOperMessage {
 

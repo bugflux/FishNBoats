@@ -4,9 +4,10 @@
 package pt.ua.sd.diroper;
 
 /**
+ * Distinctively identify a DirOper
+ * 
  * @author André Prata
  * @author Eriksson Monteiro
- * 
  */
 public class DirOperId {
 	protected final int id;

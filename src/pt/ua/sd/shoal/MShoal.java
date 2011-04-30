@@ -11,9 +11,10 @@ import pt.ua.sd.communication.toshoal.TrappedByTheNetMessage;
 import pt.ua.sd.log.ILogger;
 
 /**
+ * Point of communication with the Shoals
+ * 
  * @author André Prata
  * @author Eriksson Monteiro
- * 
  */
 public class MShoal implements IShoal, IShoalBoat, IShoalDirOper {
 
