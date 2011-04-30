@@ -18,8 +18,10 @@ import pt.ua.sd.network.ProtocolEndPoint;
 import pt.ua.sd.shoal.network.ShoalClient;
 
 /**
- * @author Eriksson Monteiro <eriksson.monteiro@ua.pt>
- * @author André Prata <andreprata@ua.pt>
+ * The interface to communicate with a remote Logging monitor
+ * 
+ * @author André Prata
+ * @author Eriksson Monteiro
  */
 public class LogClient implements ILogger {
 

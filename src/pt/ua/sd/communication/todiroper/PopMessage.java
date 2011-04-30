@@ -4,9 +4,10 @@
 package pt.ua.sd.communication.todiroper;
 
 /**
+ * A specialized Message: Pop Message
+ * 
  * @author André Prata
  * @author Eriksson Monteiro
- * 
  */
 public class PopMessage extends DirOperMessage {
 

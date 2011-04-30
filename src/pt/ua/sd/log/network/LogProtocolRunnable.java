@@ -13,8 +13,10 @@ import pt.ua.sd.network.IProtocolRunnable;
 import pt.ua.sd.network.ProtocolEndPoint;
 
 /**
+ * The Log message handler at the server side
  * 
- * @author eriksson
+ * @author André Prata
+ * @author Eriksson Monteiro
  */
 public class LogProtocolRunnable implements IProtocolRunnable {
 

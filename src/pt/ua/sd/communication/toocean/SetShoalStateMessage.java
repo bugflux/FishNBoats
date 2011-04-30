@@ -7,8 +7,10 @@ import pt.ua.sd.shoal.ShoalId;
 import pt.ua.sd.shoal.ShoalStats.INTERNAL_STATE_SCHOOL;
 
 /**
- * @author André Prata <andreprata@ua.pt>
- * @author Eriksson Monteiro <eriksson.monteiro@ua.pt>
+ * A specialized Message: Set Shoal State
+ * 
+ * @author André Prata
+ * @author Eriksson Monteiro
  */
 public class SetShoalStateMessage extends OceanMessage {
 

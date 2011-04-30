@@ -10,6 +10,8 @@ import java.util.HashMap;
 import pt.ua.sd.communication.Message;
 
 /**
+ * A specialized Message: Start
+ * 
  * @author André Prata <andreprata@ua.pt>
  * @author Eriksson Monteiro <eriksson.monteiro@ua.pt>
  */

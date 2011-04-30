@@ -4,8 +4,10 @@
 package pt.ua.sd.communication.toocean;
 
 /**
- * @author André Prata <andreprata@ua.pt>
- * @author Eriksson Monteiro <eriksson.monteiro@ua.pt>
+ * A specialized Message: Get Wharf
+ * 
+ * @author André Prata
+ * @author Eriksson Monteiro
  */
 public class GetWharfMessage extends OceanMessage {
 

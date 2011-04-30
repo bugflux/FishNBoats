@@ -1,12 +1,13 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * 
  */
 package pt.ua.sd.communication.tologger;
 
 /**
+ * A specialized Message: Pop Contiguous Message
  * 
- * @author eriksson
+ * @author André Prata
+ * @author Eriksson Monteiro
  */
 public class PopContiguousMessage extends LoggerMessage {
 

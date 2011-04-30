@@ -11,8 +11,10 @@ import pt.ua.sd.diroper.DirOperId;
 import pt.ua.sd.network.IProtocolMessage;
 
 /**
- * @author Eriksson Monteiro <eriksson.monteiro@ua.pt>
- * @author André Prata <andreprata@ua.pt>
+ * A Message container for boat messages.
+ * 
+ * @author André Prata
+ * @author Eriksson Monteiro
  */
 public class BoatProtocolMessage implements Serializable, IProtocolMessage {
 
@@ -26,13 +28,13 @@ public class BoatProtocolMessage implements Serializable, IProtocolMessage {
 	protected final DirOperId dOperId;
 
 	/**
-	 * Construct a new BoatProtocolMessage given a destination Shoal and the
+	 * Construct a new BoatProtocolMessage given a destination Boat and the
 	 * message to deliver to it.
 	 * 
-	 * @param sId
+	 * @param dOperId
 	 *            the id of the shoal that send the message
 	 * @param id
-	 *            the shoal to deliver the message to.
+	 *            the boat to deliver the message to.
 	 * @param m
 	 *            the message to deliver.
 	 */

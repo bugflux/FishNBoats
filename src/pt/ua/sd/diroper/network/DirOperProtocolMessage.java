@@ -10,8 +10,10 @@ import pt.ua.sd.diroper.DirOperId;
 import pt.ua.sd.network.IProtocolMessage;
 
 /**
- * @author Eriksson Monteiro <eriksson.monteiro@ua.pt>
- * @author André Prata <andreprata@ua.pt>
+ * A Message container for DirOper messages.
+ * 
+ * @author André Prata
+ * @author Eriksson Monteiro
  */
 public class DirOperProtocolMessage implements Serializable, IProtocolMessage {
 
@@ -28,7 +30,7 @@ public class DirOperProtocolMessage implements Serializable, IProtocolMessage {
 	 * message to deliver to it.
 	 * 
 	 * @param id
-	 *            the shoal to deliver the message to.
+	 *            the diroper to deliver the message to.
 	 * @param m
 	 *            the messsage to deliver.
 	 */

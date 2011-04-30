@@ -7,8 +7,10 @@ import pt.ua.sd.diroper.DirOperId;
 import pt.ua.sd.diroper.DirOperStats.INTERNAL_STATE_DIROPER;
 
 /**
- * @author André Prata <andreprata@ua.pt>
- * @author Eriksson Monteiro <eriksson.monteiro@ua.pt>
+ * A specialized Message: Set DirOper state
+ * 
+ * @author André Prata
+ * @author Eriksson Monteiro
  */
 public class SetDirOperStateMessage extends OceanMessage {
 

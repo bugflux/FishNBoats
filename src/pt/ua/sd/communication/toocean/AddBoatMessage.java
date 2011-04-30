@@ -8,8 +8,10 @@ import java.awt.Point;
 import pt.ua.sd.boat.BoatStats;
 
 /**
- * @author André Prata <andreprata@ua.pt>
- * @author Eriksson Monteiro <eriksson.monteiro@ua.pt>
+ * A specialized Message: Add Boat
+ * 
+ * @author André Prata
+ * @author Eriksson Monteiro
  */
 public class AddBoatMessage extends OceanMessage {
 

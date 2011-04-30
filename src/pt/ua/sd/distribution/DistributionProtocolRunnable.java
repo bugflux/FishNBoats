@@ -51,7 +51,13 @@ import pt.ua.sd.shoal.network.ShoalProtocolRunnable;
 import pt.ua.sd.shoal.network.ShoalServer;
 
 /**
- * @author André Prata <andreprata@ua.pt>
+ * The Distribution message handler at the server side.
+ * 
+ * For each message that it receives, it tries to launch an entity that's been
+ * assigned to it. This is where lies the guarantee that entities start orderly!
+ * 
+ * @author André Prata
+ * @author Eriksson Monteiro
  */
 public class DistributionProtocolRunnable implements IProtocolRunnable {
 

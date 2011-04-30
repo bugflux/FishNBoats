@@ -30,8 +30,10 @@ import pt.ua.sd.ocean.MOcean;
 import pt.ua.sd.shoal.IShoalBoat;
 
 /**
- * @author Eriksson Monteiro <eriksson.monteiro@ua.pt>
- * @author André Prata <andreprata@ua.pt>
+ * The Ocean message handler at the server side
+ * 
+ * @author André Prata
+ * @author Eriksson Monteiro
  */
 public class OceanProtocolRunnable implements IProtocolRunnable {
 

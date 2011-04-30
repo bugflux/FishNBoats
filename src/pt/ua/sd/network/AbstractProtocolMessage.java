@@ -7,15 +7,13 @@ import java.io.Serializable;
 import pt.ua.sd.communication.Message;
 
 /**
- * @author Eriksson Monteiro <eriksson.monteiro@ua.pt>
- * @author André Prata <andreprata@ua.pt>
+ * Ensures an outline of a ProtocolMessage
+ * 
+ * @author André Prata
+ * @author Eriksson Monteiro
  */
+@SuppressWarnings("serial")
 public abstract class AbstractProtocolMessage implements IProtocolMessage {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -2975624544689947875L;
 
 	public enum MESSAGE_TYPE implements Message.MESSAGE_TYPE, Serializable {
 

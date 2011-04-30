@@ -9,8 +9,10 @@ import pt.ua.sd.shoal.MShoal;
 import pt.ua.sd.shoal.ShoalStats;
 
 /**
- * @author André Prata <andreprata@ua.pt>
- * @author Eriksson Monteiro <eriksson.monteiro@ua.pt>
+ * A specialized Message: Add Shoal
+ * 
+ * @author André Prata
+ * @author Eriksson Monteiro
  */
 public class AddShoalMessage extends OceanMessage {
 

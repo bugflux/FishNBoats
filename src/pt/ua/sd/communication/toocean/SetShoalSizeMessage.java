@@ -6,8 +6,10 @@ package pt.ua.sd.communication.toocean;
 import pt.ua.sd.shoal.ShoalId;
 
 /**
- * @author André Prata <andreprata@ua.pt>
- * @author Eriksson Monteiro <eriksson.monteiro@ua.pt>
+ * A specialized Message: Set Shoal Size
+ * 
+ * @author André Prata
+ * @author Eriksson Monteiro
  */
 public class SetShoalSizeMessage extends OceanMessage {
 

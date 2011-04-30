@@ -4,8 +4,10 @@
 package pt.ua.sd.network;
 
 /**
- * @author Eriksson Monteiro <eriksson.monteiro@ua.pt>
- * @author André Prata <andreprata@ua.pt>
+ * Just to ensure that all Handlers can be Threads
+ * 
+ * @author André Prata
+ * @author Eriksson Monteiro
  */
 public interface IProtocolRunnable extends Runnable {
 

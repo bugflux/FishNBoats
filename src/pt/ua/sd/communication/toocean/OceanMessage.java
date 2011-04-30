@@ -6,8 +6,10 @@ package pt.ua.sd.communication.toocean;
 import pt.ua.sd.communication.Message;
 
 /**
- * @author André Prata <andreprata@ua.pt>
- * @author Eriksson Monteiro <eriksson.monteiro@ua.pt>
+ * Ancestor of all Ocean messages.
+ * 
+ * @author André Prata
+ * @author Eriksson Monteiro
  */
 @SuppressWarnings("serial")
 // abstract class

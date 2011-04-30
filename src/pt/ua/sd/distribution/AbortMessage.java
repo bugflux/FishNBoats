@@ -6,8 +6,10 @@ package pt.ua.sd.distribution;
 import pt.ua.sd.communication.Message;
 
 /**
- * @author André Prata <andreprata@ua.pt>
- * @author Eriksson Monteiro <eriksson.monteiro@ua.pt>
+ * A specialized Message: Abort
+ * 
+ * @author André Prata
+ * @author Eriksson Monteiro
  */
 public class AbortMessage extends DistributionMessage {
 

@@ -7,8 +7,10 @@ import pt.ua.sd.boat.BoatId;
 import pt.ua.sd.boat.BoatStats.INTERNAL_STATE_BOAT;
 
 /**
- * @author André Prata <andreprata@ua.pt>
- * @author Eriksson Monteiro <eriksson.monteiro@ua.pt>
+ * A specialized Message: SetBoatState
+ * 
+ * @author André Prata
+ * @author Eriksson Monteiro
  */
 public class SetBoatStateMessage extends OceanMessage {
 

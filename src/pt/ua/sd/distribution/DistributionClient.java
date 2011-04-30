@@ -10,16 +10,13 @@ import pt.ua.sd.network.Acknowledge;
 import pt.ua.sd.network.ProtocolEndPoint;
 
 /**
- * This entity accepts a list of known servers, including the localhost, and the
- * server configurations.
+ * This entity accepts a valid {@link StartMessage} and sends it to the
+ * respective machines that ought the entities assigned to them.
  * 
- * @author André Prata <andreprata@ua.pt>
- * @author Eriksson Monteiro <eriksson.monteiro@ua.pt>
+ * @author André Prata
+ * @author Eriksson Monteiro
  */
 public class DistributionClient {
-
-	public DistributionClient() {
-	}
 
 	public boolean stopEntities(InetAddress entities[]) {
 		try {

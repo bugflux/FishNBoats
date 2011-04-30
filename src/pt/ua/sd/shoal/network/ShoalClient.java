@@ -24,8 +24,10 @@ import pt.ua.sd.shoal.IShoalDirOper;
 import pt.ua.sd.shoal.ShoalId;
 
 /**
- * @author Eriksson Monteiro <eriksson.monteiro@ua.pt>
- * @author André Prata <andreprata@ua.pt>
+ * The interface to communicate with a remote Shoal monitor
+ * 
+ * @author André Prata
+ * @author Eriksson Monteiro
  */
 public class ShoalClient implements IShoal, IShoalBoat, IShoalDirOper, Serializable {
 

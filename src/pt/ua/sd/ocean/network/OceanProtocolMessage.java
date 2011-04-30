@@ -8,8 +8,10 @@ import pt.ua.sd.communication.toocean.OceanMessage;
 import pt.ua.sd.network.IProtocolMessage;
 
 /**
- * @author André Prata <andreprata@ua.pt>
- * @author Eriksson Monteiro <eriksson.monteiro@ua.pt>
+ * A Message container for Ocean messages.
+ * 
+ * @author André Prata
+ * @author Eriksson Monteiro
  */
 public class OceanProtocolMessage implements Serializable, IProtocolMessage {
 

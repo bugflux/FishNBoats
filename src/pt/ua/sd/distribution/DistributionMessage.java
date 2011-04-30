@@ -6,8 +6,10 @@ import pt.ua.sd.communication.Message;
 import pt.ua.sd.network.IProtocolMessage;
 
 /**
- * @author André Prata <andreprata@ua.pt>
- * @author Eriksson Monteiro <eriksson.monteiro@ua.pt>
+ * Ancestor of all Distribution-related messages
+ * 
+ * @author André Prata
+ * @author Eriksson Monteiro
  */
 @SuppressWarnings("serial")
 public abstract class DistributionMessage extends Message implements Serializable, IProtocolMessage {

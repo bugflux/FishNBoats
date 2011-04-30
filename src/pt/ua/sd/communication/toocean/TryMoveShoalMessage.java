@@ -8,8 +8,10 @@ import java.awt.Point;
 import pt.ua.sd.shoal.ShoalId;
 
 /**
- * @author André Prata <andreprata@ua.pt>
- * @author Eriksson Monteiro <eriksson.monteiro@ua.pt>
+ * A specialized Message: Try Move Shoal
+ * 
+ * @author André Prata
+ * @author Eriksson Monteiro
  */
 public class TryMoveShoalMessage extends OceanMessage {
 

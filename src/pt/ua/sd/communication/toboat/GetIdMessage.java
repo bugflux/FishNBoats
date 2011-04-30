@@ -4,9 +4,10 @@
 package pt.ua.sd.communication.toboat;
 
 /**
+ * A specialized Message: Get Id
+ * 
  * @author André Prata
  * @author Eriksson Monteiro
- * 
  */
 public class GetIdMessage extends BoatMessage {
 

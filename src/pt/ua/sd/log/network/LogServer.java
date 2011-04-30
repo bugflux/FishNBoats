@@ -9,13 +9,18 @@ import pt.ua.sd.log.TLogFlusher;
 import pt.ua.sd.network.ProtocolServer;
 
 /**
- * @author Eriksson Monteiro <eriksson.monteiro@ua.pt>
- * @author André Prata <andreprata@ua.pt>
+ * The server side listener of messages to a Log monitor
+ * 
+ * @author André Prata
+ * @author Eriksson Monteiro
  */
 public class LogServer extends ProtocolServer {
 	private TLogFlusher logFlusher;
 	private String logFile;
 
+	/**
+	 * @see ProtocolServer#ProtocolServer(int, pt.ua.sd.network.IProtocolRunnable)
+	 */
 	public LogServer(int port, LogProtocolRunnable runnable, String logFile) {
 		super(port, runnable);
 	}

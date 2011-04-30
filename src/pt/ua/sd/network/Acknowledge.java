@@ -1,6 +1,5 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * 
  */
 package pt.ua.sd.network;
 
@@ -8,8 +7,13 @@ import java.util.HashMap;
 import pt.ua.sd.communication.Message;
 
 /**
+ * A simple Message: Acknowledge
  * 
- * @author Eriksson Monteiro <eriksson.monteiro@ua.pt>
+ * May contain return values, depending on the request that it acknowledges. The
+ * requester should know how to handle them.
+ * 
+ * @author André Prata
+ * @author Eriksson Monteiro
  */
 public class Acknowledge implements IProtocolMessage {
 
@@ -24,17 +28,34 @@ public class Acknowledge implements IProtocolMessage {
 		return ack;
 	}
 
+	/**
+	 * Get a parameter
+	 * 
+	 * @param param
+	 *            the name of the parameter
+	 * @return the parameter value
+	 */
 	public Object getParam(String param) {
 		return params.get(param);
 	}
 
+	/**
+	 * Put a parameter
+	 * 
+	 * @param param
+	 *            the parameter name
+	 * @param value
+	 *            the parameter value
+	 */
 	public void setParam(String param, Object value) {
-		if (param.contains(param)) {
-			params.remove(param);
-		}
 		params.put(param, value);
 	}
 
+	/**
+	 * Get all parameters
+	 * 
+	 * @return the name-value parameters mapping
+	 */
 	public HashMap<String, Object> getParams() {
 		return params;
 	}

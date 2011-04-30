@@ -6,8 +6,10 @@ package pt.ua.sd.communication.toocean;
 import pt.ua.sd.diroper.DirOperStats;
 
 /**
- * @author André Prata <andreprata@ua.pt>
- * @author Eriksson Monteiro <eriksson.monteiro@ua.pt>
+ * A specialized Message: Add DirOper
+ * 
+ * @author André Prata
+ * @author Eriksson Monteiro
  */
 public class AddDirOperMessage extends OceanMessage {
 

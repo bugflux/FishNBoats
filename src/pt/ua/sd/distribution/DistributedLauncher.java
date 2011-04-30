@@ -7,8 +7,13 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 
 /**
- * @author André Prata <andreprata@ua.pt>
+ * This class allows launching a distributed simulation. The location of each
+ * entity is defined by an ip address and a port (servers only)
  * 
+ * It is statically defined.
+ * 
+ * @author André Prata
+ * @author Eriksson Monteiro
  */
 public class DistributedLauncher {
 

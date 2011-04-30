@@ -1,6 +1,5 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * 
  */
 package pt.ua.sd.network;
 
@@ -12,8 +11,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ * This class is utilitary, and contains methods that help send and receive
+ * objects through network sockets
  * 
- * @author eriksson
+ * @author André Prata
+ * @author Eriksson Monteiro
  */
 public class ProtocolEndPoint {
 

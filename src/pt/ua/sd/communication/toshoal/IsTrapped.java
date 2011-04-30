@@ -4,9 +4,10 @@
 package pt.ua.sd.communication.toshoal;
 
 /**
+ * A specialized Message: Is trapped
+ * 
  * @author André Prata
  * @author Eriksson Monteiro
- * 
  */
 public class IsTrapped extends ShoalMessage {
 

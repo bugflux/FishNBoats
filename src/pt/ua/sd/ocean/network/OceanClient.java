@@ -40,8 +40,10 @@ import pt.ua.sd.shoal.ShoalId;
 import pt.ua.sd.shoal.ShoalStats.INTERNAL_STATE_SCHOOL;
 
 /**
- * @author Eriksson Monteiro <eriksson.monteiro@ua.pt>
- * @author André Prata <andreprata@ua.pt>
+ * The interface to communicate with a remote Ocean monitor
+ * 
+ * @author André Prata
+ * @author Eriksson Monteiro
  */
 public class OceanClient implements IOceanBoat, IOceanShoal, IOceanDirOper, Serializable {
 	/**

@@ -6,8 +6,10 @@ package pt.ua.sd.communication.toocean;
 import pt.ua.sd.boat.BoatId;
 
 /**
- * @author André Prata <andreprata@ua.pt>
- * @author Eriksson Monteiro <eriksson.monteiro@ua.pt>
+ * A specialized Message: Set Boat Catch
+ * 
+ * @author André Prata
+ * @author Eriksson Monteiro
  */
 public class SetBoatCatchMessage extends OceanMessage {
 

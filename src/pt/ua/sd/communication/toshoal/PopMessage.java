@@ -4,9 +4,10 @@
 package pt.ua.sd.communication.toshoal;
 
 /**
+ * A specialized Message: Pop Message
+ * 
  * @author André Prata
  * @author Eriksson Monteiro
- * 
  */
 public class PopMessage extends ShoalMessage {
 

@@ -11,8 +11,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * @author Eriksson Monteiro <eriksson.monteiro@ua.pt>
- * @author André Prata <andreprata@ua.pt>
+ * The generic purpose server. When constructed, the socket is created. Upon
+ * start, it start accepting connections and serving the requests in a new
+ * thread, with the associated protocol handler
+ * 
+ * @author André Prata
+ * @author Eriksson Monteiro
  */
 public class ProtocolServer {
 
@@ -20,6 +24,13 @@ public class ProtocolServer {
 	protected IProtocolRunnable protocol;
 	protected boolean isClosed = false;
 
+	/**
+	 * 
+	 * @param port
+	 *            The port to run at
+	 * @param protocol
+	 *            The message handler for this specific server
+	 */
 	public ProtocolServer(int port, IProtocolRunnable protocol) {
 
 		this.protocol = protocol;
@@ -32,6 +43,9 @@ public class ProtocolServer {
 		}
 	}
 
+	/**
+	 * Start handling messages in the port given port.
+	 */
 	synchronized public void startServer() {
 		try {
 			System.out.println("Server started");
@@ -39,7 +53,6 @@ public class ProtocolServer {
 				Socket accept = server.accept();
 				protocol = protocol.getClass().getConstructor(Socket.class).newInstance(accept);
 				new Thread(protocol).start();
-
 			} while (!isClosed);
 		} catch (NoSuchMethodException ex) {
 			Logger.getLogger(ProtocolServer.class.getName()).log(Level.SEVERE, null, ex);
@@ -59,7 +72,16 @@ public class ProtocolServer {
 		}
 	}
 
+	/**
+	 * Close the socket and don't accept any more connections. You can't call
+	 * startServer again, you must recreate the object!
+	 */
 	synchronized public void stopServer() {
 		this.isClosed = true;
+		try {
+			this.server.close();
+		} catch (IOException e) {
+			Logger.getLogger(ProtocolServer.class.getName()).log(Level.SEVERE, null, e);
+		}
 	}
 }

@@ -19,9 +19,10 @@ import pt.ua.sd.network.IProtocolRunnable;
 import pt.ua.sd.network.ProtocolEndPoint;
 
 /**
+ * The DirOper message handler at the server side
+ * 
  * @author André Prata
  * @author Eriksson Monteiro
- * 
  */
 public class DirOperProtocolRunnable implements IProtocolRunnable {
 

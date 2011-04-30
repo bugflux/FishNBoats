@@ -18,9 +18,10 @@ import pt.ua.sd.network.ProtocolEndPoint;
 import pt.ua.sd.shoal.MShoal;
 
 /**
+ * The Shoal message handler at the server side
  * 
- * @author Eriksson Monteiro <eriksson.monteiro@ua.pt>
  * @author André Prata
+ * @author Eriksson Monteiro
  */
 public class ShoalProtocolRunnable implements IProtocolRunnable {
 

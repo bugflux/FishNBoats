@@ -4,9 +4,10 @@
 package pt.ua.sd.communication.tologger;
 
 /**
+ * A specialized Message: Get Tick Clock
+ * 
  * @author André Prata
  * @author Eriksson Monteiro
- * 
  */
 public class GetTickClockMessage extends LoggerMessage {
 

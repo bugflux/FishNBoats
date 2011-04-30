@@ -6,8 +6,12 @@ package pt.ua.sd.distribution;
 import java.io.Serializable;
 
 /**
- * @author André Prata <andreprata@ua.pt>
- * @author Eriksson Monteiro <eriksson.monteiro@ua.pt>
+ * A distribution config is actually a running configuration, and contains
+ * information of how many boats, companies, shoals are, the size of the board,
+ * etc...
+ * 
+ * @author André Prata
+ * @author Eriksson Monteiro
  */
 public class DistributionConfig implements Serializable {
 

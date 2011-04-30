@@ -7,9 +7,17 @@ import java.io.Serializable;
 import pt.ua.sd.communication.Message;
 
 /**
- * @author Eriksson Monteiro <eriksson.monteiro@ua.pt>
- * @author André Prata <andreprata@ua.pt>
+ * Expose the ProtocolMessage methods
+ * 
+ * @author André Prata
+ * @author Eriksson Monteiro
  */
 public interface IProtocolMessage extends Serializable {
+	
+	/**
+	 * Get the Message that this ProtocolMessage encloses.
+	 * 
+	 * @return the message
+	 */
 	public Message getMessage();
 }

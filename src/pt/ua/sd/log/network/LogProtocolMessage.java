@@ -8,8 +8,10 @@ import pt.ua.sd.communication.tologger.LoggerMessage;
 import pt.ua.sd.network.IProtocolMessage;
 
 /**
- * @author Eriksson Monteiro <eriksson.monteiro@ua.pt>
- * @author André Prata <andreprata@ua.pt>
+ * A Message container for Log messages.
+ * 
+ * @author André Prata
+ * @author Eriksson Monteiro
  */
 public class LogProtocolMessage implements IProtocolMessage, Serializable {
 
@@ -19,6 +21,11 @@ public class LogProtocolMessage implements IProtocolMessage, Serializable {
 	private static final long serialVersionUID = -628384051581925384L;
 	private LoggerMessage message;
 
+	/**
+	 * Construct a new logging message
+	 * 
+	 * @param message the message
+	 */
 	public LogProtocolMessage(LoggerMessage message) {
 		this.message = message;
 	}

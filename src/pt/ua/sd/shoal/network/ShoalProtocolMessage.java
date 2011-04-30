@@ -10,8 +10,10 @@ import pt.ua.sd.network.IProtocolMessage;
 import pt.ua.sd.shoal.ShoalId;
 
 /**
- * @author Eriksson Monteiro <eriksson.monteiro@ua.pt>
- * @author André Prata <andreprata@ua.pt>
+ * A Message container for Shoal messages.
+ * 
+ * @author André Prata
+ * @author Eriksson Monteiro
  */
 public class ShoalProtocolMessage implements Serializable, IProtocolMessage {
 
@@ -26,8 +28,6 @@ public class ShoalProtocolMessage implements Serializable, IProtocolMessage {
 	 * Construct a new ShoalProtocolMessage given a destination Shoal and the
 	 * message to deliver to it.
 	 * 
-	 * @param b
-	 *            the boat that send the message
 	 * @param id
 	 *            the shoal to deliver the message to.
 	 * @param m
