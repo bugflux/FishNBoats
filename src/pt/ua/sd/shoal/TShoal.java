@@ -15,9 +15,11 @@ import pt.ua.sd.ocean.IOceanShoal;
 import pt.ua.sd.shoal.ShoalStats.INTERNAL_STATE_SCHOOL;
 
 /**
+ * Thread that listens to messages on the point of communication and acts
+ * accordingly, simulating the Shoal activitys
+ * 
  * @author André Prata
  * @author Eriksson Monteiro
- * 
  */
 public class TShoal extends Thread {
 

@@ -6,9 +6,10 @@ package pt.ua.sd.communication;
 import java.io.Serializable;
 
 /**
+ * Message is a common class from which all specialized Messages derive.
+ * 
  * @author André Prata
  * @author Eriksson Monteiro
- * 
  */
 @SuppressWarnings("serial")
 // abstract class

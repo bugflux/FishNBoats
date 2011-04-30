@@ -11,9 +11,10 @@ import pt.ua.sd.boat.BoatStats;
 import pt.ua.sd.shoal.IShoalBoat;
 
 /**
+ * Exposes Ocean methods to Boats
+ * 
  * @author André Prata
  * @author Eriksson Monteiro
- * 
  */
 public interface IOceanBoat {
 

@@ -4,9 +4,11 @@
 package pt.ua.sd.boat;
 
 /**
+ * This interface exposes all the methods in the Boat monitor to be used by
+ * DirOpers.
+ * 
  * @author André Prata
  * @author Eriksson Monteiro
- * 
  */
 public interface IBoatDirOper {
 

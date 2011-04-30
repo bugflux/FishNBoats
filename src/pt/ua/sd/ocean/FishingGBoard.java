@@ -14,9 +14,10 @@ import pt.ua.sd.boat.BoatId;
 import pt.ua.sd.shoal.ShoalId;
 
 /**
+ * Graphical interface for the Ocean's state
+ * 
  * @author André Prata
  * @author Eriksson Monteiro
- * 
  */
 public class FishingGBoard {
 

@@ -6,9 +6,10 @@ package pt.ua.sd.communication.todiroper;
 import pt.ua.sd.boat.BoatId;
 
 /**
+ * A specialized Message: boat is Back at Wharf
+ * 
  * @author André Prata
  * @author Eriksson Monteiro
- * 
  */
 public class BackAtWharfMessage extends DirOperMessage {
 

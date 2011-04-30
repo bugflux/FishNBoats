@@ -7,9 +7,11 @@ import java.awt.Point;
 import java.io.Serializable;
 
 /**
+ * This class contains all state information relative to a Boat, identified by
+ * its BoatId.
+ * 
  * @author André Prata
  * @author Eriksson Monteiro
- * 
  */
 public class BoatStats implements Serializable {
 

@@ -7,9 +7,10 @@ import pt.ua.sd.diroper.DirOperId;
 import pt.ua.sd.diroper.DirOperStats.INTERNAL_STATE_DIROPER;
 
 /**
+ * Exposes Ocean methods to DirOpers
+ * 
  * @author André Prata
  * @author Eriksson Monteiro
- * 
  */
 public interface IOceanDirOper {
 

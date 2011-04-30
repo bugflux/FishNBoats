@@ -6,9 +6,10 @@ package pt.ua.sd.diroper;
 import java.io.Serializable;
 
 /**
+ * Distinctively identify a DirOper
+ * 
  * @author André Prata
  * @author Eriksson Monteiro
- * 
  */
 public class DirOperId implements Serializable {
 

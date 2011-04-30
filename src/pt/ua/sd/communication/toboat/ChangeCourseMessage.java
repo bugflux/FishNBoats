@@ -6,9 +6,10 @@ package pt.ua.sd.communication.toboat;
 import java.awt.Point;
 
 /**
+ * A specialized Message: Change Course
+ * 
  * @author André Prata
  * @author Eriksson Monteiro
- * 
  */
 public class ChangeCourseMessage extends BoatMessage {
 

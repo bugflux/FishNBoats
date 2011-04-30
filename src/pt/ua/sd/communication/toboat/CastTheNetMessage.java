@@ -6,9 +6,10 @@ package pt.ua.sd.communication.toboat;
 import pt.ua.sd.shoal.IShoalBoat;
 
 /**
+ * A specialized Message: Cast The Net
+ * 
  * @author André Prata
  * @author Eriksson Monteiro
- * 
  */
 public class CastTheNetMessage extends BoatMessage {
 

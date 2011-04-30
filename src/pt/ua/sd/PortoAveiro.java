@@ -35,9 +35,13 @@ import pt.ua.sd.shoal.network.ShoalProtocolRunnable;
 import pt.ua.sd.shoal.network.ShoalServer;
 
 /**
+ * PortoAveiro contains a "public static main" method, which enables you to
+ * launch a simulation. Called with no arguments, it launches a simulation using
+ * the defaul parameters. To set different parameters, use the
+ * {@link pt.ua.sd.gui.Faina} launcher.
+ * 
  * @author André Prata
  * @author Eriksson Monteiro
- * 
  */
 public class PortoAveiro {
 

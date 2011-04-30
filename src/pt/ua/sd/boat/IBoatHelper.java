@@ -8,9 +8,11 @@ import java.awt.Point;
 import pt.ua.sd.shoal.IShoalBoat;
 
 /**
+ * This interface exposes all the methods in the Boat monitor to be used by a
+ * helping boat.
+ * 
  * @author André Prata
  * @author Eriksson Monteiro
- * 
  */
 public interface IBoatHelper {
 

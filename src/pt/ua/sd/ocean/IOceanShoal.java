@@ -9,9 +9,10 @@ import pt.ua.sd.shoal.ShoalId;
 import pt.ua.sd.shoal.ShoalStats;
 
 /**
+ * Exposes DirOper methods to Shoals
+ * 
  * @author André Prata
  * @author Eriksson Monteiro
- * 
  */
 public interface IOceanShoal {
 

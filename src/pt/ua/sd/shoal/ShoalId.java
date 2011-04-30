@@ -6,9 +6,10 @@ package pt.ua.sd.shoal;
 import java.io.Serializable;
 
 /**
+ * Global distinct identifier of a Shoal
+ * 
  * @author André Prata
  * @author Eriksson Monteiro
- * 
  */
 public class ShoalId implements Serializable {
 

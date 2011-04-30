@@ -6,9 +6,10 @@ package pt.ua.sd.communication.todiroper;
 import pt.ua.sd.communication.Message;
 
 /**
+ * Ancestor of all DirOper messages.
+ * 
  * @author André Prata
  * @author Eriksson Monteiro
- * 
  */
 @SuppressWarnings("serial")
 // abstract class

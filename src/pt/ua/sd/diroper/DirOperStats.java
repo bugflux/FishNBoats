@@ -6,9 +6,10 @@ package pt.ua.sd.diroper;
 import java.io.Serializable;
 
 /**
+ * Aggregates all the state information of a DirOper.
+ * 
  * @author André Prata
  * @author Eriksson Monteiro
- * 
  */
 public class DirOperStats implements Serializable {
 

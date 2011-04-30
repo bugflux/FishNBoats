@@ -19,9 +19,10 @@ import pt.ua.sd.log.ILogger;
 import pt.ua.sd.shoal.IShoalBoat;
 
 /**
+ * This class is the monitor that coordinates all Boat communication.
+ * 
  * @author André Prata
  * @author Eriksson Monteiro
- * 
  */
 public class MBoat implements IBoat, IBoatDirOper, IBoatHelper {
 

@@ -4,9 +4,10 @@
 package pt.ua.sd.communication.toboat;
 
 /**
+ * A specialized Message: Return to Wharf
+ * 
  * @author André Prata
  * @author Eriksson Monteiro
- * 
  */
 public class ReturnToWharfMessage extends BoatMessage {
 

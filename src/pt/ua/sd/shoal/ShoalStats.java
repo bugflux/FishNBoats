@@ -7,9 +7,10 @@ import java.awt.Point;
 import java.io.Serializable;
 
 /**
+ * Combined state information of a given Shoal
+ * 
  * @author André Prata
  * @author Eriksson Monteiro
- * 
  */
 public class ShoalStats implements Serializable {
 

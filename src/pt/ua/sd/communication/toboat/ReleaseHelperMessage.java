@@ -4,9 +4,10 @@
 package pt.ua.sd.communication.toboat;
 
 /**
+ * A specialized Message: Release helper boat
+ * 
  * @author André Prata
  * @author Eriksson Monteiro
- * 
  */
 public class ReleaseHelperMessage extends BoatMessage {
 

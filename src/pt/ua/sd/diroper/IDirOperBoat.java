@@ -8,9 +8,10 @@ import java.awt.Point;
 import pt.ua.sd.boat.BoatId;
 
 /**
+ * Exposes DirOper communication interface to Boats
+ * 
  * @author André Prata
  * @author Eriksson Monteiro
- * 
  */
 public interface IDirOperBoat {
 

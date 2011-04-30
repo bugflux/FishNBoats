@@ -6,9 +6,10 @@ package pt.ua.sd.diroper;
 import pt.ua.sd.communication.todiroper.DirOperMessage;
 
 /**
+ * Exposes all methods that DirOpers should access in their monitors.
+ * 
  * @author André Prata
  * @author Eriksson Monteiro
- * 
  */
 public interface IDirOper {
 

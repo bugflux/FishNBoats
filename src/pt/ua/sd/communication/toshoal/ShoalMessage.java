@@ -6,9 +6,10 @@ package pt.ua.sd.communication.toshoal;
 import pt.ua.sd.communication.Message;
 
 /**
+ * Ancestor of all Shoal messages
+ * 
  * @author André Prata
  * @author Eriksson Monteiro
- * 
  */
 @SuppressWarnings("serial")
 // abstract class

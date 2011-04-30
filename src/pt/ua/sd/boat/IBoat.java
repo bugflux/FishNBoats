@@ -6,9 +6,11 @@ package pt.ua.sd.boat;
 import pt.ua.sd.communication.toboat.BoatMessage;
 
 /**
+ * This interface exposes all the methods in the Boat monitor to be used by
+ * Boats.
+ * 
  * @author André Prata
  * @author Eriksson Monteiro
- * 
  */
 public interface IBoat {
 

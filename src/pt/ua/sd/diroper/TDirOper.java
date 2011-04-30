@@ -20,9 +20,11 @@ import pt.ua.sd.ocean.IOceanDirOper;
 import pt.ua.sd.shoal.IShoalDirOper;
 
 /**
+ * Thread that listens to messages on the point of communication, the monitor,
+ * and acts accordingly.
+ * 
  * @author André Prata
  * @author Eriksson Monteiro
- * 
  */
 public class TDirOper extends Thread {
 

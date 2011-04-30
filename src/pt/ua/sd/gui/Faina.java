@@ -4,19 +4,11 @@ import javax.swing.JFileChooser;
 
 import pt.ua.sd.PortoAveiro;
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
- * Faina.java
- *
- * Created on 2/Abr/2011, 18:03:43
- */
 /**
+ * Graphical launcher with settings menus
  * 
- * @author MIECT-ES
+ * @author André Prata
+ * @author Eriksson Monteiro
  */
 public class Faina extends javax.swing.JFrame {
 

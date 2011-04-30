@@ -21,9 +21,10 @@ import pt.ua.sd.shoal.ShoalId;
 import pt.ua.sd.shoal.ShoalStats;
 
 /**
+ * Point of synchronization of all Ocean actions, including state updates
+ * 
  * @author André Prata
  * @author Eriksson Monteiro
- * 
  */
 public class MOcean implements IOceanBoat, IOceanShoal, IOceanDirOper {
 
