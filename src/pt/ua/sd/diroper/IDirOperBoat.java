@@ -6,7 +6,6 @@ package pt.ua.sd.diroper;
 import java.awt.Point;
 
 import pt.ua.sd.boat.BoatId;
-import pt.ua.sd.diroper.rmi.IRemoteDirOper;
 
 /**
  * Exposes DirOper communication interface to Boats
@@ -14,7 +13,7 @@ import pt.ua.sd.diroper.rmi.IRemoteDirOper;
  * @author André Prata
  * @author Eriksson Monteiro
  */
-public interface IDirOperBoat extends IRemoteDirOper {
+public interface IDirOperBoat {
 
 	/**
 	 * Tell the DirOper that a boat arrived at the Wharf. Also indicate how much

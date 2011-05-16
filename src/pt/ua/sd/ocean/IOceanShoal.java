@@ -5,7 +5,6 @@ package pt.ua.sd.ocean;
 
 import java.awt.Point;
 
-import pt.ua.sd.ocean.rmi.IRemoteOcean;
 import pt.ua.sd.shoal.ShoalId;
 import pt.ua.sd.shoal.ShoalStats;
 
@@ -15,7 +14,7 @@ import pt.ua.sd.shoal.ShoalStats;
  * @author André Prata
  * @author Eriksson Monteiro
  */
-public interface IOceanShoal extends IRemoteOcean {
+public interface IOceanShoal {
 
 	/**
 	 * Attempt to move shoal ShoalId one square in the direction of point p.

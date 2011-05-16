@@ -3,15 +3,13 @@
  */
 package pt.ua.sd.shoal;
 
-import pt.ua.sd.shoal.rmi.IRemoteShoal;
-
 /**
  * Exposes Shoal methods to Boats
  * 
  * @author André Prata
  * @author Eriksson Monteiro
  */
-public interface IShoalBoat extends IRemoteShoal {
+public interface IShoalBoat {
 
 	/**
 	 * Cast the net to this shoal.

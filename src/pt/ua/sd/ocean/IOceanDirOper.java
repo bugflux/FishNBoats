@@ -5,7 +5,6 @@ package pt.ua.sd.ocean;
 
 import pt.ua.sd.diroper.DirOperId;
 import pt.ua.sd.diroper.DirOperStats.INTERNAL_STATE_DIROPER;
-import pt.ua.sd.ocean.rmi.IRemoteOcean;
 
 /**
  * Exposes Ocean methods to DirOpers
@@ -13,7 +12,7 @@ import pt.ua.sd.ocean.rmi.IRemoteOcean;
  * @author André Prata
  * @author Eriksson Monteiro
  */
-public interface IOceanDirOper extends IRemoteOcean {
+public interface IOceanDirOper {
 
 	/**
 	 * Set the DirOperState for a current DirOper.

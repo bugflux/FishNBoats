@@ -8,7 +8,6 @@ import java.util.List;
 
 import pt.ua.sd.boat.BoatId;
 import pt.ua.sd.boat.BoatStats;
-import pt.ua.sd.ocean.rmi.IRemoteOcean;
 import pt.ua.sd.shoal.IShoalBoat;
 
 /**
@@ -17,7 +16,7 @@ import pt.ua.sd.shoal.IShoalBoat;
  * @author André Prata
  * @author Eriksson Monteiro
  */
-public interface IOceanBoat extends IRemoteOcean {
+public interface IOceanBoat {
 
 	/**
 	 * Attempt to move boat BoatId one square in the direction of point p.

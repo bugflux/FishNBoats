@@ -3,15 +3,13 @@
  */
 package pt.ua.sd.log;
 
-import pt.ua.sd.log.rmi.IRemoteLogger;
-
 /**
  * Exposes the Logging methods
  * 
  * @author André Prata
  * @author Eriksson Monteiro
  */
-public interface ILogger extends IRemoteLogger {
+public interface ILogger {
 
 	/**
 	 * Gets a contiguous tick. All following messages will get queued until this

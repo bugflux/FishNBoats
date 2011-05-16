@@ -3,8 +3,6 @@
  */
 package pt.ua.sd.boat;
 
-import pt.ua.sd.boat.rmi.IRemoteBoat;
-
 /**
  * This interface exposes all the methods in the Boat monitor to be used by
  * DirOpers.
@@ -12,7 +10,7 @@ import pt.ua.sd.boat.rmi.IRemoteBoat;
  * @author André Prata
  * @author Eriksson Monteiro
  */
-public interface IBoatDirOper extends IRemoteBoat {
+public interface IBoatDirOper {
 
 	/**
 	 * Order the boat to go to high sea.

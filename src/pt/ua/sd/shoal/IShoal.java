@@ -4,7 +4,6 @@
 package pt.ua.sd.shoal;
 
 import pt.ua.sd.communication.toshoal.ShoalMessage;
-import pt.ua.sd.shoal.rmi.IRemoteShoal;
 
 /**
  * Exposes Shoal methods to Shoal threads
@@ -12,7 +11,7 @@ import pt.ua.sd.shoal.rmi.IRemoteShoal;
  * @author André Prata
  * @author Eriksson Monteiro
  */
-public interface IShoal extends IRemoteShoal {
+public interface IShoal {
 
 	/**
 	 * Retrieve the next message for this shoal to process.
