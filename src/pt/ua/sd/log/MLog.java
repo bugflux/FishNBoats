@@ -5,10 +5,6 @@ package pt.ua.sd.log;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-
-import pt.ua.sd.log.rmi.IRemoteLogger;
 
 /**
  * Point of synchronization to orderly record log messages
@@ -16,9 +12,7 @@ import pt.ua.sd.log.rmi.IRemoteLogger;
  * @author André Prata
  * @author Eriksson Monteiro
  */
-public class MLog implements IRemoteLogger {
-
-	protected static MLog instance;
+public class MLog implements ILogger {
 	protected Map<Integer, String> list;
 	protected int nextContiguousIndex;
 
@@ -33,26 +27,9 @@ public class MLog implements IRemoteLogger {
 		return ++tick;
 	}
 
-	private MLog() {
+	public MLog() {
 		this.list = new HashMap<Integer, String>();
 		this.nextContiguousIndex = 1;
-	}
-
-	protected static Lock singleton = new ReentrantLock();
-
-	/**
-	 * get a Logger's instance
-	 * 
-	 * @return MLog instance
-	 */
-	synchronized public static MLog getInstance() {
-		singleton.lock();
-		if (instance == null) {
-			instance = new MLog();
-		}
-		singleton.unlock();
-
-		return instance;
 	}
 
 	/**

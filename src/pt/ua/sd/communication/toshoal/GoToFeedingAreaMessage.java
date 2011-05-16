@@ -12,6 +12,11 @@ package pt.ua.sd.communication.toshoal;
 public class GoToFeedingAreaMessage extends ShoalMessage {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6538407188546880194L;
+
+	/**
 	 * @return MESSAGE_TYPE.GoToFeedingArea
 	 * @see pt.ua.sd.communication.Message#getMsgType()
 	 */

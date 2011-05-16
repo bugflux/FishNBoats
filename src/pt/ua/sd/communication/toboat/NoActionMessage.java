@@ -12,6 +12,11 @@ package pt.ua.sd.communication.toboat;
 public class NoActionMessage extends BoatMessage {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1373405856991513546L;
+
+	/**
 	 * @return MESSAGE_TYPE.NoAction
 	 * @see pt.ua.sd.communication.Message#getMsgType()
 	 */

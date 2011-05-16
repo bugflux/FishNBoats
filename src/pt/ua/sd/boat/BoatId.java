@@ -3,13 +3,16 @@
  */
 package pt.ua.sd.boat;
 
+import java.io.Serializable;
+
 /**
  * The BoatId class distinctively identifies a Boat in the world.
  * 
  * @author André Prata
  * @author Eriksson Monteiro
  */
-public class BoatId {
+public class BoatId implements Serializable {
+	private static final long serialVersionUID = 4641229688893370756L;
 	protected final int company, boat;
 
 	public BoatId(int company, int boat) {

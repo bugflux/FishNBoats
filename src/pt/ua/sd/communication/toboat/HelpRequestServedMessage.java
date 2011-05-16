@@ -13,6 +13,10 @@ import pt.ua.sd.boat.IBoatHelper;
  */
 public class HelpRequestServedMessage extends BoatMessage {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3003566580546890240L;
 	protected final IBoatHelper helper;
 
 	/**

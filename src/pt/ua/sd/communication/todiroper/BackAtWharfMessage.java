@@ -12,6 +12,10 @@ import pt.ua.sd.boat.BoatId;
  * @author Eriksson Monteiro
  */
 public class BackAtWharfMessage extends DirOperMessage {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5618858783286128192L;
 	protected final BoatId boatId;
 	protected final int stored;
 

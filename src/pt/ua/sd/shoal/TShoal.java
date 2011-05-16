@@ -4,6 +4,7 @@
 package pt.ua.sd.shoal;
 
 import java.awt.Point;
+import java.rmi.RemoteException;
 import java.util.Date;
 import java.util.Random;
 
@@ -66,9 +67,10 @@ public class TShoal extends Thread {
 	 * @param maxCatchPercentage
 	 *            the maximum Fish that might be caught by the net. A percentage
 	 *            of the total size of the fish in a given moment. [0..1].
+	 * @throws RemoteException 
 	 */
 	public TShoal(ShoalStats stats, int period, int seasonMoves, int nCampaigns, IShoal monitor, IOceanShoal ocean,
-			IDirOperShoal diroper[], int growing_factor, double eco_system_capacity, double maxCatchPercentage) {
+			IDirOperShoal diroper[], int growing_factor, double eco_system_capacity, double maxCatchPercentage) throws RemoteException {
 		this.period = period;
 		this.monitor = monitor;
 		this.ocean = ocean;
@@ -89,6 +91,15 @@ public class TShoal extends Thread {
 
 	@Override
 	public void run() {
+		try {
+			run2();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void run2() throws RemoteException {
 		rand = new Random(new Date().getTime() * Thread.currentThread().getId() * stats.getId().getShoal());
 		ShoalMessage popMsg;
 		int campaigns;
@@ -164,7 +175,7 @@ public class TShoal extends Thread {
 	 * Updates the number of fish in this shoal, according to the ecosystem
 	 * rules.
 	 */
-	protected void spawn() {
+	protected void spawn() throws RemoteException {
 		int currentSize = stats.getSize();
 		int newSize = (int) (currentSize * (1 + growing_factor - eco_system_capacity * currentSize));
 		changeSize(newSize);
@@ -174,7 +185,7 @@ public class TShoal extends Thread {
 	 * Sends this shoal to the feeding area. Means just that the state is
 	 * changed to feeding.
 	 */
-	protected void goToFeedingArea() {
+	protected void goToFeedingArea() throws RemoteException {
 		changeState(INTERNAL_STATE_SCHOOL.feeding);
 	}
 
@@ -188,7 +199,7 @@ public class TShoal extends Thread {
 	/**
 	 * The shoal tries to move to a random position.
 	 */
-	protected void swimAbout() {
+	protected void swimAbout() throws RemoteException {
 		changePosition(new Point(rand.nextInt(oceanWidth), rand.nextInt(oceanHeight)));
 	}
 
@@ -197,7 +208,7 @@ public class TShoal extends Thread {
 	 * 
 	 * @return true if it has reached it, false otherwise.
 	 */
-	protected boolean swimToSpawningArea() {
+	protected boolean swimToSpawningArea() throws RemoteException {
 		return changePosition(oceanSpawningArea);
 	}
 
@@ -205,7 +216,7 @@ public class TShoal extends Thread {
 	 * Accept being trapped. Basically changes the state of this shoal to
 	 * trapped_by_the_net.
 	 */
-	protected void isTrapped() {
+	protected void isTrapped() throws RemoteException {
 		changeState(INTERNAL_STATE_SCHOOL.trapped_by_the_net);
 	}
 
@@ -214,7 +225,7 @@ public class TShoal extends Thread {
 	 * net so they can retrieve the net. This also indicates how many fish was
 	 * trapped in the net during the process.
 	 */
-	protected void trap() {
+	protected void trap() throws RemoteException {
 		int maxTrapped = (int) (stats.getSize() * maxCatchPercentage);
 		int trapped = rand.nextInt(maxTrapped);
 		int remaining = stats.getSize() - trapped;
@@ -227,7 +238,7 @@ public class TShoal extends Thread {
 	/**
 	 * Escape the net. The boats may or may not cast the net again.
 	 */
-	protected void escapeTheNet() {
+	protected void escapeTheNet() throws RemoteException {
 		// if the shoal changes to the feeding state before releasing the net,
 		// the fish will be detected sooner >P
 		changeState(INTERNAL_STATE_SCHOOL.feeding);
@@ -247,7 +258,7 @@ public class TShoal extends Thread {
 	/**
 	 * Ends a season. Informs the DirOpers that the Shoal is reproducing.
 	 */
-	protected void seasonEnd() {
+	protected void seasonEnd() throws RemoteException {
 		changeState(INTERNAL_STATE_SCHOOL.spawning);
 		spawn();
 
@@ -259,7 +270,7 @@ public class TShoal extends Thread {
 	/**
 	 * Ends the life. Informs the DirOpers that the Shoal is dying.
 	 */
-	protected void lifeEnd() {
+	protected void lifeEnd() throws RemoteException {
 		// changeState(INTERNAL_STATE_SCHOOL.spawning);
 		for (IDirOperShoal d : diropers) {
 			d.endLife();
@@ -272,7 +283,7 @@ public class TShoal extends Thread {
 	 * @param s
 	 *            the state to set to.
 	 */
-	protected void changeState(INTERNAL_STATE_SCHOOL s) {
+	protected void changeState(INTERNAL_STATE_SCHOOL s) throws RemoteException {
 		if (stats.getState() != s) {
 			stats.setState(s);
 			ocean.setShoalState(stats.getId(), s);
@@ -285,7 +296,7 @@ public class TShoal extends Thread {
 	 * @param size
 	 *            the size to set to.
 	 */
-	protected void changeSize(int size) {
+	protected void changeSize(int size) throws RemoteException {
 		stats.setSize(size);
 		ocean.setShoalSize(stats.getId(), size);
 	}
@@ -300,7 +311,7 @@ public class TShoal extends Thread {
 	 * @return true if the final position was the desired position, false
 	 *         otherwise.
 	 */
-	protected boolean changePosition(Point p) {
+	protected boolean changePosition(Point p) throws RemoteException {
 		stats.setPosition(ocean.tryMoveShoal(stats.getId(), p));
 		return stats.getPosition().equals(p);
 	}

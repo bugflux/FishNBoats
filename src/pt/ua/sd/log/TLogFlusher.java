@@ -20,15 +20,16 @@ public class TLogFlusher extends Thread {
 	protected final OutputStream s;
 	protected final OutputStreamWriter out;
 	protected boolean stop = false;
+	protected final ILogger log;
 
-	public TLogFlusher(OutputStream s) {
+	public TLogFlusher(OutputStream s, ILogger log) {
 		this.s = s;
 		this.out = new OutputStreamWriter(s);
+		this.log = log;
 	}
 
 	@Override
 	public void run() {
-		MLog log = MLog.getInstance();
 		String msg;
 		while (!interrupted() && !stop) {
 

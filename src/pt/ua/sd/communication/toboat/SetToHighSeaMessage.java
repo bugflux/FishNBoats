@@ -12,6 +12,11 @@ package pt.ua.sd.communication.toboat;
 public class SetToHighSeaMessage extends BoatMessage {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3849337385635416107L;
+
+	/**
 	 * @return MESSAGE_TYPE.SetToHighSea
 	 * @see pt.ua.sd.communication.Message#getMsgType()
 	 */

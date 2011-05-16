@@ -13,6 +13,10 @@ import pt.ua.sd.boat.BoatId;
  */
 public class BoatFullMessage extends DirOperMessage {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1249930885495037978L;
 	protected final BoatId id;
 
 	/**

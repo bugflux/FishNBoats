@@ -3,13 +3,16 @@
  */
 package pt.ua.sd.shoal;
 
+import java.io.Serializable;
+
 /**
  * Global distinct identifier of a Shoal
  * 
  * @author André Prata
  * @author Eriksson Monteiro
  */
-public class ShoalId {
+public class ShoalId implements Serializable {
+	private static final long serialVersionUID = 1309689831476629966L;
 	protected final int shoal;
 
 	/**

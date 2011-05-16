@@ -12,6 +12,11 @@ package pt.ua.sd.communication.toshoal;
 public class TrappedByTheNetMessage extends ShoalMessage {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3597970031339658207L;
+
+	/**
 	 * @return MESSAGE_TYPE.TrappedByTheNet
 	 * @see pt.ua.sd.communication.Message#getMsgType()
 	 */

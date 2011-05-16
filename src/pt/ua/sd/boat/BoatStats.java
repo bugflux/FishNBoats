@@ -4,6 +4,7 @@
 package pt.ua.sd.boat;
 
 import java.awt.Point;
+import java.io.Serializable;
 
 /**
  * This class contains all state information relative to a Boat, identified by
@@ -12,7 +13,9 @@ import java.awt.Point;
  * @author André Prata
  * @author Eriksson Monteiro
  */
-public class BoatStats {
+public class BoatStats implements Serializable {
+	private static final long serialVersionUID = 2196857245971079652L;
+
 	public enum INTERNAL_STATE_BOAT {
 		at_the_wharf, searching_for_fish, tracking_a_school, joining_a_companion, returning_to_wharf, boat_full
 	}

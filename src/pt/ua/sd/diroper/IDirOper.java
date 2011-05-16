@@ -3,6 +3,9 @@
  */
 package pt.ua.sd.diroper;
 
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+
 import pt.ua.sd.communication.todiroper.DirOperMessage;
 
 /**
@@ -11,7 +14,7 @@ import pt.ua.sd.communication.todiroper.DirOperMessage;
  * @author André Prata
  * @author Eriksson Monteiro
  */
-public interface IDirOper {
+public interface IDirOper extends Remote {
 
 	/**
 	 * Retrieve the message that is at the head of the message FIFO. This method
@@ -19,10 +22,10 @@ public interface IDirOper {
 	 * 
 	 * @return the first message in the queue.
 	 */
-	public DirOperMessage popMsg();
+	public DirOperMessage popMsg() throws RemoteException;
 
 	/**
 	 * Clears the list of pending messages for the Thread.
 	 */
-	public void clearMessages();
+	public void clearMessages() throws RemoteException;
 }

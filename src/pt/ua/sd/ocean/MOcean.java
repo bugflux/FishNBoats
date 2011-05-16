@@ -4,6 +4,7 @@
 package pt.ua.sd.ocean;
 
 import java.awt.Point;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -16,7 +17,6 @@ import pt.ua.sd.diroper.DirOperId;
 import pt.ua.sd.diroper.DirOperStats;
 import pt.ua.sd.diroper.DirOperStats.INTERNAL_STATE_DIROPER;
 import pt.ua.sd.log.ILogger;
-import pt.ua.sd.ocean.rmi.IRemoteOcean;
 import pt.ua.sd.shoal.IShoalBoat;
 import pt.ua.sd.shoal.ShoalId;
 import pt.ua.sd.shoal.ShoalStats;
@@ -27,7 +27,7 @@ import pt.ua.sd.shoal.ShoalStats;
  * @author André Prata
  * @author Eriksson Monteiro
  */
-public class MOcean implements IRemoteOcean {
+public class MOcean implements ICompleteOcean {
 
 	protected final int height, width;
 	protected final int maxShoalPerSquare, maxBoatsPerSquare;
@@ -65,8 +65,12 @@ public class MOcean implements IRemoteOcean {
 		this.height = height;
 		this.width = width;
 
-		assert isValid(wharf);
-		assert isValid(reproducingZone);
+		try {
+			assert isValid(wharf);
+			assert isValid(reproducingZone);
+		} catch (RemoteException e) {
+
+		}
 		this.log = log;
 		this.wharf = wharf;
 		this.reproducingZone = reproducingZone;
@@ -93,7 +97,7 @@ public class MOcean implements IRemoteOcean {
 		gmap = new FishingGBoard(width, height, (int) Math.ceil((maxBoatsPerSquare + maxShoalPerSquare) / 2.0));
 	}
 
-	public void addDirOper(DirOperStats s) {
+	public void addDirOper(DirOperStats s) throws RemoteException {
 		int logTick;
 		String logMessage;
 
@@ -115,7 +119,7 @@ public class MOcean implements IRemoteOcean {
 	 * @param s
 	 *            the new state to set.
 	 */
-	public void setDirOperState(DirOperId id, INTERNAL_STATE_DIROPER s) {
+	public void setDirOperState(DirOperId id, INTERNAL_STATE_DIROPER s) throws RemoteException {
 		int logTick;
 		String logMessage;
 
@@ -140,7 +144,7 @@ public class MOcean implements IRemoteOcean {
 	 * @param p
 	 *            the position to add the boat to.
 	 */
-	public void addBoat(BoatStats boat, Point p) {
+	public void addBoat(BoatStats boat, Point p) throws RemoteException {
 		int logTick;
 		String logMessage;
 
@@ -166,7 +170,7 @@ public class MOcean implements IRemoteOcean {
 	/**
 	 * @see #addShoal(ShoalStats, IShoalBoat, Point)
 	 */
-	public void addShoal(ShoalStats shoal, IShoalBoat mshoal, int x, int y) {
+	public void addShoal(ShoalStats shoal, IShoalBoat mshoal, int x, int y) throws RemoteException {
 		synchronized (this) {
 			addShoal(shoal, mshoal, new Point(x, y));
 		}
@@ -180,7 +184,7 @@ public class MOcean implements IRemoteOcean {
 	 * @param p
 	 *            the position to add the shoal to.
 	 */
-	public void addShoal(ShoalStats shoal, IShoalBoat mshoal, Point p) {
+	public void addShoal(ShoalStats shoal, IShoalBoat mshoal, Point p) throws RemoteException {
 		int logTick;
 		String logMessage;
 
@@ -212,7 +216,7 @@ public class MOcean implements IRemoteOcean {
 	 *            the new state to set.
 	 */
 	@Override
-	public void setBoatState(BoatId id, BoatStats.INTERNAL_STATE_BOAT state) {
+	public void setBoatState(BoatId id, BoatStats.INTERNAL_STATE_BOAT state) throws RemoteException {
 		int logTick;
 		String logMessage;
 
@@ -233,7 +237,7 @@ public class MOcean implements IRemoteOcean {
 	 * @see IOceanBoat#setBoatCatch(BoatId, int)
 	 */
 	@Override
-	public void setBoatCatch(BoatId id, int stored) {
+	public void setBoatCatch(BoatId id, int stored) throws RemoteException {
 		int logTick;
 		String logMessage;
 
@@ -258,7 +262,7 @@ public class MOcean implements IRemoteOcean {
 	 *            the new state to set.
 	 */
 	@Override
-	public void setShoalState(ShoalId id, ShoalStats.INTERNAL_STATE_SCHOOL state) {
+	public void setShoalState(ShoalId id, ShoalStats.INTERNAL_STATE_SCHOOL state) throws RemoteException {
 		int logTick;
 		String logMessage;
 
@@ -284,7 +288,7 @@ public class MOcean implements IRemoteOcean {
 	 *            the size of the shoal.
 	 */
 	@Override
-	public void setShoalSize(ShoalId id, int size) {
+	public void setShoalSize(ShoalId id, int size) throws RemoteException {
 		int logTick;
 		String logMessage;
 
@@ -318,7 +322,7 @@ public class MOcean implements IRemoteOcean {
 	 * @return the new coordinate for boat id.
 	 */
 	@Override
-	public Point tryMoveBoat(BoatId id, Point p) {
+	public Point tryMoveBoat(BoatId id, Point p) throws RemoteException {
 		int logTick;
 		String logMessage;
 
@@ -457,7 +461,7 @@ public class MOcean implements IRemoteOcean {
 	 * @param p
 	 *            the point to teleport it to.
 	 */
-	protected void moveBoat(BoatId id, Point p) {
+	protected void moveBoat(BoatId id, Point p) throws RemoteException {
 		assert isValid(p);
 		assert boatsPosition.containsKey(id);
 
@@ -472,7 +476,7 @@ public class MOcean implements IRemoteOcean {
 	/**
 	 * @see IOceanBoat#companionDetected(BoatId, BoatId)
 	 */
-	public IShoalBoat companionDetected(BoatId id, BoatId helper) {
+	public IShoalBoat companionDetected(BoatId id, BoatId helper) throws RemoteException {
 		int logTick;
 		String logShoal = "Shoal NOT present";
 		String logCompanion = "Companion NOT present";
@@ -513,7 +517,7 @@ public class MOcean implements IRemoteOcean {
 	 * @return a list of points with fish, at the current moment.
 	 */
 	@Override
-	public List<Point> getRadar(BoatId id) {
+	public List<Point> getRadar(BoatId id) throws RemoteException {
 		int logTick;
 
 		List<Point> points;
@@ -633,7 +637,7 @@ public class MOcean implements IRemoteOcean {
 	 * @return the new coordinate for boat id.
 	 */
 	@Override
-	public Point tryMoveShoal(ShoalId id, Point p) {
+	public Point tryMoveShoal(ShoalId id, Point p) throws RemoteException {
 		int logTick;
 		String logMessage;
 
@@ -784,7 +788,7 @@ public class MOcean implements IRemoteOcean {
 	 * @param p
 	 *            the point to teleport it to.
 	 */
-	protected void moveShoal(ShoalId id, Point p) {
+	protected void moveShoal(ShoalId id, Point p) throws RemoteException {
 		assert isValid(p);
 		assert shoalsPosition.containsKey(id);
 
@@ -813,7 +817,7 @@ public class MOcean implements IRemoteOcean {
 	 *            the point.
 	 * @return true if the point is within 0:height and 0:width-1
 	 */
-	protected boolean isValid(Point p) {
+	protected boolean isValid(Point p) throws RemoteException {
 		boolean b = p != null && p.x >= 0 && p.y >= 0 && p.x < width && p.y < height;
 		if (!b) {
 			b = false;
@@ -827,7 +831,7 @@ public class MOcean implements IRemoteOcean {
 	 */
 	@Override
 	// no need to synch this, it's final!
-	public int getHeight() {
+	public int getHeight() throws RemoteException {
 		return height;
 	}
 
@@ -837,7 +841,7 @@ public class MOcean implements IRemoteOcean {
 	 */
 	@Override
 	// no need to synch this, it's final!
-	public int getWidth() {
+	public int getWidth() throws RemoteException {
 		return width;
 	}
 
@@ -846,7 +850,7 @@ public class MOcean implements IRemoteOcean {
 	 */
 	@Override
 	// no need to synch this, it's final!
-	public Point getWharf() {
+	public Point getWharf() throws RemoteException {
 		return new Point(wharf);
 	}
 
@@ -855,7 +859,7 @@ public class MOcean implements IRemoteOcean {
 	 */
 	@Override
 	// no need to synch this, it's final!
-	public Point getSpawningArea() {
+	public Point getSpawningArea() throws RemoteException {
 		return reproducingZone;
 	}
 

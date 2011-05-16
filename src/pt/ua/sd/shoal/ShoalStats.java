@@ -4,6 +4,7 @@
 package pt.ua.sd.shoal;
 
 import java.awt.Point;
+import java.io.Serializable;
 
 /**
  * Combined state information of a given Shoal
@@ -11,7 +12,9 @@ import java.awt.Point;
  * @author André Prata
  * @author Eriksson Monteiro
  */
-public class ShoalStats {
+public class ShoalStats implements Serializable {
+	private static final long serialVersionUID = -2115906958356771184L;
+
 	public enum INTERNAL_STATE_SCHOOL {
 		spawning, feeding, trapped_by_the_net
 	}

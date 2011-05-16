@@ -4,6 +4,7 @@
 package pt.ua.sd.diroper;
 
 import java.awt.Point;
+import java.rmi.RemoteException;
 import java.util.LinkedList;
 
 import pt.ua.sd.boat.BoatId;
@@ -14,7 +15,6 @@ import pt.ua.sd.communication.todiroper.FishingDoneMessage;
 import pt.ua.sd.communication.todiroper.LifeEndMessage;
 import pt.ua.sd.communication.todiroper.RequestHelpMessage;
 import pt.ua.sd.communication.todiroper.SeasonEndMessage;
-import pt.ua.sd.diroper.rmi.IRemoteDirOper;
 import pt.ua.sd.log.ILogger;
 
 /**
@@ -23,7 +23,7 @@ import pt.ua.sd.log.ILogger;
  * @author André Prata
  * @author Eriksson Monteiro
  */
-public class MDirOper implements IRemoteDirOper {
+public class MDirOper implements ICompleteDirOper {
 
 	protected final int nshoals;
 	protected final int nboats;
@@ -74,7 +74,7 @@ public class MDirOper implements IRemoteDirOper {
 	 * @see IDirOperBoat#backAtWharf(BoatId, int)
 	 */
 	@Override
-	public void backAtWharf(BoatId id, int stored) {
+	public void backAtWharf(BoatId id, int stored) throws RemoteException {
 		int logTick;
 
 		synchronized (this) {
@@ -90,7 +90,7 @@ public class MDirOper implements IRemoteDirOper {
 	 * @see IDirOperBoat#fishingDone(BoatId)
 	 */
 	@Override
-	public void fishingDone(BoatId id) {
+	public void fishingDone(BoatId id) throws RemoteException {
 		int logTick;
 
 		synchronized (this) {
@@ -106,7 +106,7 @@ public class MDirOper implements IRemoteDirOper {
 	 * @see IDirOperShoal#endSeason()
 	 */
 	@Override
-	public void endSeason() {
+	public void endSeason() throws RemoteException {
 		int logTick;
 		String logMessage;
 
@@ -130,7 +130,7 @@ public class MDirOper implements IRemoteDirOper {
 	 * @see IDirOperShoal#endLife()
 	 */
 	@Override
-	public void endLife() {
+	public void endLife() throws RemoteException {
 		int logTick;
 		String logMessage;
 
@@ -154,7 +154,7 @@ public class MDirOper implements IRemoteDirOper {
 	 * @see IDirOperBoat#requestHelp(BoatId, Point)
 	 */
 	@Override
-	public void requestHelp(BoatId id, Point p) {
+	public void requestHelp(BoatId id, Point p) throws RemoteException {
 		int logTick;
 
 		synchronized (this) {
@@ -170,7 +170,7 @@ public class MDirOper implements IRemoteDirOper {
 	 * @see IDirOperBoat#boatFull(BoatId)
 	 */
 	@Override
-	public void boatFull(BoatId id) {
+	public void boatFull(BoatId id) throws RemoteException {
 		int logTick;
 
 		synchronized (this) {

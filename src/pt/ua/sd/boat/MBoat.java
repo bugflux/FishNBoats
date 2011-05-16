@@ -4,9 +4,9 @@
 package pt.ua.sd.boat;
 
 import java.awt.Point;
+import java.rmi.RemoteException;
 import java.util.LinkedList;
 
-import pt.ua.sd.boat.rmi.IRemoteBoat;
 import pt.ua.sd.communication.toboat.BoatMessage;
 import pt.ua.sd.communication.toboat.CastTheNetMessage;
 import pt.ua.sd.communication.toboat.ChangeCourseMessage;
@@ -25,7 +25,7 @@ import pt.ua.sd.shoal.IShoalBoat;
  * @author André Prata
  * @author Eriksson Monteiro
  */
-public class MBoat implements IRemoteBoat {
+public class MBoat implements ICompleteBoat {
 
 	protected final BoatId id;
 	protected LinkedList<BoatMessage> messages = new LinkedList<BoatMessage>();
@@ -77,7 +77,7 @@ public class MBoat implements IRemoteBoat {
 	 * @see IBoatDirOper#setToHighSea()
 	 */
 	@Override
-	public void setToHighSea() {
+	public void setToHighSea() throws RemoteException {
 		int logTick;
 
 		synchronized (this) {
@@ -93,7 +93,7 @@ public class MBoat implements IRemoteBoat {
 	 * @see IBoatDirOper#returnToWharf()
 	 */
 	@Override
-	public void returnToWharf() {
+	public void returnToWharf() throws RemoteException {
 		int logTick;
 
 		synchronized (this) {
@@ -109,7 +109,7 @@ public class MBoat implements IRemoteBoat {
 	 * @see IBoatHelper#changeCourse(Point)
 	 */
 	@Override
-	public void changeCourse(Point p) {
+	public void changeCourse(Point p) throws RemoteException {
 		int logTick;
 
 		synchronized (this) {
@@ -125,7 +125,7 @@ public class MBoat implements IRemoteBoat {
 	 * @see IBoatDirOper#helpRequestServed(IBoatHelper)
 	 */
 	@Override
-	public void helpRequestServed(IBoatHelper id) {
+	public void helpRequestServed(IBoatHelper id) throws RemoteException {
 		int logTick;
 
 		synchronized (this) {
@@ -141,7 +141,7 @@ public class MBoat implements IRemoteBoat {
 	 * @see IBoatHelper#releaseHelper()
 	 */
 	@Override
-	public void releaseHelper() {
+	public void releaseHelper() throws RemoteException {
 		int logTick;
 
 		synchronized (this) {
@@ -157,7 +157,7 @@ public class MBoat implements IRemoteBoat {
 	 * @see IBoatHelper#castTheNet(IShoalBoat)
 	 */
 	@Override
-	public void castTheNet(IShoalBoat s) {
+	public void castTheNet(IShoalBoat s) throws RemoteException {
 		int logTick;
 
 		synchronized (this) {
@@ -173,7 +173,7 @@ public class MBoat implements IRemoteBoat {
 	 * @see IBoatDirOper#lifeEnd()
 	 */
 	@Override
-	public void lifeEnd() {
+	public void lifeEnd() throws RemoteException {
 		int logTick;
 
 		synchronized (this) {

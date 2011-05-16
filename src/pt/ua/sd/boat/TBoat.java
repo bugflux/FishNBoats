@@ -4,6 +4,7 @@
 package pt.ua.sd.boat;
 
 import java.awt.Point;
+import java.rmi.RemoteException;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -53,9 +54,10 @@ public class TBoat extends Thread {
 	 *            This boat's stats
 	 * @param monitor
 	 *            the monitor of this boat
+	 * @throws RemoteException 
 	 * 
 	 */
-	public TBoat(BoatStats stats, int period, IDirOperBoat diroper, IOceanBoat ocean, IBoat monitor) {
+	public TBoat(BoatStats stats, int period, IDirOperBoat diroper, IOceanBoat ocean, IBoat monitor) throws RemoteException {
 		this.diroper = diroper;
 		this.ocean = ocean;
 		this.monitor = monitor;
@@ -69,6 +71,15 @@ public class TBoat extends Thread {
 
 	@Override
 	public void run() {
+		try {
+			run2();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void run2() throws RemoteException {
 		BoatMessage popMsg;
 		boolean lifeEnd = false;
 		boolean seasonEnd = false;
@@ -185,7 +196,7 @@ public class TBoat extends Thread {
 	 * Casts the net on this shoal to catch it. The catch goes to the other guy.
 	 * I, the helper, automatically switch to searching_for_fish state.
 	 */
-	protected void castTheNet(IShoalBoat s) {
+	protected void castTheNet(IShoalBoat s) throws RemoteException {
 		s.castTheNet();
 		s.retrieveTheNet();
 		conditionalResetState();
@@ -195,7 +206,7 @@ public class TBoat extends Thread {
 	 * Sets the boat to high sea. What happens is that the boat starts searching
 	 * for fish like it was already in high sea (so changing the state).
 	 */
-	protected void setToHighSea() {
+	protected void setToHighSea() throws RemoteException {
 		changeState(INTERNAL_STATE_BOAT.searching_for_fish);
 		// searchFish();
 	}
@@ -204,7 +215,7 @@ public class TBoat extends Thread {
 	 * Searches for fish in the nearby cell. If fish is found, changes the state
 	 * to tracking_a_school and sends a help request to the DirOper.
 	 */
-	protected void searchFish() {
+	protected void searchFish() throws RemoteException {
 		List<Point> shoal = ocean.getRadar(stats.getId());
 		Point follow;
 
@@ -229,7 +240,7 @@ public class TBoat extends Thread {
 	 * @param p
 	 *            the point the companion should be at.
 	 */
-	protected void joinCompanion(Point p) {
+	protected void joinCompanion(Point p) throws RemoteException {
 		changeState(INTERNAL_STATE_BOAT.joining_a_companion);
 		changePosition(p);
 	}
@@ -240,7 +251,7 @@ public class TBoat extends Thread {
 	 * @param helper
 	 *            the Boat that is joining.
 	 */
-	protected void trackSchool(IBoatHelper helper) {
+	protected void trackSchool(IBoatHelper helper) throws RemoteException {
 		changeState(INTERNAL_STATE_BOAT.tracking_a_school);
 
 		// attempt to join with companion right away. if not possible, track
@@ -284,7 +295,7 @@ public class TBoat extends Thread {
 	/**
 	 * Moves this boat to wharf. This has an internal l
 	 */
-	protected void returnToWharf() {
+	protected void returnToWharf() throws RemoteException {
 		if (changePosition(oceanWharf)) {
 			changeState(INTERNAL_STATE_BOAT.at_the_wharf);
 			diroper.backAtWharf(stats.getId(), stats.getCatch());
@@ -296,7 +307,7 @@ public class TBoat extends Thread {
 	 * This resets the state after main operations. If the boat is full, the
 	 * state is set to boat_full. If not, searching_for_fish.
 	 */
-	protected void conditionalResetState() {
+	protected void conditionalResetState() throws RemoteException {
 		if (stats.isFull()) {
 			changeState(INTERNAL_STATE_BOAT.boat_full);
 		} else {
@@ -313,7 +324,7 @@ public class TBoat extends Thread {
 	 * @return true if the desired position is now the current position, false
 	 *         otherwise.
 	 */
-	protected boolean changePosition(Point p) {
+	protected boolean changePosition(Point p) throws RemoteException {
 		stats.setPosition(ocean.tryMoveBoat(stats.getId(), p));
 		return p.equals(stats.getPosition());
 	}
@@ -324,7 +335,7 @@ public class TBoat extends Thread {
 	 * @param s
 	 *            the state to set to.
 	 */
-	protected void changeState(INTERNAL_STATE_BOAT s) {
+	protected void changeState(INTERNAL_STATE_BOAT s) throws RemoteException {
 		if (stats.getState() != s) {
 			stats.setState(s);
 			ocean.setBoatState(stats.getId(), stats.getState());
@@ -337,7 +348,7 @@ public class TBoat extends Thread {
 	 * @param store
 	 *            the current catch count.
 	 */
-	protected void changeCatch(int store) {
+	protected void changeCatch(int store) throws RemoteException {
 		if (stats.getCatch() != store) {
 			stats.setCatch(store);
 			ocean.setBoatCatch(stats.getId(), stats.getCatch());

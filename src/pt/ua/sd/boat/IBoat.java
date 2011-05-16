@@ -3,6 +3,9 @@
  */
 package pt.ua.sd.boat;
 
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+
 import pt.ua.sd.communication.toboat.BoatMessage;
 
 /**
@@ -12,7 +15,7 @@ import pt.ua.sd.communication.toboat.BoatMessage;
  * @author André Prata
  * @author Eriksson Monteiro
  */
-public interface IBoat {
+public interface IBoat extends Remote {
 
 	/**
 	 * Retrieve the last message for this boat.
@@ -22,5 +25,5 @@ public interface IBoat {
 	 *            instead of returning a NoActionMessage.
 	 * @return return the most recent message to this boat.
 	 */
-	public BoatMessage popMsg(boolean blocking);
+	public BoatMessage popMsg(boolean blocking) throws RemoteException;
 }

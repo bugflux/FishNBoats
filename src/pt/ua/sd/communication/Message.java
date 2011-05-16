@@ -3,13 +3,17 @@
  */
 package pt.ua.sd.communication;
 
+import java.io.Serializable;
+
 /**
  * Message is a common class from which all specialized Messages derive.
  * 
  * @author André Prata
  * @author Eriksson Monteiro
  */
-public abstract class Message {
+@SuppressWarnings("serial")
+public abstract class Message implements Serializable {
+
 	public interface MESSAGE_TYPE {
 		public int getPriority();
 	};

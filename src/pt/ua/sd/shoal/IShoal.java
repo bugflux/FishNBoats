@@ -3,6 +3,9 @@
  */
 package pt.ua.sd.shoal;
 
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+
 import pt.ua.sd.communication.toshoal.ShoalMessage;
 
 /**
@@ -11,7 +14,7 @@ import pt.ua.sd.communication.toshoal.ShoalMessage;
  * @author André Prata
  * @author Eriksson Monteiro
  */
-public interface IShoal {
+public interface IShoal extends Remote {
 
 	/**
 	 * Retrieve the next message for this shoal to process.
@@ -22,11 +25,11 @@ public interface IShoal {
 	 *            returned.
 	 * @return ShoalMessge message retrieved
 	 */
-	public ShoalMessage popMsg(boolean blocking);
+	public ShoalMessage popMsg(boolean blocking) throws RemoteException;
 
 	/**
 	 * This method releases the boats, for the Shoal is accepting that it has
 	 * been trapped.
 	 */
-	public void isTrapped(int amount);
+	public void isTrapped(int amount) throws RemoteException;
 }

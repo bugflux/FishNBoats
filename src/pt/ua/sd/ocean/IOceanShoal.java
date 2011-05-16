@@ -4,6 +4,8 @@
 package pt.ua.sd.ocean;
 
 import java.awt.Point;
+import java.rmi.Remote;
+import java.rmi.RemoteException;
 
 import pt.ua.sd.shoal.ShoalId;
 import pt.ua.sd.shoal.ShoalStats;
@@ -14,7 +16,7 @@ import pt.ua.sd.shoal.ShoalStats;
  * @author André Prata
  * @author Eriksson Monteiro
  */
-public interface IOceanShoal {
+public interface IOceanShoal extends Remote {
 
 	/**
 	 * Attempt to move shoal ShoalId one square in the direction of point p.
@@ -31,7 +33,7 @@ public interface IOceanShoal {
 	 *            the destination point.
 	 * @return the new coordinate for boat id.
 	 */
-	public Point tryMoveShoal(ShoalId id, Point p);
+	public Point tryMoveShoal(ShoalId id, Point p) throws RemoteException;
 
 	/**
 	 * Update the state of a given shoal.
@@ -41,7 +43,7 @@ public interface IOceanShoal {
 	 * @param state
 	 *            the new state to set.
 	 */
-	public void setShoalState(ShoalId id, ShoalStats.INTERNAL_STATE_SCHOOL state);
+	public void setShoalState(ShoalId id, ShoalStats.INTERNAL_STATE_SCHOOL state) throws RemoteException;
 
 	/**
 	 * Update the size of a shoal.
@@ -51,7 +53,7 @@ public interface IOceanShoal {
 	 * @param size
 	 *            the size of the shoal.
 	 */
-	public void setShoalSize(ShoalId id, int size);
+	public void setShoalSize(ShoalId id, int size) throws RemoteException;
 
 	/**
 	 * Get the number of lines for this ocean instance.
@@ -59,7 +61,7 @@ public interface IOceanShoal {
 	 * @return the number of lines (nlines), or y coordinates, that can be
 	 *         occupied, from 0 to nlines-1
 	 */
-	public int getHeight();
+	public int getHeight() throws RemoteException;
 
 	/**
 	 * Get the number of columns for this ocean instance.
@@ -67,7 +69,7 @@ public interface IOceanShoal {
 	 * @return the number of columns (ncolumns), or x coordinates, that can be
 	 *         occupied, from 0 to ncolumns-1
 	 */
-	public int getWidth();
+	public int getWidth() throws RemoteException;
 
 	/**
 	 * Get the spawning area of this ocean.
@@ -75,5 +77,5 @@ public interface IOceanShoal {
 	 * @return the Point that indicates the spawning area location in this
 	 *         ocean.
 	 */
-	public Point getSpawningArea();
+	public Point getSpawningArea() throws RemoteException;
 }

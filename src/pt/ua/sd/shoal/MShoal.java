@@ -3,13 +3,14 @@
  */
 package pt.ua.sd.shoal;
 
+import java.rmi.RemoteException;
+
 import pt.ua.sd.communication.toshoal.GoToFeedingAreaMessage;
 import pt.ua.sd.communication.toshoal.NoActionMessage;
 import pt.ua.sd.communication.toshoal.RetrieveTheNetMessage;
 import pt.ua.sd.communication.toshoal.ShoalMessage;
 import pt.ua.sd.communication.toshoal.TrappedByTheNetMessage;
 import pt.ua.sd.log.ILogger;
-import pt.ua.sd.shoal.rmi.IRemoteShoal;
 
 /**
  * Point of communication with the Shoals
@@ -17,7 +18,7 @@ import pt.ua.sd.shoal.rmi.IRemoteShoal;
  * @author André Prata
  * @author Eriksson Monteiro
  */
-public class MShoal implements IRemoteShoal {
+public class MShoal implements ICompleteShoal {
 
 	protected final ShoalId id;
 	protected final int ndiroper;
@@ -78,7 +79,7 @@ public class MShoal implements IRemoteShoal {
 	 * @see IShoalDirOper#seasonBegin()
 	 */
 	@Override
-	public void seasonBegin() {
+	public void seasonBegin() throws RemoteException {
 		int logTick;
 
 		synchronized (this) {
@@ -108,7 +109,7 @@ public class MShoal implements IRemoteShoal {
 	 * @see IShoalBoat#castTheNet()
 	 */
 	@Override
-	public void castTheNet() {
+	public void castTheNet() throws RemoteException {
 		int logTick;
 		String logMessage;
 
@@ -140,7 +141,7 @@ public class MShoal implements IRemoteShoal {
 	 * @see IShoal#isTrapped(int)
 	 */
 	@Override
-	public void isTrapped(int amount) {
+	public void isTrapped(int amount) throws RemoteException {
 		int logTick;
 
 		synchronized (this) {
@@ -166,7 +167,7 @@ public class MShoal implements IRemoteShoal {
 	 * @see IShoalBoat#retrieveTheNet()
 	 */
 	@Override
-	public int retrieveTheNet() {
+	public int retrieveTheNet() throws RemoteException {
 		int logTick;
 		String logMessage;
 

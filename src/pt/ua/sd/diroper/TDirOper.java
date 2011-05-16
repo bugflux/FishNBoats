@@ -4,6 +4,7 @@
 package pt.ua.sd.diroper;
 
 import java.awt.Point;
+import java.rmi.RemoteException;
 import java.util.HashMap;
 
 import pt.ua.sd.boat.BoatId;
@@ -51,6 +52,15 @@ public class TDirOper extends Thread {
 
 	@Override
 	public void run() {
+		try {
+			run2();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void run2() throws RemoteException {
 		boolean lifeEnd = false;
 		boolean lifeEnding = false;
 		DirOperMessage popMsg;
@@ -145,7 +155,7 @@ public class TDirOper extends Thread {
 	 * Set boats to high sea and change state to organising_the_catch. Clears
 	 * the boatsAtWharf count.
 	 */
-	protected void startCampaign() {
+	protected void startCampaign() throws RemoteException {
 		for (IShoalDirOper s : shoals) {
 			s.seasonBegin();
 		}
@@ -164,7 +174,7 @@ public class TDirOper extends Thread {
 	 * @param stored
 	 *            how much fish it had stored.
 	 */
-	protected void newBoatAtWharf(BoatId id, int stored) {
+	protected void newBoatAtWharf(BoatId id, int stored) throws RemoteException {
 		totalCatch += stored;
 		boatsAtWharf.put(id, true);
 
@@ -195,7 +205,7 @@ public class TDirOper extends Thread {
 	/**
 	 * Set remaining boats to wharf.
 	 */
-	protected void setBoatsToWharf() {
+	protected void setBoatsToWharf() throws RemoteException {
 		for (IBoatDirOper b : boats) {
 			if (!boatsAtWharf.containsKey(b.getId()) && !assignedCompanions.containsValue(b.getId())) {
 				b.returnToWharf();
@@ -210,7 +220,7 @@ public class TDirOper extends Thread {
 	 * @param id
 	 *            the id of the boat to set to wharf.
 	 */
-	protected void setBoatToWharf(BoatId id) {
+	protected void setBoatToWharf(BoatId id) throws RemoteException {
 		if (!assignedCompanions.containsValue(id) && !boatsAtWharf.containsKey(id)) {
 			boats[id.getBoat()].returnToWharf();
 			boatsAtWharf.put(id, false);
@@ -221,7 +231,7 @@ public class TDirOper extends Thread {
 	 * Determine the end of a season. If there still are boats to arrive, wait
 	 * for them, otherwise effectively end the campaign.
 	 */
-	protected void seasonEnd() {
+	protected void seasonEnd() throws RemoteException {
 		if (boatsConfirmedAtWharf() != boats.length) {
 			changeState(INTERNAL_STATE_DIROPER.waiting_for_boats);
 		} else {
@@ -237,7 +247,7 @@ public class TDirOper extends Thread {
 	 * @param p
 	 *            the point where the boat should be at.
 	 */
-	protected void assignCompanion(BoatId id, Point p) {
+	protected void assignCompanion(BoatId id, Point p) throws RemoteException {
 		// don't hand help to boats that are expected to help others
 		// also if it's arriving at wharf, let him be!
 		if (!assignedCompanions.containsKey(id) && !assignedCompanions.containsValue(id)) {
@@ -268,7 +278,7 @@ public class TDirOper extends Thread {
 	/**
 	 * Alert all boats that life is ending.
 	 */
-	protected void endLife() {
+	protected void endLife() throws RemoteException {
 		for (IBoatDirOper b : boats) {
 			b.lifeEnd();
 		}
@@ -278,7 +288,7 @@ public class TDirOper extends Thread {
 	 * Effectively end a campaign. Means the state is changed to start a new
 	 * campaign.
 	 */
-	protected void endCampaign() {
+	protected void endCampaign() throws RemoteException {
 		changeState(INTERNAL_STATE_DIROPER.starting_a_campaign);
 		monitor.clearMessages();
 		boatsAtWharf.clear();
@@ -291,7 +301,7 @@ public class TDirOper extends Thread {
 	 * @param state
 	 *            the new local state.
 	 */
-	protected void changeState(INTERNAL_STATE_DIROPER state) {
+	protected void changeState(INTERNAL_STATE_DIROPER state) throws RemoteException {
 		if (stats.getState() != state) {
 			stats.setState(state);
 			ocean.setDirOperState(stats.getId(), stats.getState());
