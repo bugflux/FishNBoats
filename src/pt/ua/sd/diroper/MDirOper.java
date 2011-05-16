@@ -14,6 +14,7 @@ import pt.ua.sd.communication.todiroper.FishingDoneMessage;
 import pt.ua.sd.communication.todiroper.LifeEndMessage;
 import pt.ua.sd.communication.todiroper.RequestHelpMessage;
 import pt.ua.sd.communication.todiroper.SeasonEndMessage;
+import pt.ua.sd.diroper.rmi.IRemoteDirOper;
 import pt.ua.sd.log.ILogger;
 
 /**
@@ -22,7 +23,7 @@ import pt.ua.sd.log.ILogger;
  * @author André Prata
  * @author Eriksson Monteiro
  */
-public class MDirOper implements IDirOper, IDirOperBoat, IDirOperShoal {
+public class MDirOper implements IRemoteDirOper {
 
 	protected final int nshoals;
 	protected final int nboats;

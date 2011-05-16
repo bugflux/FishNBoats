@@ -8,13 +8,15 @@ import java.util.Map;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import pt.ua.sd.log.rmi.IRemoteLogger;
+
 /**
  * Point of synchronization to orderly record log messages
  * 
  * @author André Prata
  * @author Eriksson Monteiro
  */
-public class MLog implements ILogger {
+public class MLog implements IRemoteLogger {
 
 	protected static MLog instance;
 	protected Map<Integer, String> list;

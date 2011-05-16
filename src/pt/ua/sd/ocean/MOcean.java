@@ -16,6 +16,7 @@ import pt.ua.sd.diroper.DirOperId;
 import pt.ua.sd.diroper.DirOperStats;
 import pt.ua.sd.diroper.DirOperStats.INTERNAL_STATE_DIROPER;
 import pt.ua.sd.log.ILogger;
+import pt.ua.sd.ocean.rmi.IRemoteOcean;
 import pt.ua.sd.shoal.IShoalBoat;
 import pt.ua.sd.shoal.ShoalId;
 import pt.ua.sd.shoal.ShoalStats;
@@ -26,7 +27,7 @@ import pt.ua.sd.shoal.ShoalStats;
  * @author André Prata
  * @author Eriksson Monteiro
  */
-public class MOcean implements IOceanBoat, IOceanShoal, IOceanDirOper {
+public class MOcean implements IRemoteOcean {
 
 	protected final int height, width;
 	protected final int maxShoalPerSquare, maxBoatsPerSquare;

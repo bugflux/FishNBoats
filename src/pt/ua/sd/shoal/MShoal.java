@@ -9,6 +9,7 @@ import pt.ua.sd.communication.toshoal.RetrieveTheNetMessage;
 import pt.ua.sd.communication.toshoal.ShoalMessage;
 import pt.ua.sd.communication.toshoal.TrappedByTheNetMessage;
 import pt.ua.sd.log.ILogger;
+import pt.ua.sd.shoal.rmi.IRemoteShoal;
 
 /**
  * Point of communication with the Shoals
@@ -16,7 +17,7 @@ import pt.ua.sd.log.ILogger;
  * @author André Prata
  * @author Eriksson Monteiro
  */
-public class MShoal implements IShoal, IShoalBoat, IShoalDirOper {
+public class MShoal implements IRemoteShoal {
 
 	protected final ShoalId id;
 	protected final int ndiroper;

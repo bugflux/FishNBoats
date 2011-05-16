@@ -6,6 +6,7 @@ package pt.ua.sd.boat;
 import java.awt.Point;
 import java.util.LinkedList;
 
+import pt.ua.sd.boat.rmi.IRemoteBoat;
 import pt.ua.sd.communication.toboat.BoatMessage;
 import pt.ua.sd.communication.toboat.CastTheNetMessage;
 import pt.ua.sd.communication.toboat.ChangeCourseMessage;
@@ -24,7 +25,7 @@ import pt.ua.sd.shoal.IShoalBoat;
  * @author André Prata
  * @author Eriksson Monteiro
  */
-public class MBoat implements IBoat, IBoatDirOper, IBoatHelper {
+public class MBoat implements IRemoteBoat {
 
 	protected final BoatId id;
 	protected LinkedList<BoatMessage> messages = new LinkedList<BoatMessage>();
