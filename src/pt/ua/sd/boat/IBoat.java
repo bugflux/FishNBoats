@@ -3,6 +3,7 @@
  */
 package pt.ua.sd.boat;
 
+import pt.ua.sd.boat.rmi.IRemoteBoat;
 import pt.ua.sd.communication.toboat.BoatMessage;
 
 /**
@@ -12,7 +13,7 @@ import pt.ua.sd.communication.toboat.BoatMessage;
  * @author André Prata
  * @author Eriksson Monteiro
  */
-public interface IBoat {
+public interface IBoat extends IRemoteBoat {
 
 	/**
 	 * Retrieve the last message for this boat.

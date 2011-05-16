@@ -3,13 +3,15 @@
  */
 package pt.ua.sd.diroper;
 
+import pt.ua.sd.diroper.rmi.IRemoteDirOper;
+
 /**
  * Exposes DirOper communication interface to Shoals
  * 
  * @author André Prata
  * @author Eriksson Monteiro
  */
-public interface IDirOperShoal {
+public interface IDirOperShoal extends IRemoteDirOper {
 
 	/**
 	 * This is for the Shoal to inform the DirOper that it arrived to the

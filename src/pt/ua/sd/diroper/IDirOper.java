@@ -4,6 +4,7 @@
 package pt.ua.sd.diroper;
 
 import pt.ua.sd.communication.todiroper.DirOperMessage;
+import pt.ua.sd.diroper.rmi.IRemoteDirOper;
 
 /**
  * Exposes all methods that DirOpers should access in their monitors.
@@ -11,7 +12,7 @@ import pt.ua.sd.communication.todiroper.DirOperMessage;
  * @author André Prata
  * @author Eriksson Monteiro
  */
-public interface IDirOper {
+public interface IDirOper extends IRemoteDirOper {
 
 	/**
 	 * Retrieve the message that is at the head of the message FIFO. This method

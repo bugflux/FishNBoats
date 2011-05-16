@@ -5,6 +5,7 @@ package pt.ua.sd.boat;
 
 import java.awt.Point;
 
+import pt.ua.sd.boat.rmi.IRemoteBoat;
 import pt.ua.sd.shoal.IShoalBoat;
 
 /**
@@ -14,7 +15,7 @@ import pt.ua.sd.shoal.IShoalBoat;
  * @author André Prata
  * @author Eriksson Monteiro
  */
-public interface IBoatHelper {
+public interface IBoatHelper extends IRemoteBoat {
 
 	/**
 	 * Get the BoatId associated to this monitor.

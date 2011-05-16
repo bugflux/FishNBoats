@@ -3,13 +3,15 @@
  */
 package pt.ua.sd.shoal;
 
+import pt.ua.sd.shoal.rmi.IRemoteShoal;
+
 /**
  * Exposes Shoal methods to DirOpers
  * 
  * @author André Prata
  * @author Eriksson Monteiro
  */
-public interface IShoalDirOper {
+public interface IShoalDirOper extends IRemoteShoal {
 
 	/**
 	 * Informs the Shoal that the DirOpers are ready to proceed for the next
