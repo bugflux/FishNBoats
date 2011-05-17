@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.rmi.RemoteException;
 
 import pt.ua.sd.boat.BoatId;
 import pt.ua.sd.boat.BoatStats;
@@ -39,6 +40,15 @@ public class PortoAveiro {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		try {
+			start(args);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	private static void start(String[] args) throws RemoteException {
 		int nboats = 5, ncompanies = 2, nshoals = 5;
 		int boatPeriod = 333, shoalPeriod = 666;
 		int height = 11, width = 11;
@@ -80,13 +90,13 @@ public class PortoAveiro {
 		}
 
 		// Logger
-		MLog logger = MLog.getInstance();
+		MLog logger = new MLog();
 		TLogFlusher logFlusher = null;
 		if (logFile == null) {
-			logFlusher = new TLogFlusher(System.out);
+			logFlusher = new TLogFlusher(System.out, logger);
 		} else {
 			try {
-				logFlusher = new TLogFlusher(new FileOutputStream(logFile));
+				logFlusher = new TLogFlusher(new FileOutputStream(logFile), logger);
 			} catch (FileNotFoundException e) {
 				System.out.println("Error opening file for logging");
 				System.exit(-1);
