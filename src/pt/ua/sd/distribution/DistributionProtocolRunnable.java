@@ -6,9 +6,9 @@ package pt.ua.sd.distribution;
 import java.awt.Point;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
-import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.rmi.RMISecurityManager;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -53,7 +53,6 @@ import pt.ua.sd.shoal.TShoal;
  * @author Eriksson Monteiro
  */
 public class DistributionProtocolRunnable implements IProtocolRunnable {
-
 	protected Socket socket;
 	protected Acknowledge ack = new Acknowledge();
 
@@ -72,10 +71,12 @@ public class DistributionProtocolRunnable implements IProtocolRunnable {
 		assert socket != null;
 
 		try {
-			String thisMachine = InetAddress.getLocalHost().getHostAddress();
-			System.out.println("Detected ip address for this server: " + thisMachine);
+			if (System.getSecurityManager() == null) {
+				System.setSecurityManager(new RMISecurityManager());
+				System.out.println("Installed rmi security manager");
+			}
 
-			// fetch the dsitribution message
+			// fetch the distribution message
 			DistributionMessage distributionMessage = (DistributionMessage) ((IProtocolMessage) ProtocolEndPoint
 					.getMessageObject(socket)).getMessage();
 
@@ -83,11 +84,16 @@ public class DistributionProtocolRunnable implements IProtocolRunnable {
 			if (distributionMessage.getMsgType() == MESSAGE_TYPE.Start) {
 				StartMessage msg = (StartMessage) distributionMessage;
 				DistributionConfig config = msg.getConfig();
-				Registry registry = null;
+
+				Registry realRegistry = null;
+				IRmiRegistry remoteRegistry = null;
+
 				InetSocketAddress rmiAddr = null;
 				try {
 					rmiAddr = msg.getRmiRegistryAddress();
-					registry = LocateRegistry.getRegistry(rmiAddr.getAddress().getHostName(), rmiAddr.getPort());
+					System.out.println("Getting registry at " + rmiAddr.getAddress().getHostAddress());
+					realRegistry = LocateRegistry.getRegistry(rmiAddr.getAddress().getHostAddress(), rmiAddr.getPort());
+					remoteRegistry = (IRmiRegistry) realRegistry.lookup(IRmiRegistry.class.toString());
 				} catch (RemoteException e) {
 					// do nothing with this exception, it just means the
 					// registry could not be created, and that means that this
@@ -98,18 +104,30 @@ public class DistributionProtocolRunnable implements IProtocolRunnable {
 
 				case RmiServer: { // We'll use these brackets here just to avoid
 									// scope-name collisions
-					new RmiServer(msg.getRmiRegistryAddress().getPort());
+					new RmiServer(rmiAddr.getAddress().getHostAddress(), rmiAddr.getPort());
+
+					RmiRegistry tmpRmiRegistry = new RmiRegistry(rmiAddr.getAddress().getHostAddress(),
+							rmiAddr.getPort());
+
+					IRmiRegistry tmpRmiRegistryStub = (IRmiRegistry) UnicastRemoteObject.exportObject(tmpRmiRegistry,
+							rmiAddr.getPort() + 1);
+
+					Registry tmpLocalRegistry = LocateRegistry.getRegistry(rmiAddr.getPort());
+					tmpLocalRegistry.bind(IRmiRegistry.class.toString(), tmpRmiRegistryStub);
+
+					System.out.println("rmi registry created");
 					break;
 				}
 
 				case MLog: {
 					// just reference the monitor once.
 					// TODO: offer a reset!
-					MLog log = new MLog(); // actually unnecessary, since it's done next
+					MLog log = new MLog(); // actually unnecessary, since it's
+											// done next
 
 					// and register it
-					ILogger stub = (ILogger) UnicastRemoteObject.exportObject(log, rmiAddr.getPort());
-					registry.bind(ILogger.class.toString(), stub);
+					ILogger stub = (ILogger) UnicastRemoteObject.exportObject(log, msg.getPort());
+					remoteRegistry.bind(ILogger.class.toString(), stub);
 
 					// then create the flusher
 					String logName = msg.getConfig().getLogFile();
@@ -122,6 +140,8 @@ public class DistributionProtocolRunnable implements IProtocolRunnable {
 					TLogFlusher flusher = new TLogFlusher(file, log);
 					flusher.start();
 
+					System.out.println("mlog created");
+
 					break;
 				}
 
@@ -133,27 +153,33 @@ public class DistributionProtocolRunnable implements IProtocolRunnable {
 					Point wharf = new Point(0, 0);
 					Point reproducingZone = new Point(width - 1, height - 1);
 
-					ILogger log = (ILogger) registry.lookup(ILogger.class.toString());
+					ILogger log = (ILogger) realRegistry.lookup(ILogger.class.toString());
 					MOcean ocean = new MOcean(height, width, maxShoalPerSquare, maxBoatsPerSquare, wharf,
 							reproducingZone, log);
 
-					ICompleteOcean stub = (ICompleteOcean) UnicastRemoteObject.exportObject(ocean, rmiAddr.getPort());
-					registry.bind(ICompleteOcean.class.toString(), stub);
+					ICompleteOcean stub = (ICompleteOcean) UnicastRemoteObject.exportObject(ocean, msg.getPort());
+					remoteRegistry.bind(ICompleteOcean.class.toString(), stub);
+
+					System.out.println("mocean created");
+
 					break;
 				}
 
 				case MShoal: {
 					int nshoals = config.getNshoals();
 					int ndiroper = config.getNcompanies();
-					ILogger log = (ILogger) registry.lookup(ILogger.class.toString());
+					ILogger log = (ILogger) realRegistry.lookup(ILogger.class.toString());
 
 					for (int s = 0; s < nshoals; s++) {
 						ShoalId id = new ShoalId(s);
 						MShoal shoal = new MShoal(id, ndiroper, log);
 
-						ICompleteShoal stub = (ICompleteShoal) UnicastRemoteObject.exportObject(shoal, rmiAddr.getPort());
-						registry.bind(ICompleteShoal.class.toString() + String.valueOf(s), stub);
+						ICompleteShoal stub = (ICompleteShoal) UnicastRemoteObject.exportObject(shoal, msg.getPort());
+						remoteRegistry.bind(ICompleteShoal.class.toString() + String.valueOf(s), stub);
 					}
+
+					System.out.println("mshoal created");
+
 					break;
 				}
 
@@ -161,22 +187,26 @@ public class DistributionProtocolRunnable implements IProtocolRunnable {
 					int ndiroper = config.getNcompanies();
 					int nshoals = config.getNshoals();
 					int nboats = config.getNboats();
-					ILogger log = (ILogger) registry.lookup(ILogger.class.toString());
+					ILogger log = (ILogger) realRegistry.lookup(ILogger.class.toString());
 
 					for (int d = 0; d < ndiroper; d++) {
 						DirOperId id = new DirOperId(d);
 						MDirOper diroper = new MDirOper(id, nshoals, nboats, log);
 
-						ICompleteDirOper stub = (ICompleteDirOper) UnicastRemoteObject.exportObject(diroper, rmiAddr.getPort());
-						registry.bind(ICompleteDirOper.class.toString() + String.valueOf(d), stub);
+						ICompleteDirOper stub = (ICompleteDirOper) UnicastRemoteObject.exportObject(diroper,
+								msg.getPort());
+						remoteRegistry.bind(ICompleteDirOper.class.toString() + String.valueOf(d), stub);
 					}
+
+					System.out.println("mdiroper created");
+
 					break;
 				}
 
 				case MBoat: {
 					int ndiroper = config.getNcompanies();
 					int nboats = config.getNboats();
-					ILogger log = (ILogger) registry.lookup(ILogger.class.toString());
+					ILogger log = (ILogger) realRegistry.lookup(ILogger.class.toString());
 
 					for (int d = 0; d < ndiroper; d++) {
 						for (int b = 0; b < nboats; b++) {
@@ -184,10 +214,14 @@ public class DistributionProtocolRunnable implements IProtocolRunnable {
 
 							MBoat boat = new MBoat(id, log);
 
-							ICompleteBoat stub = (ICompleteBoat) UnicastRemoteObject.exportObject(boat, rmiAddr.getPort());
-							registry.bind(ICompleteBoat.class.toString() + String.valueOf(d) + String.valueOf(b), stub);
+							ICompleteBoat stub = (ICompleteBoat) UnicastRemoteObject.exportObject(boat, msg.getPort());
+							remoteRegistry.bind(ICompleteBoat.class.toString() + String.valueOf(d) + String.valueOf(b),
+									stub);
 						}
 					}
+
+					System.out.println("mboat created");
+
 					break;
 				}
 
@@ -201,13 +235,13 @@ public class DistributionProtocolRunnable implements IProtocolRunnable {
 					for (int d = 0; d < ndiroper; d++) {
 						for (int b = 0; b < nboats; b++) {
 							BoatId id = new BoatId(d, b);
-							BoatStats stats = new BoatStats(id, INTERNAL_STATE_BOAT.at_the_wharf, wharf,
-									capacity);
+							BoatStats stats = new BoatStats(id, INTERNAL_STATE_BOAT.at_the_wharf, wharf, capacity);
 
-							ICompleteDirOper diroper = (ICompleteDirOper) registry.lookup(ICompleteDirOper.class.toString()
-									+ String.valueOf(d));
-							ICompleteOcean ocean = (ICompleteOcean) registry.lookup(ICompleteOcean.class.toString());
-							ICompleteBoat mboat = (ICompleteBoat) registry.lookup(ICompleteBoat.class.toString()
+							ICompleteDirOper diroper = (ICompleteDirOper) realRegistry.lookup(ICompleteDirOper.class
+									.toString() + String.valueOf(d));
+							ICompleteOcean ocean = (ICompleteOcean) realRegistry
+									.lookup(ICompleteOcean.class.toString());
+							ICompleteBoat mboat = (ICompleteBoat) realRegistry.lookup(ICompleteBoat.class.toString()
 									+ String.valueOf(d) + String.valueOf(b));
 
 							ocean.addBoat(stats, wharf);
@@ -236,21 +270,23 @@ public class DistributionProtocolRunnable implements IProtocolRunnable {
 
 					for (int s = 0; s < nshoals; s++) {
 						ShoalId id = new ShoalId(s);
-						ShoalStats stats = new ShoalStats(id, INTERNAL_STATE_SCHOOL.spawning, reproduzingZone, size, minDetectable);
+						ShoalStats stats = new ShoalStats(id, INTERNAL_STATE_SCHOOL.spawning, reproduzingZone, size,
+								minDetectable);
 
 						ICompleteDirOper[] diroper = new ICompleteDirOper[ndiroper];
 						for (int d = 0; d < ndiroper; d++) {
-							diroper[d] = (ICompleteDirOper) registry.lookup(ICompleteDirOper.class.toString()
+							diroper[d] = (ICompleteDirOper) realRegistry.lookup(ICompleteDirOper.class.toString()
 									+ String.valueOf(d));
 						}
 
-						ICompleteOcean ocean = (ICompleteOcean) registry.lookup(ICompleteOcean.class.toString());
-						ICompleteShoal monitor = (ICompleteShoal) registry.lookup(ICompleteShoal.class.toString()
+						ICompleteOcean ocean = (ICompleteOcean) realRegistry.lookup(ICompleteOcean.class.toString());
+						ICompleteShoal monitor = (ICompleteShoal) realRegistry.lookup(ICompleteShoal.class.toString()
 								+ String.valueOf(s));
 
-						ICompleteShoal stub = (ICompleteShoal) registry.lookup(ICompleteShoal.class.toString() + String.valueOf(s));
+						ICompleteShoal stub = (ICompleteShoal) realRegistry.lookup(ICompleteShoal.class.toString()
+								+ String.valueOf(s));
 						ocean.addShoal(stats, stub, reproduzingZone);
-						
+
 						TShoal shoal = new TShoal(stats, period, seasonMoves, nCampaigns, monitor, ocean, diroper,
 								growing_factor, eco_system_capacity, maxCatchPercentage);
 						shoal.start();
@@ -265,18 +301,19 @@ public class DistributionProtocolRunnable implements IProtocolRunnable {
 
 					ICompleteShoal[] shoals = new ICompleteShoal[nshoals];
 					for (int s = 0; s < nshoals; s++) {
-						shoals[s] = (ICompleteShoal) registry.lookup(ICompleteShoal.class.toString() + String.valueOf(s));
+						shoals[s] = (ICompleteShoal) realRegistry.lookup(ICompleteShoal.class.toString()
+								+ String.valueOf(s));
 					}
 
 					for (int d = 0; d < ndiroper; d++) {
 						ICompleteBoat[] boats = new ICompleteBoat[nboats];
 						for (int b = 0; b < nboats; b++) {
-							boats[b] = (ICompleteBoat) registry.lookup(ICompleteBoat.class.toString() + String.valueOf(d)
-									+ String.valueOf(b));
+							boats[b] = (ICompleteBoat) realRegistry.lookup(ICompleteBoat.class.toString()
+									+ String.valueOf(d) + String.valueOf(b));
 						}
-						ICompleteOcean ocean = (ICompleteOcean) registry.lookup(ICompleteOcean.class.toString());
-						ICompleteDirOper monitor = (ICompleteDirOper) registry.lookup(ICompleteDirOper.class.toString()
-								+ String.valueOf(d));
+						ICompleteOcean ocean = (ICompleteOcean) realRegistry.lookup(ICompleteOcean.class.toString());
+						ICompleteDirOper monitor = (ICompleteDirOper) realRegistry.lookup(ICompleteDirOper.class
+								.toString() + String.valueOf(d));
 
 						DirOperId id = new DirOperId(d);
 						DirOperStats stats = new DirOperStats(INTERNAL_STATE_DIROPER.starting_a_campaign, id);

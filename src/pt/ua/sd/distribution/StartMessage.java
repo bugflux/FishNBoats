@@ -23,6 +23,7 @@ public class StartMessage extends DistributionMessage {
 	protected final Entity entity;
 	protected final DistributionConfig config;
 	protected final InetSocketAddress rmiRegistryAddress;
+	protected final int port;
 
 	/**
 	 * Create a new StartMessage with distribution configuration.
@@ -30,17 +31,25 @@ public class StartMessage extends DistributionMessage {
 	 * @param config
 	 *            the running configurations
 	 */
-	public StartMessage(DistributionConfig config, Entity entity, InetSocketAddress rmiRegistryAddress) {
+	public StartMessage(DistributionConfig config, Entity entity, int port, InetSocketAddress rmiRegistryAddress) {
 		this.config = config;
 		this.entity = entity;
 		this.rmiRegistryAddress = rmiRegistryAddress;
+		this.port = port;
 	}
 
 	/**
-	 * @return the rmiRegistryAddress
+	 * @return the entity
 	 */
 	public Entity getEntity() {
 		return this.entity;
+	}
+
+	/**
+	 * @return the port
+	 */
+	public int getPort() {
+		return this.port;
 	}
 
 	/**

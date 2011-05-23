@@ -41,60 +41,60 @@ public class DistributionClient {
 		Socket s;
 		DistributionConfig config = new DistributionConfig();
 		
-		String rmiserveraddress = "127.0.0.1"; int rmiserverport = 22140;
-		String mlogserveaddress = "127.0.0.1";
-		String moceanseraddress = "127.0.0.1";
-		String mshoalseraddress = "127.0.0.1";
-		String mdiropersaddress = "127.0.0.1";
-		String mboatservaddress = "127.0.0.1";
-		String tboatservaddress = "127.0.0.1";
-		String tshoalseraddress = "127.0.0.1";
-		String tdiropersaddress = "127.0.0.1";
+		String rmiserveraddress = "192.168.8.171"; int rmiserverport = 22145; // this and the next port will be used!
+		String mlogserveaddress = "192.168.8.171"; int mlogserveport = 22140; 
+		String moceanseraddress = "172.16.6.49"; int moceanserport = 22141;
+		String mshoalseraddress = "172.16.6.49"; int mshoalserport = 22142;
+		String mdiropersaddress = "172.16.6.49"; int mdiropersport = 22143;
+		String mboatservaddress = "172.16.6.49"; int mboatservport = 22144;
+		String tboatservaddress = "192.168.8.181";
+		String tshoalseraddress = "192.168.8.181";
+		String tdiropersaddress = "192.168.8.181";
 
 		try {
 			// start rmi server
 			InetSocketAddress rmi = new InetSocketAddress(rmiserveraddress, rmiserverport);
-			start = new StartMessage(config, Entity.RmiServer, rmi);
+			start = new StartMessage(config, Entity.RmiServer, 0, rmi);
 			s = new Socket(rmiserveraddress, DistributionConfig.DISTRIBUTION_SERVER_PORT);
 			Acknowledge.class.cast(ProtocolEndPoint.sendMessageObjectBlocking(s, start));
 			
 			// start mlog
-			start = new StartMessage(config, Entity.MLog, rmi);
+			start = new StartMessage(config, Entity.MLog, mlogserveport, rmi);
 			s = new Socket(mlogserveaddress, DistributionConfig.DISTRIBUTION_SERVER_PORT);
 			Acknowledge.class.cast(ProtocolEndPoint.sendMessageObjectBlocking(s, start));
 			
 			// start mocean
-			start = new StartMessage(config, Entity.MOcean, rmi);
+			start = new StartMessage(config, Entity.MOcean, moceanserport, rmi);
 			s = new Socket(moceanseraddress, DistributionConfig.DISTRIBUTION_SERVER_PORT);
 			Acknowledge.class.cast(ProtocolEndPoint.sendMessageObjectBlocking(s, start));
 
 			// start mshoal
-			start = new StartMessage(config, Entity.MShoal, rmi);
+			start = new StartMessage(config, Entity.MShoal, mshoalserport, rmi);
 			s = new Socket(mshoalseraddress, DistributionConfig.DISTRIBUTION_SERVER_PORT);
 			Acknowledge.class.cast(ProtocolEndPoint.sendMessageObjectBlocking(s, start));
 			
 			// start mdiroper
-			start = new StartMessage(config, Entity.MDirOper, rmi);
+			start = new StartMessage(config, Entity.MDirOper, mdiropersport, rmi);
 			s = new Socket(mdiropersaddress, DistributionConfig.DISTRIBUTION_SERVER_PORT);
 			Acknowledge.class.cast(ProtocolEndPoint.sendMessageObjectBlocking(s, start));
 			
 			// start mboat
-			start = new StartMessage(config, Entity.MBoat, rmi);
+			start = new StartMessage(config, Entity.MBoat, mboatservport, rmi);
 			s = new Socket(mboatservaddress, DistributionConfig.DISTRIBUTION_SERVER_PORT);
 			Acknowledge.class.cast(ProtocolEndPoint.sendMessageObjectBlocking(s, start));
 			
 			// start tboat
-			start = new StartMessage(config, Entity.TBoat, rmi);
+			start = new StartMessage(config, Entity.TBoat, 0, rmi);
 			s = new Socket(tboatservaddress, DistributionConfig.DISTRIBUTION_SERVER_PORT);
 			Acknowledge.class.cast(ProtocolEndPoint.sendMessageObjectBlocking(s, start));
 			
 			// start tshoal
-			start = new StartMessage(config, Entity.TShoal, rmi);
+			start = new StartMessage(config, Entity.TShoal, 0, rmi);
 			s = new Socket(tshoalseraddress, DistributionConfig.DISTRIBUTION_SERVER_PORT);
 			Acknowledge.class.cast(ProtocolEndPoint.sendMessageObjectBlocking(s, start));
 			
 			// start tdiroper
-			start = new StartMessage(config, Entity.TDirOper, rmi);
+			start = new StartMessage(config, Entity.TDirOper, 0, rmi);
 			s = new Socket(tdiropersaddress, DistributionConfig.DISTRIBUTION_SERVER_PORT);
 			Acknowledge.class.cast(ProtocolEndPoint.sendMessageObjectBlocking(s, start));
 
