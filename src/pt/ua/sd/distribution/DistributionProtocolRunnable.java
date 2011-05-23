@@ -175,7 +175,7 @@ public class DistributionProtocolRunnable implements IProtocolRunnable {
 						MShoal shoal = new MShoal(id, ndiroper, log);
 
 						ICompleteShoal stub = (ICompleteShoal) UnicastRemoteObject.exportObject(shoal, msg.getPort());
-						remoteRegistry.bind(ICompleteShoal.class.toString() + String.valueOf(s), stub);
+						remoteRegistry.bind(ICompleteShoal.class.toString() + "[" + String.valueOf(s) + "]", stub);
 					}
 
 					System.out.println("mshoal created");
@@ -195,7 +195,7 @@ public class DistributionProtocolRunnable implements IProtocolRunnable {
 
 						ICompleteDirOper stub = (ICompleteDirOper) UnicastRemoteObject.exportObject(diroper,
 								msg.getPort());
-						remoteRegistry.bind(ICompleteDirOper.class.toString() + String.valueOf(d), stub);
+						remoteRegistry.bind(ICompleteDirOper.class.toString() + "[" + String.valueOf(d) + "]", stub);
 					}
 
 					System.out.println("mdiroper created");
@@ -215,8 +215,8 @@ public class DistributionProtocolRunnable implements IProtocolRunnable {
 							MBoat boat = new MBoat(id, log);
 
 							ICompleteBoat stub = (ICompleteBoat) UnicastRemoteObject.exportObject(boat, msg.getPort());
-							remoteRegistry.bind(ICompleteBoat.class.toString() + String.valueOf(d) + String.valueOf(b),
-									stub);
+							remoteRegistry.bind(ICompleteBoat.class.toString() + "[" + String.valueOf(d) + "]["
+									+ String.valueOf(b) + "]", stub);
 						}
 					}
 
@@ -238,11 +238,11 @@ public class DistributionProtocolRunnable implements IProtocolRunnable {
 							BoatStats stats = new BoatStats(id, INTERNAL_STATE_BOAT.at_the_wharf, wharf, capacity);
 
 							ICompleteDirOper diroper = (ICompleteDirOper) realRegistry.lookup(ICompleteDirOper.class
-									.toString() + String.valueOf(d));
+									.toString() + "[" + String.valueOf(d) + "]");
 							ICompleteOcean ocean = (ICompleteOcean) realRegistry
 									.lookup(ICompleteOcean.class.toString());
 							ICompleteBoat mboat = (ICompleteBoat) realRegistry.lookup(ICompleteBoat.class.toString()
-									+ String.valueOf(d) + String.valueOf(b));
+									+ "[" + String.valueOf(d) + "][" + String.valueOf(b) + "]");
 
 							ocean.addBoat(stats, wharf);
 
@@ -276,15 +276,15 @@ public class DistributionProtocolRunnable implements IProtocolRunnable {
 						ICompleteDirOper[] diroper = new ICompleteDirOper[ndiroper];
 						for (int d = 0; d < ndiroper; d++) {
 							diroper[d] = (ICompleteDirOper) realRegistry.lookup(ICompleteDirOper.class.toString()
-									+ String.valueOf(d));
+									+ "[" + String.valueOf(d) + "]");
 						}
 
 						ICompleteOcean ocean = (ICompleteOcean) realRegistry.lookup(ICompleteOcean.class.toString());
 						ICompleteShoal monitor = (ICompleteShoal) realRegistry.lookup(ICompleteShoal.class.toString()
-								+ String.valueOf(s));
+								+ "[" + String.valueOf(s) + "]");
 
 						ICompleteShoal stub = (ICompleteShoal) realRegistry.lookup(ICompleteShoal.class.toString()
-								+ String.valueOf(s));
+								+ "[" + String.valueOf(s) + "]");
 						ocean.addShoal(stats, stub, reproduzingZone);
 
 						TShoal shoal = new TShoal(stats, period, seasonMoves, nCampaigns, monitor, ocean, diroper,
@@ -302,18 +302,18 @@ public class DistributionProtocolRunnable implements IProtocolRunnable {
 					ICompleteShoal[] shoals = new ICompleteShoal[nshoals];
 					for (int s = 0; s < nshoals; s++) {
 						shoals[s] = (ICompleteShoal) realRegistry.lookup(ICompleteShoal.class.toString()
-								+ String.valueOf(s));
+								+ "[" + String.valueOf(s) + "]");
 					}
 
 					for (int d = 0; d < ndiroper; d++) {
 						ICompleteBoat[] boats = new ICompleteBoat[nboats];
 						for (int b = 0; b < nboats; b++) {
 							boats[b] = (ICompleteBoat) realRegistry.lookup(ICompleteBoat.class.toString()
-									+ String.valueOf(d) + String.valueOf(b));
+									+ "[" + String.valueOf(d) + "][" + String.valueOf(b) + "]");
 						}
 						ICompleteOcean ocean = (ICompleteOcean) realRegistry.lookup(ICompleteOcean.class.toString());
 						ICompleteDirOper monitor = (ICompleteDirOper) realRegistry.lookup(ICompleteDirOper.class
-								.toString() + String.valueOf(d));
+								.toString() + "[" + String.valueOf(d) + "]");
 
 						DirOperId id = new DirOperId(d);
 						DirOperStats stats = new DirOperStats(INTERNAL_STATE_DIROPER.starting_a_campaign, id);
