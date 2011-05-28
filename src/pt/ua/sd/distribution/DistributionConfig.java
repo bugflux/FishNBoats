@@ -30,7 +30,17 @@ public class DistributionConfig implements Serializable {
 	protected int minShoalDetectable = 100;
 	protected int nCampaign = 3;
 	protected String logFile = "log.txt";
+        protected int nservers=5;
 
+        public int getNservers() {
+            return nservers;
+        }
+
+        public void setNservers(int nservers) {
+            this.nservers = nservers;
+        }
+        
+        
 	/**
 	 * @return the nboats
 	 */
