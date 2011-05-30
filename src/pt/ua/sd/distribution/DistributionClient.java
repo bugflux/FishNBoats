@@ -15,12 +15,10 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.Observable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import pt.ua.sd.distribution.StartMessage.Entity;
-import pt.ua.sd.gui.Faina;
 import pt.ua.sd.gui.IRemoteObserver;
 import pt.ua.sd.gui.RemoteObserver;
 import pt.ua.sd.network.Acknowledge;

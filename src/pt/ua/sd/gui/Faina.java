@@ -2,11 +2,11 @@ package pt.ua.sd.gui;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.RenderingHints;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.swing.JFileChooser;
 
 import pt.ua.sd.distribution.DistributionClient;

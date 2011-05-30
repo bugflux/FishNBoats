@@ -32,7 +32,6 @@ import pt.ua.sd.diroper.MDirOper;
 import pt.ua.sd.diroper.TDirOper;
 import pt.ua.sd.distribution.DistributionMessage.MESSAGE_TYPE;
 import pt.ua.sd.gui.IRemoteObserver;
-import pt.ua.sd.gui.RemoteObserver;
 import pt.ua.sd.log.ILogger;
 import pt.ua.sd.log.MLog;
 import pt.ua.sd.log.TLogFlusher;
@@ -130,7 +129,7 @@ public class DistributionProtocolRunnable implements IProtocolRunnable {
 					// TODO: offer a reset!
 					MLog log = new MLog(); // actually unnecessary, since it's
 											// done next
-                                        
+
 					// and register it
 					ILogger stub = (ILogger) UnicastRemoteObject.exportObject(log, msg.getPort());
 					remoteRegistry.bind(ILogger.class.toString(), stub);
@@ -147,19 +146,21 @@ public class DistributionProtocolRunnable implements IProtocolRunnable {
 					flusher.start();
 
 					System.out.println("mlog created");
-                                        final IRemoteObserver rmobserver = (IRemoteObserver) realRegistry.lookup(IRemoteObserver.class.toString());
-                                        Timer t = new Timer();
-                                        t.schedule(new TimerTask() {
-                                            @Override
-                                            public void run() {
-                                                try {
-                                                    rmobserver.notifyAlive(IRemoteObserver.SERVER_ID.log.ordinal());
-                                                } catch (RemoteException ex) {
-                                                    Logger.getLogger(DistributionProtocolRunnable.class.getName()).log(Level.SEVERE, null, ex);
-                                                }
-                                            }
-                                        }, 1000, 1000);   
-                                        
+					final IRemoteObserver rmobserver = (IRemoteObserver) realRegistry.lookup(IRemoteObserver.class
+							.toString());
+					Timer t = new Timer();
+					t.schedule(new TimerTask() {
+						@Override
+						public void run() {
+							try {
+								rmobserver.notifyAlive(IRemoteObserver.SERVER_ID.log.ordinal());
+							} catch (RemoteException ex) {
+								Logger.getLogger(DistributionProtocolRunnable.class.getName()).log(Level.SEVERE, null,
+										ex);
+							}
+						}
+					}, 1000, 1000);
+
 					break;
 				}
 
@@ -177,20 +178,22 @@ public class DistributionProtocolRunnable implements IProtocolRunnable {
 
 					ICompleteOcean stub = (ICompleteOcean) UnicastRemoteObject.exportObject(ocean, msg.getPort());
 					remoteRegistry.bind(ICompleteOcean.class.toString(), stub);
-                                        
+
 					System.out.println("mocean created");
-                                        final IRemoteObserver rmobserver = (IRemoteObserver) realRegistry.lookup(IRemoteObserver.class.toString());
-                                        Timer t = new Timer(true);
-                                        t.schedule(new TimerTask() {
-                                            @Override
-                                            public void run() {
-                                                try {
-                                                    rmobserver.notifyAlive(IRemoteObserver.SERVER_ID.ocean.ordinal());
-                                                } catch (RemoteException ex) {
-                                                    Logger.getLogger(DistributionProtocolRunnable.class.getName()).log(Level.SEVERE, null, ex);
-                                                }
-                                            }
-                                        }, 1000, 1000);
+					final IRemoteObserver rmobserver = (IRemoteObserver) realRegistry.lookup(IRemoteObserver.class
+							.toString());
+					Timer t = new Timer(true);
+					t.schedule(new TimerTask() {
+						@Override
+						public void run() {
+							try {
+								rmobserver.notifyAlive(IRemoteObserver.SERVER_ID.ocean.ordinal());
+							} catch (RemoteException ex) {
+								Logger.getLogger(DistributionProtocolRunnable.class.getName()).log(Level.SEVERE, null,
+										ex);
+							}
+						}
+					}, 1000, 1000);
 					break;
 				}
 
@@ -208,18 +211,20 @@ public class DistributionProtocolRunnable implements IProtocolRunnable {
 					}
 
 					System.out.println("mshoal created");
-                                        final IRemoteObserver rmobserver = (IRemoteObserver) realRegistry.lookup(IRemoteObserver.class.toString());
-                                        Timer t = new Timer();
-                                        t.schedule(new TimerTask() {
-                                            @Override
-                                            public void run() {
-                                                try {
-                                                    rmobserver.notifyAlive(IRemoteObserver.SERVER_ID.shoal.ordinal());
-                                                } catch (RemoteException ex) {
-                                                    Logger.getLogger(DistributionProtocolRunnable.class.getName()).log(Level.SEVERE, null, ex);
-                                                }
-                                            }
-                                        }, 1000, 1000);
+					final IRemoteObserver rmobserver = (IRemoteObserver) realRegistry.lookup(IRemoteObserver.class
+							.toString());
+					Timer t = new Timer();
+					t.schedule(new TimerTask() {
+						@Override
+						public void run() {
+							try {
+								rmobserver.notifyAlive(IRemoteObserver.SERVER_ID.shoal.ordinal());
+							} catch (RemoteException ex) {
+								Logger.getLogger(DistributionProtocolRunnable.class.getName()).log(Level.SEVERE, null,
+										ex);
+							}
+						}
+					}, 1000, 1000);
 					break;
 				}
 
@@ -239,18 +244,20 @@ public class DistributionProtocolRunnable implements IProtocolRunnable {
 					}
 
 					System.out.println("mdiroper created");
-                                        final IRemoteObserver rmobserver = (IRemoteObserver) realRegistry.lookup(IRemoteObserver.class.toString());
-                                        Timer t = new Timer();
-                                        t.schedule(new TimerTask() {
-                                            @Override
-                                            public void run() {
-                                                try {
-                                                    rmobserver.notifyAlive(IRemoteObserver.SERVER_ID.diroper.ordinal());
-                                                } catch (RemoteException ex) {
-                                                    Logger.getLogger(DistributionProtocolRunnable.class.getName()).log(Level.SEVERE, null, ex);
-                                                }
-                                            }
-                                        }, 1000, 1000);
+					final IRemoteObserver rmobserver = (IRemoteObserver) realRegistry.lookup(IRemoteObserver.class
+							.toString());
+					Timer t = new Timer();
+					t.schedule(new TimerTask() {
+						@Override
+						public void run() {
+							try {
+								rmobserver.notifyAlive(IRemoteObserver.SERVER_ID.diroper.ordinal());
+							} catch (RemoteException ex) {
+								Logger.getLogger(DistributionProtocolRunnable.class.getName()).log(Level.SEVERE, null,
+										ex);
+							}
+						}
+					}, 1000, 1000);
 					break;
 				}
 
@@ -270,18 +277,20 @@ public class DistributionProtocolRunnable implements IProtocolRunnable {
 									+ String.valueOf(b) + "]", stub);
 						}
 					}
-                                        final IRemoteObserver rmobserver = (IRemoteObserver) realRegistry.lookup(IRemoteObserver.class.toString());
-                                        Timer t = new Timer();
-                                        t.schedule(new TimerTask() {
-                                            @Override
-                                            public void run() {
-                                                try {
-                                                    rmobserver.notifyAlive(IRemoteObserver.SERVER_ID.boat.ordinal());
-                                                } catch (RemoteException ex) {
-                                                    Logger.getLogger(DistributionProtocolRunnable.class.getName()).log(Level.SEVERE, null, ex);
-                                                }
-                                            }
-                                        }, 1000, 1000);
+					final IRemoteObserver rmobserver = (IRemoteObserver) realRegistry.lookup(IRemoteObserver.class
+							.toString());
+					Timer t = new Timer();
+					t.schedule(new TimerTask() {
+						@Override
+						public void run() {
+							try {
+								rmobserver.notifyAlive(IRemoteObserver.SERVER_ID.boat.ordinal());
+							} catch (RemoteException ex) {
+								Logger.getLogger(DistributionProtocolRunnable.class.getName()).log(Level.SEVERE, null,
+										ex);
+							}
+						}
+					}, 1000, 1000);
 					System.out.println("mboat created");
 
 					break;
@@ -312,18 +321,20 @@ public class DistributionProtocolRunnable implements IProtocolRunnable {
 							boat.start();
 						}
 					}
-                                        final IRemoteObserver rmobserver = (IRemoteObserver) realRegistry.lookup(IRemoteObserver.class.toString());
-                                        Timer t = new Timer();
-                                        t.schedule(new TimerTask() {
-                                            @Override
-                                            public void run() {
-                                                try {
-                                                    rmobserver.notifyAlive(IRemoteObserver.SERVER_ID.tboat.ordinal());
-                                                } catch (RemoteException ex) {
-                                                    Logger.getLogger(DistributionProtocolRunnable.class.getName()).log(Level.SEVERE, null, ex);
-                                                }
-                                            }
-                                        }, 1000, 1000);
+					final IRemoteObserver rmobserver = (IRemoteObserver) realRegistry.lookup(IRemoteObserver.class
+							.toString());
+					Timer t = new Timer();
+					t.schedule(new TimerTask() {
+						@Override
+						public void run() {
+							try {
+								rmobserver.notifyAlive(IRemoteObserver.SERVER_ID.tboat.ordinal());
+							} catch (RemoteException ex) {
+								Logger.getLogger(DistributionProtocolRunnable.class.getName()).log(Level.SEVERE, null,
+										ex);
+							}
+						}
+					}, 1000, 1000);
 					break;
 				}
 
@@ -349,8 +360,8 @@ public class DistributionProtocolRunnable implements IProtocolRunnable {
 
 						ICompleteDirOper[] diroper = new ICompleteDirOper[ndiroper];
 						for (int d = 0; d < ndiroper; d++) {
-							diroper[d] = (ICompleteDirOper) realRegistry.lookup(ICompleteDirOper.class.toString()
-									+ "[" + String.valueOf(d) + "]");
+							diroper[d] = (ICompleteDirOper) realRegistry.lookup(ICompleteDirOper.class.toString() + "["
+									+ String.valueOf(d) + "]");
 						}
 
 						ICompleteOcean ocean = (ICompleteOcean) realRegistry.lookup(ICompleteOcean.class.toString());
@@ -365,18 +376,20 @@ public class DistributionProtocolRunnable implements IProtocolRunnable {
 								growing_factor, eco_system_capacity, maxCatchPercentage);
 						shoal.start();
 					}
-                                        final IRemoteObserver rmobserver = (IRemoteObserver) realRegistry.lookup(IRemoteObserver.class.toString());
-                                        Timer t = new Timer();
-                                        t.schedule(new TimerTask() {
-                                            @Override
-                                            public void run() {
-                                                try {
-                                                    rmobserver.notifyAlive(IRemoteObserver.SERVER_ID.tshoal.ordinal());
-                                                } catch (RemoteException ex) {
-                                                    Logger.getLogger(DistributionProtocolRunnable.class.getName()).log(Level.SEVERE, null, ex);
-                                                }
-                                            }
-                                        }, 1000, 1000);
+					final IRemoteObserver rmobserver = (IRemoteObserver) realRegistry.lookup(IRemoteObserver.class
+							.toString());
+					Timer t = new Timer();
+					t.schedule(new TimerTask() {
+						@Override
+						public void run() {
+							try {
+								rmobserver.notifyAlive(IRemoteObserver.SERVER_ID.tshoal.ordinal());
+							} catch (RemoteException ex) {
+								Logger.getLogger(DistributionProtocolRunnable.class.getName()).log(Level.SEVERE, null,
+										ex);
+							}
+						}
+					}, 1000, 1000);
 					break;
 				}
 
@@ -387,15 +400,15 @@ public class DistributionProtocolRunnable implements IProtocolRunnable {
 
 					ICompleteShoal[] shoals = new ICompleteShoal[nshoals];
 					for (int s = 0; s < nshoals; s++) {
-						shoals[s] = (ICompleteShoal) realRegistry.lookup(ICompleteShoal.class.toString()
-								+ "[" + String.valueOf(s) + "]");
+						shoals[s] = (ICompleteShoal) realRegistry.lookup(ICompleteShoal.class.toString() + "["
+								+ String.valueOf(s) + "]");
 					}
 
 					for (int d = 0; d < ndiroper; d++) {
 						ICompleteBoat[] boats = new ICompleteBoat[nboats];
 						for (int b = 0; b < nboats; b++) {
-							boats[b] = (ICompleteBoat) realRegistry.lookup(ICompleteBoat.class.toString()
-									+ "[" + String.valueOf(d) + "][" + String.valueOf(b) + "]");
+							boats[b] = (ICompleteBoat) realRegistry.lookup(ICompleteBoat.class.toString() + "["
+									+ String.valueOf(d) + "][" + String.valueOf(b) + "]");
 						}
 						ICompleteOcean ocean = (ICompleteOcean) realRegistry.lookup(ICompleteOcean.class.toString());
 						ICompleteDirOper monitor = (ICompleteDirOper) realRegistry.lookup(ICompleteDirOper.class
@@ -409,18 +422,20 @@ public class DistributionProtocolRunnable implements IProtocolRunnable {
 						TDirOper diroper = new TDirOper(ocean, monitor, boats, shoals, stats);
 						diroper.start();
 					}
-                                        final IRemoteObserver rmobserver = (IRemoteObserver) realRegistry.lookup(IRemoteObserver.class.toString());
-                                        Timer t = new Timer();
-                                        t.schedule(new TimerTask() {
-                                            @Override
-                                            public void run() {
-                                                try {
-                                                    rmobserver.notifyAlive(IRemoteObserver.SERVER_ID.tdiroper.ordinal());
-                                                } catch (RemoteException ex) {
-                                                    Logger.getLogger(DistributionProtocolRunnable.class.getName()).log(Level.SEVERE, null, ex);
-                                                }
-                                            }
-                                        }, 1000, 1000);
+					final IRemoteObserver rmobserver = (IRemoteObserver) realRegistry.lookup(IRemoteObserver.class
+							.toString());
+					Timer t = new Timer();
+					t.schedule(new TimerTask() {
+						@Override
+						public void run() {
+							try {
+								rmobserver.notifyAlive(IRemoteObserver.SERVER_ID.tdiroper.ordinal());
+							} catch (RemoteException ex) {
+								Logger.getLogger(DistributionProtocolRunnable.class.getName()).log(Level.SEVERE, null,
+										ex);
+							}
+						}
+					}, 1000, 1000);
 					break;
 				}
 
