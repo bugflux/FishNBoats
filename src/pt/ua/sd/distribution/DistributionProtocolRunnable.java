@@ -100,6 +100,7 @@ public class DistributionProtocolRunnable implements IProtocolRunnable {
 					realRegistry = LocateRegistry.getRegistry(rmiAddr.getAddress().getHostAddress(), rmiAddr.getPort());
 					remoteRegistry = (IRmiRegistry) realRegistry.lookup(IRmiRegistry.class.toString());
 				} catch (RemoteException e) {
+					e.printStackTrace();
 					// do nothing with this exception, it just means the
 					// registry could not be created, and that means that this
 					// message is to create it for the first time, probably!
