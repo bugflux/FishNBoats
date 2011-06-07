@@ -4,6 +4,7 @@
 package pt.ua.sd.distribution;
 
 import java.awt.Point;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
@@ -138,8 +139,9 @@ public class DistributionProtocolRunnable implements IProtocolRunnable {
 					// then create the flusher
 					String logName = msg.getConfig().getLogFile();
 					OutputStream file = null;
-					if (logName == null || logName.length() == 0) {
-						file = new FileOutputStream(logName);
+					if (logName != null && logName.length() != 0) {
+						System.out.println("Printing log to " + logName);
+						file = new FileOutputStream(new File(logName));
 					} else {
 						file = System.out;
 					}
