@@ -69,13 +69,13 @@ public class SimulationLaunch extends javax.swing.JFrame {
 
         jLabel3.setText("Port");
 
-        txtRMIAddress.setText("127.0.0.1");
+        txtRMIAddress.setText("192.168.8.171");
 
         txtRMIPort.setText("22145");
 
         jLabel4.setText("Log");
 
-        txtLogAddress.setText("127.0.0.1");
+        txtLogAddress.setText("192.168.8.177");
         txtLogAddress.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtLogAddressActionPerformed(evt);
@@ -86,35 +86,35 @@ public class SimulationLaunch extends javax.swing.JFrame {
 
         jLabel5.setText("Ocean");
 
-        txtOceanAddress.setText("127.0.0.1");
+        txtOceanAddress.setText("192.168.8.177");
 
         txtOceanPort.setText("22141");
 
         jLabel6.setText("Shoals");
 
-        txtShoalsAddress.setText("127.0.0.1");
+        txtShoalsAddress.setText("192.168.8.173");
 
         txtShoalsPort.setText("22142");
 
         jLabel7.setText("DirOpers");
 
-        txtDirOperAddress.setText("127.0.0.1");
+        txtDirOperAddress.setText("192.168.8.174");
 
         txtDirOperPort.setText("22143");
 
         jLabel8.setText("Boats");
 
-        txtBoatsAddress.setText("127.0.0.1");
+        txtBoatsAddress.setText("192.168.8.175");
 
         txtBoatsPort.setText("22144");
 
         jLabel9.setText("Thread Boats");
 
-        txtTBoatsAddress.setText("127.0.0.1");
+        txtTBoatsAddress.setText("192.168.8.176");
 
         jLabel10.setText("Thread Shoals");
 
-        txtTShoalsAddress.setText("127.0.0.1");
+        txtTShoalsAddress.setText("192.168.8.178");
         txtTShoalsAddress.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtTShoalsAddressActionPerformed(evt);
@@ -123,7 +123,7 @@ public class SimulationLaunch extends javax.swing.JFrame {
 
         jLabel11.setText("Thread DirOper");
 
-        txtTDiroperAddress.setText("127.0.0.1");
+        txtTDiroperAddress.setText("192.168.8.180");
 
         jButton1.setText("Save");
         jButton1.addActionListener(new java.awt.event.ActionListener() {

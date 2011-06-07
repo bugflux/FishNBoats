@@ -606,21 +606,21 @@ public class Faina extends javax.swing.JFrame implements Observer {
 		new SimulationLaunch(this).setVisible(true);
 	}// GEN-LAST:event_jButton3ActionPerformed
 
-	String rmiserveraddress = "127.0.0.1";
+	String rmiserveraddress = "192.168.8.171";
 	String rmiserverport = "22145"; // this and the next port will be used!
-	String mlogserveaddress = "127.0.0.1";
+	String mlogserveaddress = "192.168.8.177";
 	String mlogserveport = "22140";
-	String moceanseraddress = "127.0.0.1";
+	String moceanseraddress = "192.168.8.177";
 	String moceanserport = "22141";
-	String mshoalseraddress = "127.0.0.1";
+	String mshoalseraddress = "192.168.8.173";
 	String mshoalserport = "22142";
-	String mdiropersaddress = "127.0.0.1";
+	String mdiropersaddress = "192.168.8.174";
 	String mdiropersport = "22143";
-	String mboatservaddress = "127.0.0.1";
+	String mboatservaddress = "192.168.8.175";
 	String mboatservport = "22144";
-	String tboatservaddress = "127.0.0.1";
-	String tshoalseraddress = "127.0.0.1";
-	String tdiropersaddress = "127.0.0.1";
+	String tboatservaddress = "192.168.8.176";
+	String tshoalseraddress = "192.168.8.178";
+	String tdiropersaddress = "192.168.8.180";
 
 	public void setServersConfigurations(String[] config) {
 		assert (config.length == 15);
@@ -661,7 +661,7 @@ public class Faina extends javax.swing.JFrame implements Observer {
 			}
 		}).start();
 
-	}// GEN-LAST:event_jButton2ActionPerformed
+	}// GEN-LAST:event_jButton2Ac127.0.0.1tionPerformed
 
 	private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton1ActionPerformed
 		JFileChooser chooser = new JFileChooser();
