@@ -14,9 +14,13 @@ I can't find the file with the problem specification, but it was something along
 
 To launch, simply run the pt.ua.sd.gui.Faina class in the Master branch
 
-The branches are something along the line of:
-Master: Threaded solution
-Problema02: Distributed solution with custom communication framework
-Problema03: Distributed solution with RMI
+The branches are something along the lines of:
+
+- Master: Threaded solution
+- Problema02: Distributed solution with custom communication framework
+- Problema03: Distributed solution with RMI
 
 
+
+
+![Screenshot](/pescaria.png "Screenshot")
